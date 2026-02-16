@@ -1,5 +1,29 @@
 README.md
 
+# macOS
+**/.DS_Store
+
+# Claude Code - exclude auto-generated files
+.claude/history.jsonl
+.claude/debug
+.claude/file-history
+.claude/projects
+.claude/plugins
+.claude/session-env
+.claude/shell-snapshots
+.claude/statsig
+.claude/stats-cache.json
+.claude/telemetry
+.claude/ide
+.claude/plans
+.claude/.DS_Store
+.claude/.claude
+.claude/cache
+.claude/downloads
+.claude/paste-cache
+.claude/tasks
+.claude/todos
+
 {{ if ne .chezmoi.os "darwin" }}
 ./Library/Application Support/Code/User
 .zshrc
