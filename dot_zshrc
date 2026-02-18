@@ -23,9 +23,7 @@ if [[ "$(uname -m)" == "arm64" ]] ; then
     /opt/homebrew/bin(N-/)
     /opt/homebrew/sbin(N-/)
     /usr/local/bin(N-/)  # x86対応 (Dockerなど)
-    ${HOME}/.local/bin(N-/)  # pipx
-    ${HOME}/.volta/bin(N-/)
-    ${HOME}/.jenv/bin(N-/)
+    ${HOME}/.local/bin(N-/)
     ${HOME}/.yarn/bin(N-/)
     ${HOME}/.config/yarn/global/node_modules/.bin(N-/)
     ${HOME}/.codeium/windsurf/bin(N-/)
@@ -41,8 +39,6 @@ else
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
     ${HOME}/.local/bin(N-/)
-    ${HOME}/.volta/bin(N-/)
-    ${HOME}/.jenv/bin(N-/)
     ${HOME}/.yarn/bin(N-/)
     ${HOME}/.config/yarn/global/node_modules/.bin(N-/)
     ${HOME}/.codeium/windsurf/bin(N-/)
@@ -55,20 +51,8 @@ else
   )
 fi
 
-# Volta
-export VOLTA_HOME="${HOME}/.volta"
-
-# goenv
-eval "$(goenv init -)"
-
-# rye
-source "${HOME}/.rye/env"
-
-# jenv
-eval "$(jenv init -)"
-
-# rbenv
-eval "$(rbenv init - --no-rehash zsh)"
+# mise (runtime version manager)
+eval "$(mise activate zsh)"
 
 if type brew &>/dev/null; then
   fpath=(
@@ -78,14 +62,6 @@ if type brew &>/dev/null; then
 
   autoload -Uz compinit
   compinit
-fi
-
-# rbenv completions
-if [[ -d "${HOME}/.rbenv/completions" ]] ; then
-  fpath=(
-    ${HOME}/.rbenv/completions
-    ${fpath}
-  )
 fi
 
 # 自前の .zfunc
