@@ -54,7 +54,6 @@
   "[vba]": {
     "files.encoding": "shiftjis"
   },
-
   // ============================================================
   // Editor Settings
   // ============================================================
@@ -86,7 +85,6 @@
   "editor.inlayHints.enabled": "onUnlessPressed",
   "editor.unicodeHighlight.ambiguousCharacters": true,
   "diffEditor.ignoreTrimWhitespace": false,
-
   // ============================================================
   // File Settings
   // ============================================================
@@ -114,7 +112,6 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-
   // ============================================================
   // Search Settings
   // ============================================================
@@ -122,22 +119,20 @@
     "**/*.code-search": true,
     "**/.git": true,
     "**/.gitignore": true,
-    "**/bak": true,
     "**/bower_components": true,
     "**/certs": true,
     "**/node_modules": true,
+    "**/bak": true,
     "**/tmp": true,
     "**/trash": true
   },
   "search.showLineNumbers": true,
-
   // ============================================================
   // Explorer Settings
   // ============================================================
   "explorer.confirmDragAndDrop": false,
   "explorer.incrementalNaming": "smart",
   "explorer.autoReveal": true,
-
   // ============================================================
   // Workbench Settings
   // ============================================================
@@ -161,7 +156,6 @@
   "window.commandCenter": true,
   "zenMode.centerLayout": false,
   "zenMode.hideLineNumbers": false,
-
   // ============================================================
   // Terminal Settings
   // ============================================================
@@ -170,14 +164,12 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.scrollback": 5000,
   "terminal.integrated.shellIntegration.enabled": true,
-
   // ============================================================
   // Debug Settings
   // ============================================================
   "debug.inlineValues": "on",
   "debug.internalConsoleOptions": "openOnSessionStart",
   "debug.openDebug": "openOnSessionStart",
-
   // ============================================================
   // Git Settings
   // ============================================================
@@ -189,7 +181,6 @@
   "git.showPushSuccessNotification": true,
   "git-graph.dialog.fetchRemote.prune": true,
   "git-graph.repository.fetchAndPrune": true,
-
   // ============================================================
   // GitLens Settings
   // ============================================================
@@ -211,14 +202,12 @@
     "tags": false,
     "worktrees": false
   },
-
   // ============================================================
   // GitHub Settings
   // ============================================================
   "githubPullRequests.createOnPublishBranch": "ask",
   "githubPullRequests.fileListLayout": "flat",
   "githubPullRequests.pullBranch": "never",
-
   // ============================================================
   // Markdown Settings
   // ============================================================
@@ -226,10 +215,10 @@
   "markdown.preview.lineHeight": 2,
   "markdown.updateLinksOnFileMove.enabled": "prompt",
   "markdown-preview-enhanced.enablePreviewZenMode": false,
-  // "markdown-pdf.breaks": true,
-  // "markdown-pdf.orientation": "landscape",
-  // "markdown-preview-github-styles.colorTheme": "light",
-  // "markdown-preview-enhanced.plantumlJarPath": "/opt/homebrew/bin/plantuml",
+  "markdown-pdf.breaks": true,
+  "markdown-pdf.orientation": "landscape",
+  "markdown-preview-github-styles.colorTheme": "light",
+  "markdown-preview-enhanced.plantumlJarPath": "/opt/homebrew/bin/plantuml",
   "markdownlint.config": {
     "default": true,
     // 表の見た目を lint しない
@@ -239,7 +228,6 @@
   },
   "markdownlint.run": "onSave",
   "markdown.extension.tableFormatter.enabled": false,
-
   // ============================================================
   // YAML Settings
   // ============================================================
@@ -276,26 +264,26 @@
   "yaml.format.singleQuote": true,
   "yaml.schemas": {
     "https://api.bitbucket.org/schemas/pipelines-configuration": "bitbucket-pipelines.yml",
-    "https://docs.renovatebot.com/renovate-schema.json": ["renovate.json", ".renovaterc", ".renovaterc.json"]
+    "https://docs.renovatebot.com/renovate-schema.json": [
+      "renovate.json",
+      ".renovaterc",
+      ".renovaterc.json"
+    ]
   },
-
   // ============================================================
   // HTML Settings
   // ============================================================
   "html.format.enable": false,
-
   // ============================================================
   // Python Settings
   // ============================================================
   "python.defaultInterpreterPath": ".venv/bin/python",
   "python.terminal.activateEnvironment": true,
-
   // ============================================================
   // Dart/Flutter Settings
   // ============================================================
   "dart.flutterSdkPath": "/usr/local/lib/flutter",
   "dart.openDevTools": "flutter",
-
   // ============================================================
   // ESLint Settings
   // ============================================================
@@ -304,7 +292,6 @@
       "mode": "auto"
     }
   ],
-
   // ============================================================
   // PlantUML Settings
   // ============================================================
@@ -314,19 +301,16 @@
   "plantuml.exportOutDir": ".",
   "plantuml.exportSubFolder": false,
   "plantuml.jar": "/opt/homebrew/Cellar/plantuml/1.2025.10/libexec/plantuml.jar",
-
   // ============================================================
   // Draw.io Settings
   // ============================================================
   "hediet.vscode-drawio.codeLinkActivated": false,
   "hediet.vscode-drawio.resizeImages": null,
   "hediet.vscode-drawio.theme": "min",
-
   // ============================================================
   // Excalidraw Settings
   // ============================================================
   "excalidraw.theme": "light",
-
   // ============================================================
   // TODO Tree Settings
   // ============================================================
@@ -354,20 +338,17 @@
     "MEMO"
   ],
   "todo-tree.tree.buttons.scanMode": true,
-
   // ============================================================
   // Error Lens Settings
   // ============================================================
   "errorLens.delay": 1000,
   "errorLens.gutterIconsEnabled": true,
-
   // ============================================================
   // Code Metrics Settings
   // ============================================================
   "codemetrics.nodeconfiguration.CaseClause": 0,
   "codemetrics.nodeconfiguration.DefaultClause": 0,
   "codemetrics.nodeconfiguration.ReturnStatement": 0,
-
   // ============================================================
   // REST Client Settings
   // ============================================================
@@ -375,17 +356,14 @@
   "rest-client.environmentVariables": {
     "$shared": {},
   },
-
   // ============================================================
   // Live Server Settings
   // ============================================================
   "liveServer.settings.root": "/dist",
-
   // ============================================================
   // Swagger Viewer Settings
   // ============================================================
   "swaggerViewer.previewInBrowser": true,
-
   // ============================================================
   // ShellCheck Settings
   // ============================================================
@@ -413,18 +391,15 @@
     "**/zshenv": true,
     "**/zshrc": true,
   },
-
   // ============================================================
   // Arduino Settings
   // ============================================================
   "arduino.analyzeOnOpen": false,
-
   // ============================================================
   // Atlassian Settings
   // ============================================================
   "atlascode.bitbucket.enabled": true,
   "atlascode.jira.enabled": false,
-
   // ============================================================
   // AWS / Amazon Q Settings
   // ============================================================
@@ -436,12 +411,10 @@
   "amazonQ.shareContentWithAWS": false,
   "amazonQ.telemetry": false,
   "aws.telemetry": false,
-
   // ============================================================
   // Gemini Code Assist Settings
   // ============================================================
   "geminicodeassist.inlineSuggestions.enableAuto": true,
-
   // ============================================================
   // Cursor Settings
   // ============================================================
@@ -449,16 +422,17 @@
   "cursor.cpp.disabledLanguages": [
     "python",
     "plaintext",
-    "ini"
+    "ini",
+    "jsonc",
+    "untitled",
+    "json"
   ],
   "cursor.general.gitGraphIndexing": "disabled",
   "cursor.windowSwitcher.sidebarHoverCollapsed": true,
-
   // ============================================================
   // Claude Code Settings
   // ============================================================
   "claudeCode.preferredLocation": "panel",
-
   // ============================================================
   // MSSQL Settings
   // ============================================================
@@ -476,12 +450,10 @@
       "user": "{{put-username-here}}"
     }
   ],
-
   // ============================================================
   // Telemetry Settings
   // ============================================================
   "redhat.telemetry.enabled": false,
-
   // ============================================================
   // Miscellaneous Settings
   // ============================================================
