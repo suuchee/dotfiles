@@ -71,3 +71,6 @@ if [[ -d "${HOME}/.zfunc" ]] ; then
     ${fpath}
   )
 fi
+
+# gcloud
+export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3
