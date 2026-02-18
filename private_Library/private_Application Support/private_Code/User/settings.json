@@ -1,155 +1,10 @@
 {
-  "terminal.integrated.scrollback": 5000,
-  "files.eol": "\n",
-  "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  "files.exclude": {
-    "**/.git": false,
-    "**/.git/[^c]*": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/[Dd]esktop.ini": true,
-    "**/Thumbs.db": true,
-    "**/__pycache__": true
-  },
-  "files.associations": {
-    "*.sh.tmpl": "shellscript",
-    "*.yaml.tmpl": "yaml",
-    "*.json.tmpl": "json",
-    "*.mdc": "markdown"
-  },
-  "search.showLineNumbers": true,
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "**/tmp": true,
-    "**/bak": true,
-    "**/trash": true,
-    "**/certs": true,
-    "**/.git": true,
-    "**/.gitignore": true
-  },
-  "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.defaultProfile.linux": "bash",
-  "terminal.integrated.confirmOnExit": "always",
-  "zenMode.centerLayout": false,
-  "zenMode.hideLineNumbers": false,
-  "debug.inlineValues": "on",
-  "debug.openDebug": "openOnSessionStart",
-  "debug.internalConsoleOptions": "openOnSessionStart",
-  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?　〜！％＆（）＝＋｜／；：、。「」【】『』・？",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-  "editor.copyWithSyntaxHighlighting": false,
-  "editor.renderControlCharacters": true,
-  "editor.renderWhitespace": "boundary",
-  "editor.showFoldingControls": "always",
-  "editor.dragAndDrop": false,
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
-  "editor.minimap.showSlider": "always",
-  "editor.minimap.size": "fit",
-  "editor.tabSize": 2,
-  "editor.rulers": [88, 150],
-  "explorer.confirmDragAndDrop": false,
-  "explorer.incrementalNaming": "smart",
-  "workbench.startupEditor": "readme",
-  "workbench.editor.tabSizing": "shrink",
-  "workbench.iconTheme": "vscode-icons",
-  "workbench.editorAssociations": {
-    "*.drawio.png": "hediet.vscode-drawio",
-    "*.drawio.svg": "hediet.vscode-drawio",
-    "*.ipynb": "jupyter-notebook"
-  },
-  "workbench.localHistory.enabled": false,
-  "workbench.localHistory.maxFileSize": 256,
-  "workbench.localHistory.maxFileEntries": 5,
-  "workbench.commandPalette.history": 10,
-  "workbench.panel.showLabels": false,
-  "workbench.activityBar.location": "top",
-  // language mode
-  "[python]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports.ruff": "always",
-      "source.fixAll.ruff": "always"
-    }
-  },
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
+  // ============================================================
+  // Language-specific Settings
+  // ============================================================
   "[csv]": {
     "editor.wordWrap": "off"
   },
-  "[log]": {
-    "editor.wordWrap": "off"
-  },
-  "[markdown]": {
-    "editor.tabSize": 4
-  },
-  "[yaml]": {
-    "editor.detectIndentation": true,
-    "editor.tabSize": 2,
-    "editor.autoIndent": "full"
-  },
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ],
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.tabSize": 2
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.tabSize": 2
-  },
-  // vscode-icons
-  "vsicons.dontShowNewVersionMessage": true,
-  // Git
-  "git.autofetch": true,
-  "git.pruneOnFetch": true,
-  "git.showPushSuccessNotification": true,
-  "git.alwaysShowStagedChangesResourceGroup": true,
-  "git.openRepositoryInParentFolders": "never",
-  "git-graph.dialog.fetchRemote.prune": true,
-  "git-graph.repository.fetchAndPrune": true,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.hovers.currentLine.over": "line",
-  "gitlens.codeLens.enabled": false,
-  "gitlens.statusBar.enabled": false,
-  "gitlens.graph.minimap.enabled": false,
-  "gitlens.views.commitDetails.files.layout": "list",
-  "gitlens.views.scm.grouped.views": {
-    "commits": false,
-    "branches": false,
-    "remotes": false,
-    "stashes": false,
-    "tags": false,
-    "worktrees": false,
-    "contributors": true,
-    "repositories": false,
-    "searchAndCompare": false,
-    "launchpad": false
-  },
-  // GitHub
-  "githubPullRequests.fileListLayout": "flat",
-  "githubPullRequests.pullBranch": "never",
-  "githubPullRequests.createOnPublishBranch": "ask",
-  // JavaScript
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  // Dart
-  "dart.flutterSdkPath": "/usr/local/lib/flutter",
-  "dart.openDevTools": "flutter",
   "[dart]": {
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -157,44 +12,234 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": "off"
   },
-  // REST Client
-  "rest-client.decodeEscapedUnicodeCharacters": true,
-  "rest-client.environmentVariables": {
-    "$shared": {}
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  // Todo Tree
-  "todo-tree.general.tags": [
-    "BUG",
-    "HACK",
-    "FIXME",
-    "TODO",
-    "XXX",
-    "[ ]",
-    "[x]",
-    "NOTE",
-    "WARNING",
-    "REVIEW",
-    "MEMO"
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[log]": {
+    "editor.wordWrap": "off"
+  },
+  "[markdown]": {
+    "editor.tabSize": 4
+  },
+  "[python]": {
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "always",
+      "source.organizeImports.ruff": "always"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.tabSize": 4
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.tabSize": 2
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.autoIndent": "full",
+    "editor.detectIndentation": true,
+    "editor.tabSize": 2
+  },
+  "[vb]": {
+    "files.encoding": "shiftjis"
+  },
+  "[vba]": {
+    "files.encoding": "shiftjis"
+  },
+
+  // ============================================================
+  // Editor Settings
+  // ============================================================
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.copyWithSyntaxHighlighting": false,
+  "editor.dragAndDrop": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": false,
+  "editor.guides.bracketPairs": true,
+  "editor.minimap.enabled": true,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.size": "fit",
+  "editor.renderControlCharacters": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [
+    88,
+    150
   ],
-  // Drawio
-  // "hediet.vscode-drawio.local-storage": "",
-  "hediet.vscode-drawio.theme": "min",
-  "hediet.vscode-drawio.codeLinkActivated": false,
-  // PlantUML
-  "plantuml.render": "Local",
-  "plantuml.exportFormat": "png",
-  "plantuml.previewAutoUpdate": false,
-  // Markdown
-  // "markdown-pdf.breaks": true,
-  // "markdown-pdf.orientation": "landscape",
-  // "markdown-preview-enhanced.scrollSync": false,
-  "markdown-preview-enhanced.plantumlJarPath": "/opt/homebrew/Cellar/plantuml/1.2025.3/libexec/plantuml.jar",
-  "markdown.updateLinksOnFileMove.enabled": "prompt",
-  "markdown.preview.lineHeight": 2,
+  "editor.showFoldingControls": "always",
+  "editor.tabSize": 2,
+  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?　〜！％＆（）＝＋｜／；：、。「」【】『』・？",
+  "editor.wordWrap": "off",
+  "editor.linkedEditing": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.inlayHints.enabled": "onUnlessPressed",
+  "editor.unicodeHighlight.ambiguousCharacters": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  // ============================================================
+  // File Settings
+  // ============================================================
+  "files.associations": {
+    "**/*.json.tmpl": "json",
+    "**/*.mdc": "markdown",
+    "**/*.sh.tmpl": "shellscript",
+    "**/*.yaml.tmpl": "yaml",
+    "**/.env*": "ini",
+    "**/*.tfvars.example": "terraform-vars",
+    "**/*.tfstate*": "json"
+  },
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": false,
+    "**/.git/[^c]*": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
+    "**/Thumbs.db": true,
+    "**/[Dd]esktop.ini": true,
+    "**/__pycache__": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+
+  // ============================================================
+  // Search Settings
+  // ============================================================
+  "search.exclude": {
+    "**/*.code-search": true,
+    "**/.git": true,
+    "**/.gitignore": true,
+    "**/bak": true,
+    "**/bower_components": true,
+    "**/certs": true,
+    "**/node_modules": true,
+    "**/tmp": true,
+    "**/trash": true
+  },
+  "search.showLineNumbers": true,
+
+  // ============================================================
+  // Explorer Settings
+  // ============================================================
+  "explorer.confirmDragAndDrop": false,
+  "explorer.incrementalNaming": "smart",
+  "explorer.autoReveal": true,
+
+  // ============================================================
+  // Workbench Settings
+  // ============================================================
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.commandPalette.history": 10,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editorAssociations": {
+    "*.drawio.png": "hediet.vscode-drawio",
+    "*.ipynb": "jupyter-notebook"
+  },
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.localHistory.enabled": false,
+  "workbench.localHistory.maxFileEntries": 5,
+  "workbench.localHistory.maxFileSize": 256,
+  "workbench.startupEditor": "readme",
+  "workbench.tree.indent": 16,
+  "workbench.activityBar.location": "top",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.panel.showLabels": false,
+  "window.commandCenter": true,
+  "zenMode.centerLayout": false,
+  "zenMode.hideLineNumbers": false,
+
+  // ============================================================
+  // Terminal Settings
+  // ============================================================
+  "terminal.integrated.confirmOnExit": "always",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.scrollback": 5000,
+  "terminal.integrated.shellIntegration.enabled": true,
+
+  // ============================================================
+  // Debug Settings
+  // ============================================================
+  "debug.inlineValues": "on",
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "debug.openDebug": "openOnSessionStart",
+
+  // ============================================================
+  // Git Settings
+  // ============================================================
+  "git.alwaysShowStagedChangesResourceGroup": true,
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "never",
+  "git.path": "/opt/homebrew/bin/git",
+  "git.pruneOnFetch": true,
+  "git.showPushSuccessNotification": true,
+  "git-graph.dialog.fetchRemote.prune": true,
+  "git-graph.repository.fetchAndPrune": true,
+
+  // ============================================================
+  // GitLens Settings
+  // ============================================================
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.graph.minimap.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.statusBar.enabled": false,
+  "gitlens.views.commitDetails.files.layout": "list",
+  "gitlens.views.scm.grouped.views": {
+    "branches": false,
+    "commits": false,
+    "contributors": true,
+    "launchpad": false,
+    "remotes": false,
+    "repositories": false,
+    "searchAndCompare": false,
+    "stashes": false,
+    "tags": false,
+    "worktrees": false
+  },
+
+  // ============================================================
+  // GitHub Settings
+  // ============================================================
+  "githubPullRequests.createOnPublishBranch": "ask",
+  "githubPullRequests.fileListLayout": "flat",
+  "githubPullRequests.pullBranch": "never",
+
+  // ============================================================
+  // Markdown Settings
+  // ============================================================
   "markdown.preview.doubleClickToSwitchToEditor": false,
+  "markdown.preview.lineHeight": 2,
+  "markdown.updateLinksOnFileMove.enabled": "prompt",
+  "markdown-preview-enhanced.enablePreviewZenMode": false,
+  "markdownlint.config": {
+    "default": true,
+    "MD055": false,
+    "MD056": false
+  },
+  "markdownlint.run": "onSave",
   "markdown.extension.tableFormatter.enabled": false,
-  // YAML
-  "redhat.telemetry.enabled": false,
+
+  // ============================================================
+  // YAML Settings
+  // ============================================================
   "yaml.customTags": [
     "!And",
     "!And sequence",
@@ -224,24 +269,64 @@
     "!Split",
     "!Split sequence"
   ],
-  // SQL Server
-  "mssql.connections": [
+  "yaml.format.enable": false,
+  "yaml.format.singleQuote": true,
+  "yaml.schemas": {
+    "https://api.bitbucket.org/schemas/pipelines-configuration": "bitbucket-pipelines.yml",
+    "https://docs.renovatebot.com/renovate-schema.json": ["renovate.json", ".renovaterc", ".renovaterc.json"]
+  },
+
+  // ============================================================
+  // HTML Settings
+  // ============================================================
+  "html.format.enable": false,
+
+  // ============================================================
+  // Python Settings
+  // ============================================================
+  "python.defaultInterpreterPath": ".venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+
+  // ============================================================
+  // Dart/Flutter Settings
+  // ============================================================
+  "dart.flutterSdkPath": "/usr/local/lib/flutter",
+  "dart.openDevTools": "flutter",
+
+  // ============================================================
+  // ESLint Settings
+  // ============================================================
+  "eslint.workingDirectories": [
     {
-      "server": "{{put-server-name-here}}",
-      "database": "{{put-database-name-here}}",
-      "user": "{{put-username-here}}",
-      "password": ""
+      "mode": "auto"
     }
   ],
-  "errorLens.delay": 1000,
-  "errorLens.gutterIconsEnabled": true,
-  "yaml.schemas": {
-    "file:///Users/hayakawa/.vscode/extensions/atlassian.atlascode-3.0.9/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-  },
-  "html.format.enable": false,
-  "liveServer.settings.root": "/dist",
-  "todo-tree.tree.buttons.scanMode": true,
-  "todo-tree.general.statusBar": "current file",
+
+  // ============================================================
+  // PlantUML Settings
+  // ============================================================
+  "plantuml.exportFormat": "png",
+  "plantuml.previewAutoUpdate": false,
+  "plantuml.render": "Local",
+  "plantuml.exportOutDir": ".",
+  "plantuml.exportSubFolder": false,
+  "plantuml.jar": "/opt/homebrew/Cellar/plantuml/1.2025.10/libexec/plantuml.jar",
+
+  // ============================================================
+  // Draw.io Settings
+  // ============================================================
+  "hediet.vscode-drawio.codeLinkActivated": false,
+  "hediet.vscode-drawio.resizeImages": null,
+  "hediet.vscode-drawio.theme": "min",
+
+  // ============================================================
+  // Excalidraw Settings
+  // ============================================================
+  "excalidraw.theme": "light",
+
+  // ============================================================
+  // TODO Tree Settings
+  // ============================================================
   "todo-tree.filtering.includeGlobs": [
     "**/*.pu",
     "**/*.tf",
@@ -251,18 +336,112 @@
     "**/*.tsx",
     "**/*.py"
   ],
-  "excalidraw.theme": "light",
-  // AI
-  "amazonQ.ignoredSecurityIssues": ["certs", ".env", ".git"],
-  "geminicodeassist.project": "silent-glow-403014",
-  "roo-cline.allowedCommands": [
-    "npm test",
-    "npm install",
-    "tsc",
-    "git log",
-    "git diff",
-    "git show"
+  "todo-tree.general.statusBar": "current file",
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]",
+    "NOTE",
+    "WARNING",
+    "REVIEW",
+    "MEMO"
   ],
+  "todo-tree.tree.buttons.scanMode": true,
+
+  // ============================================================
+  // Error Lens Settings
+  // ============================================================
+  "errorLens.delay": 1000,
+  "errorLens.gutterIconsEnabled": true,
+
+  // ============================================================
+  // Code Metrics Settings
+  // ============================================================
+  "codemetrics.nodeconfiguration.CaseClause": 0,
+  "codemetrics.nodeconfiguration.DefaultClause": 0,
+  "codemetrics.nodeconfiguration.ReturnStatement": 0,
+
+  // ============================================================
+  // REST Client Settings
+  // ============================================================
+  "rest-client.decodeEscapedUnicodeCharacters": true,
+  "rest-client.environmentVariables": {
+    "$shared": {}
+  },
+
+  // ============================================================
+  // Live Server Settings
+  // ============================================================
+  "liveServer.settings.root": "/dist",
+
+  // ============================================================
+  // Swagger Viewer Settings
+  // ============================================================
+  "swaggerViewer.previewInBrowser": true,
+
+  // ============================================================
+  // ShellCheck Settings
+  // ============================================================
+  "shellcheck.ignorePatterns": {
+    "**/*.csh": true,
+    "**/*.cshrc": true,
+    "**/*.fish": true,
+    "**/*.login": true,
+    "**/*.logout": true,
+    "**/*.tcsh": true,
+    "**/*.tcshrc": true,
+    "**/*.xonshrc": true,
+    "**/*.xsh": true,
+    "**/*.zlogin": true,
+    "**/*.zlogout": true,
+    "**/*.zprofile": true,
+    "**/*.zsh": true,
+    "**/*.zsh-theme": true,
+    "**/*.zshenv": true,
+    "**/*.zshrc": true,
+    "**/.env*": true,
+    "**/zlogin": true,
+    "**/zlogout": true,
+    "**/zprofile": true,
+    "**/zshenv": true,
+    "**/zshrc": true
+  },
+
+  // ============================================================
+  // Arduino Settings
+  // ============================================================
+  "arduino.analyzeOnOpen": false,
+
+  // ============================================================
+  // Atlassian Settings
+  // ============================================================
+  "atlascode.bitbucket.enabled": true,
+  "atlascode.jira.enabled": false,
+
+  // ============================================================
+  // AWS / Amazon Q Settings
+  // ============================================================
+  "amazonQ.ignoredSecurityIssues": [
+    "certs",
+    ".env",
+    ".git"
+  ],
+  "amazonQ.shareContentWithAWS": false,
+  "amazonQ.telemetry": false,
+  "aws.telemetry": false,
+
+  // ============================================================
+  // Gemini Code Assist Settings
+  // ============================================================
+  "geminicodeassist.inlineSuggestions.enableAuto": true,
+
+  // ============================================================
+  // GitHub Copilot Settings (VS Code Only)
+  // ============================================================
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
@@ -295,24 +474,75 @@
     "tsv": true,
     "http": false
   },
+  "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.reviewSelection.instructions": [],
+  "github.copilot.chat.search.keywordSuggestions": true,
+
+  // ============================================================
+  // MCP Settings (VS Code Only)
+  // ============================================================
   "chat.mcp.discovery.enabled": {
     "claude-desktop": false,
     "windsurf": false,
     "cursor-global": true,
     "cursor-workspace": true
   },
-  "github.copilot.chat.agent.thinkingTool": true,
-  "github.copilot.chat.codesearch.enabled": true,
-  "github.copilot.chat.reviewSelection.instructions": [],
-  "github.copilot.chat.search.keywordSuggestions": true,
-  "githubPullRequests.experimental.useQuickChat": true,
-  "githubPullRequests.experimental.notificationsView": true,
   "chat.mcp.serverSampling": {
     "Cursor (Global): Notion": {
       "allowedModels": ["github.copilot-chat/gpt-4.1"]
     }
   },
-  "diffEditor.ignoreTrimWhitespace": false,
-  "workbench.editor.empty.hint": "hidden",
+
+  // ============================================================
+  // Roo Cline Settings (VS Code Only)
+  // ============================================================
+  "roo-cline.allowedCommands": [
+    "npm test",
+    "npm install",
+    "tsc",
+    "git log",
+    "git diff",
+    "git show"
+  ],
+
+  // ============================================================
+  // Inline Chat Settings (VS Code Only)
+  // ============================================================
   "inlineChat.enableV2": true,
+
+  // ============================================================
+  // GitHub Pull Requests Experimental Settings (VS Code Only)
+  // ============================================================
+  "githubPullRequests.experimental.useQuickChat": true,
+  "githubPullRequests.experimental.notificationsView": true,
+
+  // ============================================================
+  // MSSQL Settings
+  // ============================================================
+  "mssql.connectionGroups": [
+    {
+      "id": "{{put-connection-group-id}}",
+      "name": "ROOT"
+    }
+  ],
+  "mssql.connections": [
+    {
+      "database": "{{put-database-name-here}}",
+      "password": "",
+      "server": "{{put-server-name-here}}",
+      "user": "{{put-username-here}}"
+    }
+  ],
+
+  // ============================================================
+  // Telemetry Settings
+  // ============================================================
+  "redhat.telemetry.enabled": false,
+
+  // ============================================================
+  // Miscellaneous Settings
+  // ============================================================
+  "application.shellEnvironmentResolutionTimeout": 30,
+  "vsicons.dontShowNewVersionMessage": true
 }
