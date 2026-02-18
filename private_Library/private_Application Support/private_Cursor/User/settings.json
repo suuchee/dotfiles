@@ -2,7 +2,9 @@
   // ============================================================
   // Language-specific Settings
   // ============================================================
-  "[csv]": {},
+  "[csv]": {
+    "editor.wordWrap": "off"
+  },
   "[dart]": {
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -22,7 +24,9 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "[log]": {},
+  "[log]": {
+    "editor.wordWrap": "off"
+  },
   "[markdown]": {
     "editor.tabSize": 4
   },
@@ -32,11 +36,11 @@
     "editor.tabSize": 4
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.tabSize": 2
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.tabSize": 2
   },
   "[yaml]": {
@@ -62,6 +66,7 @@
   "editor.dragAndDrop": false,
   "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
+  "editor.formatOnType": false,
   "editor.guides.bracketPairs": true,
   "editor.minimap.enabled": true,
   "editor.minimap.showSlider": "always",
@@ -115,8 +120,11 @@
   // ============================================================
   "search.exclude": {
     "**/*.code-search": true,
+    "**/.git": true,
+    "**/.gitignore": true,
     "**/bak": true,
     "**/bower_components": true,
+    "**/certs": true,
     "**/node_modules": true,
     "**/tmp": true,
     "**/trash": true
@@ -147,6 +155,9 @@
   "workbench.localHistory.maxFileSize": 256,
   "workbench.startupEditor": "readme",
   "workbench.tree.indent": 16,
+  "workbench.activityBar.location": "top",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.panel.showLabels": false,
   "window.commandCenter": true,
   "zenMode.centerLayout": false,
   "zenMode.hideLineNumbers": false,
@@ -182,23 +193,23 @@
   // ============================================================
   // GitLens Settings
   // ============================================================
-  "gitlens.advanced.fileHistoryShowMergeCommits": true,
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
+  "gitlens.graph.minimap.enabled": false,
   "gitlens.hovers.currentLine.over": "line",
-  "gitlens.views.commitDetails.files.layout": "tree",
+  "gitlens.statusBar.enabled": false,
+  "gitlens.views.commitDetails.files.layout": "list",
   "gitlens.views.scm.grouped.views": {
-    "commits": true,
-    "branches": true,
-    "remotes": true,
-    "stashes": true,
-    "tags": true,
-    "worktrees": true,
+    "branches": false,
+    "commits": false,
     "contributors": true,
-    "fileHistory": true,
+    "launchpad": false,
+    "remotes": false,
     "repositories": false,
-    "searchAndCompare": true,
-    "launchpad": false
+    "searchAndCompare": false,
+    "stashes": false,
+    "tags": false,
+    "worktrees": false
   },
 
   // ============================================================
@@ -213,7 +224,7 @@
   // ============================================================
   "markdown.preview.doubleClickToSwitchToEditor": false,
   "markdown.preview.lineHeight": 2,
-  "markdown.updateLinksOnFileMove.enabled": "never",
+  "markdown.updateLinksOnFileMove.enabled": "prompt",
   "markdown-preview-enhanced.enablePreviewZenMode": false,
   // "markdown-pdf.breaks": true,
   // "markdown-pdf.orientation": "landscape",
@@ -227,6 +238,7 @@
     "MD056": false
   },
   "markdownlint.run": "onSave",
+  "markdown.extension.tableFormatter.enabled": false,
 
   // ============================================================
   // YAML Settings
@@ -308,7 +320,7 @@
   // ============================================================
   "hediet.vscode-drawio.codeLinkActivated": false,
   "hediet.vscode-drawio.resizeImages": null,
-  "hediet.vscode-drawio.theme": "atlas",
+  "hediet.vscode-drawio.theme": "min",
 
   // ============================================================
   // Excalidraw Settings
