@@ -58,7 +58,6 @@
   "[vba]": {
     "files.encoding": "shiftjis"
   },
-
   // ============================================================
   // Editor Settings
   // ============================================================
@@ -90,7 +89,6 @@
   "editor.inlayHints.enabled": "onUnlessPressed",
   "editor.unicodeHighlight.ambiguousCharacters": true,
   "diffEditor.ignoreTrimWhitespace": false,
-
   // ============================================================
   // File Settings
   // ============================================================
@@ -118,7 +116,6 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-
   // ============================================================
   // Search Settings
   // ============================================================
@@ -134,14 +131,12 @@
     "**/trash": true
   },
   "search.showLineNumbers": true,
-
   // ============================================================
   // Explorer Settings
   // ============================================================
   "explorer.confirmDragAndDrop": false,
   "explorer.incrementalNaming": "smart",
   "explorer.autoReveal": true,
-
   // ============================================================
   // Workbench Settings
   // ============================================================
@@ -150,7 +145,7 @@
   "workbench.editor.tabSizing": "shrink",
   "workbench.editorAssociations": {
     "*.drawio.png": "hediet.vscode-drawio",
-    "*.ipynb": "jupyter-notebook"
+    "*.ipynb": "jupyter-notebook",
   },
   "workbench.iconTheme": "vscode-icons",
   "workbench.localHistory.enabled": false,
@@ -164,7 +159,6 @@
   "window.commandCenter": true,
   "zenMode.centerLayout": false,
   "zenMode.hideLineNumbers": false,
-
   // ============================================================
   // Terminal Settings
   // ============================================================
@@ -173,14 +167,12 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.scrollback": 5000,
   "terminal.integrated.shellIntegration.enabled": true,
-
   // ============================================================
   // Debug Settings
   // ============================================================
   "debug.inlineValues": "on",
   "debug.internalConsoleOptions": "openOnSessionStart",
   "debug.openDebug": "openOnSessionStart",
-
   // ============================================================
   // Git Settings
   // ============================================================
@@ -192,7 +184,6 @@
   "git.showPushSuccessNotification": true,
   "git-graph.dialog.fetchRemote.prune": true,
   "git-graph.repository.fetchAndPrune": true,
-
   // ============================================================
   // GitLens Settings
   // ============================================================
@@ -214,14 +205,12 @@
     "tags": false,
     "worktrees": false
   },
-
   // ============================================================
   // GitHub Settings
   // ============================================================
   "githubPullRequests.createOnPublishBranch": "ask",
   "githubPullRequests.fileListLayout": "flat",
   "githubPullRequests.pullBranch": "never",
-
   // ============================================================
   // Markdown Settings
   // ============================================================
@@ -229,14 +218,19 @@
   "markdown.preview.lineHeight": 2,
   "markdown.updateLinksOnFileMove.enabled": "prompt",
   "markdown-preview-enhanced.enablePreviewZenMode": false,
+  "markdown-pdf.breaks": true,
+  "markdown-pdf.orientation": "landscape",
+  "markdown-preview-github-styles.colorTheme": "light",
+  "markdown-preview-enhanced.plantumlJarPath": "/opt/homebrew/bin/plantuml",
   "markdownlint.config": {
     "default": true,
+    // 表の見た目を lint しない
     "MD055": false,
+    // パイプ位置の強制をしない（整形競合回避）
     "MD056": false
   },
   "markdownlint.run": "onSave",
   "markdown.extension.tableFormatter.enabled": false,
-
   // ============================================================
   // YAML Settings
   // ============================================================
@@ -273,26 +267,26 @@
   "yaml.format.singleQuote": true,
   "yaml.schemas": {
     "https://api.bitbucket.org/schemas/pipelines-configuration": "bitbucket-pipelines.yml",
-    "https://docs.renovatebot.com/renovate-schema.json": ["renovate.json", ".renovaterc", ".renovaterc.json"]
+    "https://docs.renovatebot.com/renovate-schema.json": [
+      "renovate.json",
+      ".renovaterc",
+      ".renovaterc.json"
+    ]
   },
-
   // ============================================================
   // HTML Settings
   // ============================================================
   "html.format.enable": false,
-
   // ============================================================
   // Python Settings
   // ============================================================
   "python.defaultInterpreterPath": ".venv/bin/python",
   "python.terminal.activateEnvironment": true,
-
   // ============================================================
   // Dart/Flutter Settings
   // ============================================================
   "dart.flutterSdkPath": "/usr/local/lib/flutter",
   "dart.openDevTools": "flutter",
-
   // ============================================================
   // ESLint Settings
   // ============================================================
@@ -301,7 +295,6 @@
       "mode": "auto"
     }
   ],
-
   // ============================================================
   // PlantUML Settings
   // ============================================================
@@ -311,19 +304,16 @@
   "plantuml.exportOutDir": ".",
   "plantuml.exportSubFolder": false,
   "plantuml.jar": "/opt/homebrew/Cellar/plantuml/1.2025.10/libexec/plantuml.jar",
-
   // ============================================================
   // Draw.io Settings
   // ============================================================
   "hediet.vscode-drawio.codeLinkActivated": false,
   "hediet.vscode-drawio.resizeImages": null,
   "hediet.vscode-drawio.theme": "min",
-
   // ============================================================
   // Excalidraw Settings
   // ============================================================
   "excalidraw.theme": "light",
-
   // ============================================================
   // TODO Tree Settings
   // ============================================================
@@ -351,38 +341,32 @@
     "MEMO"
   ],
   "todo-tree.tree.buttons.scanMode": true,
-
   // ============================================================
   // Error Lens Settings
   // ============================================================
   "errorLens.delay": 1000,
   "errorLens.gutterIconsEnabled": true,
-
   // ============================================================
   // Code Metrics Settings
   // ============================================================
   "codemetrics.nodeconfiguration.CaseClause": 0,
   "codemetrics.nodeconfiguration.DefaultClause": 0,
   "codemetrics.nodeconfiguration.ReturnStatement": 0,
-
   // ============================================================
   // REST Client Settings
   // ============================================================
   "rest-client.decodeEscapedUnicodeCharacters": true,
   "rest-client.environmentVariables": {
-    "$shared": {}
+    "$shared": {},
   },
-
   // ============================================================
   // Live Server Settings
   // ============================================================
   "liveServer.settings.root": "/dist",
-
   // ============================================================
   // Swagger Viewer Settings
   // ============================================================
   "swaggerViewer.previewInBrowser": true,
-
   // ============================================================
   // ShellCheck Settings
   // ============================================================
@@ -408,20 +392,17 @@
     "**/zlogout": true,
     "**/zprofile": true,
     "**/zshenv": true,
-    "**/zshrc": true
+    "**/zshrc": true,
   },
-
   // ============================================================
   // Arduino Settings
   // ============================================================
   "arduino.analyzeOnOpen": false,
-
   // ============================================================
   // Atlassian Settings
   // ============================================================
   "atlascode.bitbucket.enabled": true,
   "atlascode.jira.enabled": false,
-
   // ============================================================
   // AWS / Amazon Q Settings
   // ============================================================
@@ -433,12 +414,10 @@
   "amazonQ.shareContentWithAWS": false,
   "amazonQ.telemetry": false,
   "aws.telemetry": false,
-
   // ============================================================
   // Gemini Code Assist Settings
   // ============================================================
   "geminicodeassist.inlineSuggestions.enableAuto": true,
-
   // ============================================================
   // GitHub Copilot Settings (VS Code Only)
   // ============================================================
@@ -478,7 +457,6 @@
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.chat.reviewSelection.instructions": [],
   "github.copilot.chat.search.keywordSuggestions": true,
-
   // ============================================================
   // MCP Settings (VS Code Only)
   // ============================================================
@@ -490,10 +468,11 @@
   },
   "chat.mcp.serverSampling": {
     "Cursor (Global): Notion": {
-      "allowedModels": ["github.copilot-chat/gpt-4.1"]
+      "allowedModels": [
+        "github.copilot-chat/gpt-4.1"
+      ]
     }
   },
-
   // ============================================================
   // Roo Cline Settings (VS Code Only)
   // ============================================================
@@ -505,25 +484,22 @@
     "git diff",
     "git show"
   ],
-
   // ============================================================
   // Inline Chat Settings (VS Code Only)
   // ============================================================
   "inlineChat.enableV2": true,
-
   // ============================================================
   // GitHub Pull Requests Experimental Settings (VS Code Only)
   // ============================================================
   "githubPullRequests.experimental.useQuickChat": true,
   "githubPullRequests.experimental.notificationsView": true,
-
   // ============================================================
   // MSSQL Settings
   // ============================================================
   "mssql.connectionGroups": [
     {
       "id": "{{put-connection-group-id}}",
-      "name": "ROOT"
+      "name": "ROOT",
     }
   ],
   "mssql.connections": [
@@ -534,15 +510,13 @@
       "user": "{{put-username-here}}"
     }
   ],
-
   // ============================================================
   // Telemetry Settings
   // ============================================================
   "redhat.telemetry.enabled": false,
-
   // ============================================================
   // Miscellaneous Settings
   // ============================================================
   "application.shellEnvironmentResolutionTimeout": 30,
-  "vsicons.dontShowNewVersionMessage": true
+  "vsicons.dontShowNewVersionMessage": true,
 }
