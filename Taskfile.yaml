@@ -1,0 +1,17 @@
+version: '3'
+
+tasks:
+  dock:backup:
+    desc: 'Dock設定をバックアップ'
+    platforms: [darwin]
+    cmd: bash scripts/dock/backup-dock.sh
+
+  dock:setup:
+    desc: 'Dock設定を適用 (要: brew install dockutil)'
+    platforms: [darwin]
+    cmd: bash scripts/dock/setup-dock.sh
+
+  dock:restore:
+    desc: 'Dock設定を復元 (usage: task dock:restore [-- backup.plist])'
+    platforms: [darwin]
+    cmd: bash scripts/dock/restore-dock.sh {{.CLI_ARGS}}
