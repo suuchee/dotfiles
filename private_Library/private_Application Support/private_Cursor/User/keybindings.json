@@ -132,5 +132,10 @@
 {
   "key": "cmd+i",
   "command": "composerMode.agent"
-}
+},
+{
+  "key": "shift+cmd+2",
+  "command": "-autoDocstring.generateDocstring",
+  "when": "editorTextFocus"
+},
 ]

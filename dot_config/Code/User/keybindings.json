@@ -63,5 +63,10 @@
     "key": "shift+up",
     "command": "-cursorColumnSelectUp",
     "when": "editorColumnSelection && textInputFocus"
-  }
+  },
+  {
+    "key": "shift+cmd+2",
+    "command": "-autoDocstring.generateDocstring",
+    "when": "editorTextFocus"
+  },
 ]
