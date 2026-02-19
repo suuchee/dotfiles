@@ -296,6 +296,7 @@
   // PlantUML Settings
   // ============================================================
   "plantuml.exportFormat": "png",
+  "plantuml.java": "/opt/homebrew/opt/openjdk/bin/java",
   "plantuml.previewAutoUpdate": false,
   "plantuml.render": "Local",
   "plantuml.exportOutDir": ".",
