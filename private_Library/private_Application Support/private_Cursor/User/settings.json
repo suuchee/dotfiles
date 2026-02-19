@@ -300,7 +300,7 @@
   "plantuml.render": "Local",
   "plantuml.exportOutDir": ".",
   "plantuml.exportSubFolder": false,
-  "plantuml.jar": "/opt/homebrew/Cellar/plantuml/1.2025.10/libexec/plantuml.jar",
+  "plantuml.jar": "/opt/homebrew/opt/plantuml/libexec/plantuml.jar",
   // ============================================================
   // Draw.io Settings
   // ============================================================
