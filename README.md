@@ -60,12 +60,6 @@ chezmoi add --template ~/.config/some-config
 chezmoi re-add
 ```
 
-### 機密ファイルの追加
-
-```bash
-chezmoi add --encrypt ~/.ssh/id_rsa
-```
-
 ### 注意点
 
 - `chezmoi add` はホームディレクトリ → ソースディレクトリの方向
