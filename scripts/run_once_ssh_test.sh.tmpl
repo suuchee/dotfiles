@@ -1,0 +1,19 @@
+#!/bin/bash
+
+{{ if stat (joinPath .chezmoi.homeDir ".ssh" (printf "id_ed25519_github_%s" .chezmoi.hostname)) }}
+echo "🔑 Testing SSH connection to GitHub..."
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+  echo "✅ GitHub SSH connection successful"
+else
+  echo "❌ SSH connection to GitHub failed"
+fi
+{{ end }}
+
+{{ if stat (joinPath .chezmoi.homeDir ".ssh" (printf "id_ed25519_bitbucket_%s" .chezmoi.hostname)) }}
+echo "🔑 Testing SSH connection to Bitbucket..."
+if ssh -T git@bitbucket.org 2>&1 | grep -q "logged in as"; then
+  echo "✅ Bitbucket SSH connection successful"
+else
+  echo "❌ SSH connection to Bitbucket failed"
+fi
+{{ end }}
