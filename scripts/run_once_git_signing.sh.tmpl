@@ -1,0 +1,19 @@
+#!/bin/bash
+
+signing_key="$HOME/.ssh/id_ed25519_github_sign_{{ .chezmoi.hostname }}.pub"
+
+if git config --global --get commit.gpgsign > /dev/null 2>&1; then
+  echo "✅ Git signing already configured, skipping."
+  exit 0
+fi
+
+if [ -f "$signing_key" ]; then
+  echo "🔏 Configuring git commit signing..."
+  git config --global gpg.format ssh
+  git config --global user.signingkey "$signing_key"
+  git config --global commit.gpgsign true
+  echo "✅ Git signing configured with $signing_key"
+else
+  echo "⚠️  Signing key not found: $signing_key"
+  echo "   Skipping git signing configuration."
+fi
