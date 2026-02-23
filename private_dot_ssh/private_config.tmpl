@@ -4,7 +4,7 @@
 Host github github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_ed25519_github_{{ .chezmoi.os }}_{{ .chezmoi.hostname }}
+  IdentityFile ~/.ssh/id_ed25519_github_{{ .chezmoi.hostname }}
   IdentitiesOnly yes
   {{- if eq .chezmoi.os "darwin" }}
   UseKeychain yes
@@ -15,7 +15,7 @@ Host github github.com
 Host bitbucket.org
   HostName bitbucket.org
   User git
-  IdentityFile ~/.ssh/id_ed25519_bitbucket_{{ .chezmoi.os }}_{{ .chezmoi.hostname }}
+  IdentityFile ~/.ssh/id_ed25519_bitbucket_{{ .chezmoi.hostname }}
   IdentitiesOnly yes
   {{- if eq .chezmoi.os "darwin" }}
   UseKeychain yes
