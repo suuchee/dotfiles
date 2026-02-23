@@ -1,0 +1,11 @@
+#!/bin/bash
+
+{{ if stat (joinPath .chezmoi.homeDir ".ssh" (printf "id_ed25519_github_%s" .chezmoi.hostname)) }}
+echo "🔑 Testing SSH connection to GitHub..."
+ssh -T git@github.com && echo "❌ SSH connection to GitHub failed"
+{{ end }}
+
+{{ if stat (joinPath .chezmoi.homeDir ".ssh" (printf "id_ed25519_bitbucket_%s" .chezmoi.hostname)) }}
+echo "🔑 Testing SSH connection to Bitbucket..."
+ssh -T git@bitbucket.org || echo "❌ SSH connection to Bitbucket failed"
+{{ end }}
