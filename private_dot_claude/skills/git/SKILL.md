@@ -1,6 +1,7 @@
 ---
 name: git
 description: This skill should be used when the user asks to "commit", "git commit", "コミット", "git init", "リポジトリ初期化", "ブランチ作成", "amend", "ステージング", "git add", or mentions Git operations like staging, committing, branching, or amending commits.
+allowed-tools: "Read,Grep,Glob"
 ---
 
 # Git Workflow
@@ -75,7 +76,7 @@ git mv old-name.txt new-name.txt
 amend は以下の条件を満たす場合のみ使用する：
 
 1. ユーザーが明示的に amend を指示した場合
-2. この会話内で作成したコミットである（author名ではなく会話の文脈で判断）
+2. 同じ変更（同じ目的・スコープ）に対するコミットである（セッション内でも別の変更が混ざる場合があるため、変更の同一性で判断する）
 3. リモートに push 済みでない（force push が必要になるため）
 
 ## 参考資料
