@@ -3,19 +3,23 @@
 ## 基本ポリシー
 
 1. 回答は必ず日本語で行う。
-2. 実装に入る前に、必ず下記を明確化・設計する。設計する場合は `Plan` モードに切り替える。
+2. セッション開始時、作業に入る前に以下を確認する。
+   * 現在のブランチ名と Git ステータス（未コミット変更の有無）
+   * これから行う作業に対して現在のブランチが適切かをユーザーに確認する
+   * 並行して別セッションから指示が出される可能性を考慮し、worktree の使用を検討する
+3. 実装に入る前に、必ず下記を明確化・設計する。設計する場合は `Plan` モードに切り替える。
    * 目的・背景・前提条件
    * 全体設計
    * ブランチ戦略・ブランチ設計
    * コミット設計
-3. 不明点や判断基準が曖昧な箇所は `AskUserQuestion` を使用して必ず質問し、クリアにしてから着手する。
-4. 違和感・矛盾を見つけた場合は必ず報告する。
-5. 常にあなたの知識は古い可能性があることを認識し、特に外部サービスやライブラリを利用しているコードの作成・変更を行う場合は、以下の手順で調査する。
+4. 不明点や判断基準が曖昧な箇所は `AskUserQuestion` を使用して必ず質問し、クリアにしてから着手する。
+5. 違和感・矛盾を見つけた場合は必ず報告する。
+6. 常にあなたの知識は古い可能性があることを認識し、特に外部サービスやライブラリを利用しているコードの作成・変更を行う場合は、以下の手順で調査する。
    1. Context7または公式ドキュメントに直接アクセスし、最新仕様を確認
    2. 調査結果は実装根拠として `.workspace/context/<NNN>_<context-name>/research/<対象名>_YYYY-MM-DD.md` に保存
       * 一度保存した記録は過去の記録として価値があるため、メンテナンス不要
-6. 対話中の要望や要件に関わる情報を常に `.workspace/context/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
-7. 検討したことは再度検討しなくていいよう `.workspace/context/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
+7. 対話中の要望や要件に関わる情報を常に `.workspace/context/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
+8. 検討したことは再度検討しなくていいよう `.workspace/context/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
 
 ## .workspace/context
 
