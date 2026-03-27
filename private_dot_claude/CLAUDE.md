@@ -81,7 +81,27 @@
 * `.structure.md` の更新はコンテキストを圧迫するため、サブエージェント（Agent ツール）に委任する
   * ただし、バックグラウンド実行（`run_in_background: true`）のサブエージェントはファイル編集の許可プロンプトがブロックされるため、ファイル編集を含むタスクはフォアグラウンドで実行するか、メインで直接編集する
 
+## コード変更後の検証
+
+コードを変更した後、コミット前に以下を実行して新規エラーがないことを確認する：
+
+1. **テスト** - 変更に関連するパッケージ/サービスのテストを実行
+2. **型チェック（typecheck）** - mypy 等で型整合性を確認
+3. **リント（lint）** - ruff 等でコード品質を確認
+
+具体的なコマンドはプロジェクトごとの CLAUDE.md の `Development Commands` セクションに従う。
+
+## ツール実行の注意事項
+
+* ruff は `uv run ruff` ではなく `uvx ruff` で実行する（uv にバンドルされているため、プロジェクトの dev 依存に含まれていなくても使える）
+
+### Slack MCP
+
+* **プライベートチャンネルの検索**: `slack_search_channels` はデフォルトで `public_channel` のみ検索する。プライベートチャンネルを含める場合は `channel_types: "public_channel,private_channel"` を指定すること
+* **GitHub Bot メッセージの制限**: GitHub 連携の Bot メッセージは attachment/block 形式で送信されるため、Slack MCP の `slack_read_channel` / `slack_search_public_and_private` では本文（Text）が空になる。GitHub の情報を取得したい場合は `gh` CLI で直接 GitHub API を叩く方が確実
+* **Slackの書式制限**: Slack はMarkdownテーブルを表示できない。共有用メッセージは箇条書き形式で作成すること。ブロック引用（`>`）は使わず、太字見出し・箇条書き・絵文字を使った平文で作成する
+
 ## その他
 
 * Markdownテーブルの見出し行の区切りは、ハイフンを3つ、両脇にスペースを入れた `| --- |` 形式を使用する。
-* Markdownファイルを書いて保存したら、`gh markdown-preview` を実行してブラウザで表示を確認する。
+* Markdownファイルを作成・更新した後は `gh markdown-preview <ファイルパス>` のコマンドを出力する。
