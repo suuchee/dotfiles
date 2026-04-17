@@ -14,12 +14,14 @@
    * コミット設計
 4. 不明点や判断基準が曖昧な箇所は `AskUserQuestion` を使用して必ず質問し、クリアにしてから着手する。
 5. 違和感・矛盾を見つけた場合は必ず報告する。
-6. 常にあなたの知識は古い可能性があることを認識し、特に外部サービスやライブラリを利用しているコードの作成・変更を行う場合は、以下の手順で調査する。
+6. 分からないことを推測で埋めない
+推測しなければ思考できない場合は、何が推測であるかを明言・明記すること
+7. 常にあなたの知識は古い可能性があることを認識し、特に外部サービスやライブラリを利用しているコードの作成・変更を行う場合は、以下の手順で調査する。
    1. Context7または公式ドキュメントに直接アクセスし、最新仕様を確認
    2. 調査結果は実装根拠として `.workspace/context/<NNN>_<context-name>/research/<対象名>_YYYY-MM-DD.md` に保存
       * 一度保存した記録は過去の記録として価値があるため、メンテナンス不要
-7. 対話中の要望や要件に関わる情報を常に `.workspace/context/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
-8. 検討したことは再度検討しなくていいよう `.workspace/context/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
+9. 対話中の要望や要件に関わる情報を常に `.workspace/context/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
+10. 検討したことは再度検討しなくていいよう `.workspace/context/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
 
 ## .workspace/context
 
@@ -80,6 +82,19 @@
 * `.pen` ファイルの構造を変更した場合は、`.structure.md` も更新する
 * `.structure.md` の更新はコンテキストを圧迫するため、サブエージェント（Agent ツール）に委任する
   * ただし、バックグラウンド実行（`run_in_background: true`）のサブエージェントはファイル編集の許可プロンプトがブロックされるため、ファイル編集を含むタスクはフォアグラウンドで実行するか、メインで直接編集する
+
+## バックグラウンド実行の制限
+
+`run_in_background: true` はユーザーの許可プロンプトがブロックされるため、以下の操作では使用しないこと：
+
+* **git commit** — pre-commit フックやコミット確認がブロックされ、コミットが完了しない
+* **git push** — 認証や確認プロンプトがブロックされる
+* **ファイル編集を含むサブエージェント** — 編集の許可プロンプトがブロックされる
+* その他、ユーザー確認が必要なコマンド全般
+
+`run_in_background` は確認不要のコマンド（ビルド、テスト、調査系）にのみ使う。
+
+**git commit は基本的にフォアグラウンドで実行すること。** Bash ツールの `run_in_background` やサブエージェントの `run_in_background: true` でコミットすると、許可プロンプトがブロックされてコミットが完了しない。
 
 ## コード変更後の検証
 
