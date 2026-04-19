@@ -1,6 +1,45 @@
 # .workspace/context
 
 作業コンテキスト（ブランチ相当の作業単位）を管理するディレクトリ。
+`.workspace/` は専用の `workspace` ブランチ上で管理し、worktree 経由でアクセスする。
+
+## セットアップ
+
+`.workspace/` ディレクトリを使う前に、以下の手順で環境を準備する。
+既にセットアップ済みの場合はスキップする。
+
+### 1. workspace ブランチの作成（存在しない場合）
+
+```bash
+# orphan ブランチとして作成（コードの履歴と完全に分離）
+git switch --orphan workspace
+git commit --allow-empty -m "chore: workspace ブランチを初期化"
+
+# 元のブランチに戻る
+git switch -
+```
+
+### 2. .gitignore への追加（現在のブランチで）
+
+`.worktrees/` がまだ `.gitignore` に含まれていない場合は、worktree 展開前に追加しておく。
+これは現在の作業ブランチ（main 等）で行う。
+
+```bash
+echo '.worktrees/' >> .gitignore
+```
+
+### 3. worktree の展開
+
+```bash
+# .worktrees/workspace に worktree を展開
+git worktree add .worktrees/workspace workspace
+```
+
+### セットアップ後のパス
+
+- **worktree ルート**: `.worktrees/workspace/`
+- **コンテキスト格納先**: `.worktrees/workspace/.workspace/context/`
+- CLAUDE.md 等で `.workspace/context/...` と記載されているパスは、すべて `.worktrees/workspace/.workspace/context/...` に読み替える
 
 ## 構造
 
@@ -59,3 +98,5 @@ updated_at: 2026-02-15
 - ブランチを作成しない場合でも、同じ形式で命名
 - 既存コンテキストへの追記は、その番号のディレクトリに行う
 - plan確定後、planファイルを該当コンテキストの `plan/` に保存
+- コンテキストへの変更は workspace ブランチ上でコミットする（worktree 内で `git add` / `git commit`）
+- worktree が展開されていない場合（`.worktrees/workspace/` が存在しない場合）は、セットアップ手順に従って展開してから作業する

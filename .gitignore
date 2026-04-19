@@ -1,5 +1,6 @@
 bak/
 trash/
+.worktrees/
 
 **/.ssh/id_*
 
