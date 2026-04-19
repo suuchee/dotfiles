@@ -229,5 +229,11 @@
       }
     }
   },
-  "alwaysThinkingEnabled": true
+  "language": "Japanese",
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "medium",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  }
 }
