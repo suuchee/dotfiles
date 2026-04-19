@@ -203,5 +203,31 @@
     "slack@claude-plugins-official": true,
     "freee-api@freee-api-marketplace": true
   },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "freee-api-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "freee/freee-mcp"
+      }
+    },
+    "everything-claude-code": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/everything-claude-code.git"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
   "alwaysThinkingEnabled": true
 }
