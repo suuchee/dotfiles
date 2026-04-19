@@ -178,12 +178,13 @@
     "code-review@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "coderabbit@claude-plugins-official": true,
+    "codex@openai-codex": true,
     "context7@claude-plugins-official": true,
     "csharp-lsp@claude-plugins-official": true,
+    "everything-claude-code@everything-claude-code": false,
     "explanatory-output-style@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true,
     "huggingface-skills@claude-plugins-official": true,
     "kotlin-lsp@claude-plugins-official": true,
     "laravel-boost@claude-plugins-official": true,
@@ -198,7 +199,9 @@
     "skill-creator@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "freee-api@freee-api-marketplace": true
   },
   "alwaysThinkingEnabled": true
 }
