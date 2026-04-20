@@ -116,6 +116,16 @@
 * **GitHub Bot メッセージの制限**: GitHub 連携の Bot メッセージは attachment/block 形式で送信されるため、Slack MCP の `slack_read_channel` / `slack_search_public_and_private` では本文（Text）が空になる。GitHub の情報を取得したい場合は `gh` CLI で直接 GitHub API を叩く方が確実
 * **Slackの書式制限**: Slack はMarkdownテーブルを表示できない。共有用メッセージは箇条書き形式で作成すること。ブロック引用（`>`）は使わず、太字見出し・箇条書き・絵文字を使った平文で作成する
 
+## git commit とサンドボックスの制約（一時的な対処）
+
+SSH 署名（`gpg.format = ssh`）が有効な環境では、サンドボックス内の `git commit` が SSH エージェントへのソケット通信をブロックされてハングする。
+
+**暫定対処**: `git commit` 実行時は `dangerouslyDisableSandbox: true` を付けて実行すること。
+
+* `settings.json` で `Bash(git commit:*)` を `ask` に設定済みなので、ユーザー確認は必ず入る
+* サンドボックス自体は他のコマンドの保護として有効なので無効化しない
+* 根本対応（サンドボックスが SSH ソケットを許可する仕組み等）が整い次第、この対処は廃止する
+
 ## その他
 
 * Markdownテーブルの見出し行の区切りは、ハイフンを3つ、両脇にスペースを入れた `| --- |` 形式を使用する。
