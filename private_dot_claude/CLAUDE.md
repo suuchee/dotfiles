@@ -18,15 +18,15 @@
 推測しなければ思考できない場合は、何が推測であるかを明言・明記すること
 7. 常にあなたの知識は古い可能性があることを認識し、特に外部サービスやライブラリを利用しているコードの作成・変更を行う場合は、以下の手順で調査する。
    1. Context7または公式ドキュメントに直接アクセスし、最新仕様を確認
-   2. 調査結果は実装根拠として `.workspace/context/<NNN>_<context-name>/research/<対象名>_YYYY-MM-DD.md` に保存
+   2. 調査結果は実装根拠として `.notes/<NNN>_<context-name>/research/<対象名>_YYYY-MM-DD.md` に保存
       * 一度保存した記録は過去の記録として価値があるため、メンテナンス不要
-9. 対話中の要望や要件に関わる情報を常に `.workspace/context/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
-10. 検討したことは再度検討しなくていいよう `.workspace/context/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
+9. 対話中の要望や要件に関わる情報を常に `.notes/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
+10. 検討したことは再度検討しなくていいよう `.notes/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
 
-## .workspace/context
+## .notes
 
-作業コンテキスト（ブランチ相当の作業単位）を管理するディレクトリ。
-詳細は `~/.claude/rules/workspace-context.md` を参照。
+作業コンテキスト（ブランチ相当の作業単位）を管理するディレクトリ。検討中・個人作業のメモ・ノート類を集約する（正式ドキュメントは `docs/` 配下）。
+詳細は `~/.claude/rules/notes.md` を参照。
 
 ## 設計・実装ポリシー
 

@@ -1,19 +1,22 @@
-# .workspace/context
+# .notes
 
 作業コンテキスト（ブランチ相当の作業単位）を管理するディレクトリ。
-`.workspace/` は専用の `workspace` ブランチ上で管理し、worktree 経由でアクセスする。
+`.notes/` は専用の `notes` ブランチ上で管理し、worktree 経由でアクセスする。
+
+正式なドキュメントは `docs/` 配下に配置し、検討中・個人作業のメモ・ノート類はこの `.notes/` 配下にコンテキスト単位で集約する。
+メモ・research・deliberation 等もすべてこのコンテキスト配下に集約する（コンテキストとの紐づきを切らないため、別ディレクトリには切り出さない）。
 
 ## セットアップ
 
-`.workspace/` ディレクトリを使う前に、以下の手順で環境を準備する。
+`.notes/` ディレクトリを使う前に、以下の手順で環境を準備する。
 既にセットアップ済みの場合はスキップする。
 
-### 1. workspace ブランチの作成（存在しない場合）
+### 1. notes ブランチの作成（存在しない場合）
 
 ```bash
 # orphan ブランチとして作成（コードの履歴と完全に分離）
-git switch --orphan workspace
-git commit --allow-empty -m "chore: workspace ブランチを初期化"
+git switch --orphan notes
+git commit --allow-empty -m "chore: notes ブランチを初期化"
 
 # 元のブランチに戻る
 git switch -
@@ -31,27 +34,27 @@ echo '.worktrees/' >> .gitignore
 ### 3. worktree の展開
 
 ```bash
-# .worktrees/workspace に worktree を展開
-git worktree add .worktrees/workspace workspace
+# .worktrees/notes に worktree を展開
+git worktree add .worktrees/notes notes
 ```
 
 ### セットアップ後のパス
 
-- **worktree ルート**: `.worktrees/workspace/`
-- **コンテキスト格納先**: `.worktrees/workspace/.workspace/context/`
-- CLAUDE.md 等で `.workspace/context/...` と記載されているパスは、すべて `.worktrees/workspace/.workspace/context/...` に読み替える
+- **worktree ルート**: `.worktrees/notes/`
+- **コンテキスト格納先**: `.worktrees/notes/.notes/`
+- CLAUDE.md 等で `.notes/...` と記載されているパスは、すべて `.worktrees/notes/.notes/...` に読み替える
 
 ## 構造
 
 ```text
-.workspace/context/<NNN>_<prefix>_<name>/
+.notes/<NNN>_<prefix>_<name>/
 ├── CONTEXT.md           # メタ情報（目的、背景、ステータス等）
 ├── plan/                # 計画・実装設計
 ├── research/            # 調査・技術検証
 ├── requirements/        # 要望・要件
 ├── deliberation/        # 検討・比較
 ├── conversation/        # 会話ログ
-└── spec/                # 仕様
+└── spec/                # 仕様（検討中。正式版は docs/ へ）
 ```
 
 ## CONTEXT.md フォーマット
@@ -97,6 +100,7 @@ updated_at: 2026-02-15
 - ブランチを作成する場合、コンテキスト名とブランチ名を一致させる
 - ブランチを作成しない場合でも、同じ形式で命名
 - 既存コンテキストへの追記は、その番号のディレクトリに行う
-- plan確定後、planファイルを該当コンテキストの `plan/` に保存
-- コンテキストへの変更は workspace ブランチ上でコミットする（worktree 内で `git add` / `git commit`）
-- worktree が展開されていない場合（`.worktrees/workspace/` が存在しない場合）は、セットアップ手順に従って展開してから作業する
+- plan 確定後、plan ファイルを該当コンテキストの `plan/` に保存
+- コンテキストへの変更は notes ブランチ上でコミットする（worktree 内で `git add` / `git commit`）
+- worktree が展開されていない場合（`.worktrees/notes/` が存在しない場合）は、セットアップ手順に従って展開してから作業する
+- 検討が固まり正式化する内容は `docs/` 配下へ昇格させる
