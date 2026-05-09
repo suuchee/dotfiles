@@ -24,6 +24,8 @@ allowed-tools:
 
 既存ADRを新しいADRで置き換えてください。
 
+公式 MADR では `status` フィールド自体に置き換え関係を記録する形式（`status: "superseded by ADR-NNNN"`）を採用している。本スキルもこれに従う。
+
 ### 1. 置き換え対象の特定
 
 $ARGUMENTS で指定された、または対話で特定された旧ADRを確認する。
@@ -43,18 +45,19 @@ $ARGUMENTS で指定された、または対話で特定された旧ADRを確認
 
 `/adr:create` と同じプロセスで新しいADRを作成する。ただし以下を追加する:
 
-- フロントマターに `supersedes: "NNNN-old-title.md"` を追加
 - 「Context and Problem Statement」に旧ADRの決定がなぜ変更されるかを記述
 - 「More Information」に旧ADRへのリンクを記載
+- ステータスは通常通り `proposed` で作成（accepted への変更は人間が行う）
 
 ### 4. 旧ADRの更新
 
-旧ADRのフロントマターを以下のように変更する:
+旧ADRの frontmatter の `status` フィールドを以下に書き換える:
 
-- `status: superseded` に更新
-- `superseded-by: "NNNN-new-title.md"` を追加
+```yaml
+status: "superseded by ADR-NNNN"
+```
 
-本文は変更しない（不変性の原則）。
+NNNN は新ADRの4桁ゼロ埋め番号。本文は変更しない（不変性の原則）。
 
 ### 5. 確認
 
@@ -62,7 +65,7 @@ $ARGUMENTS で指定された、または対話で特定された旧ADRを確認
 
 ```
 Supersede完了:
-- 旧ADR: <旧ファイル名> → status: superseded
-- 新ADR: <新ファイル名> → status: proposed
-- 双方向リンク: 設定済み
+- 旧ADR: <旧ファイル名> → status: "superseded by ADR-NNNN"
+- 新ADR: <新ファイル名> → status: "proposed"
+- 新ADRの「More Information」に旧ADRへのリンクを記載済み
 ```

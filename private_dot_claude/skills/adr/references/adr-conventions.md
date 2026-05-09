@@ -58,13 +58,15 @@ proposed ──┬──→ accepted ──┬──→ deprecated
 
 ### 各ステータスの意味
 
+公式 MADR の status フィールド書式: `proposed | rejected | accepted | deprecated | … | superseded by ADR-NNNN`
+
 | ステータス | 意味 | 次の遷移 |
 | --- | --- | --- |
-| proposed | 提案中。レビュー・議論待ち | accepted, rejected |
-| accepted | 承認済み。チームが従うべき決定 | deprecated, superseded |
-| rejected | 却下。理由を明記して保存 | なし（終了状態） |
-| deprecated | 非推奨。もう適用しないが歴史的記録として残す | なし（終了状態） |
-| superseded | 新しいADRに置き換え済み | なし（終了状態） |
+| `proposed` | 提案中。レビュー・議論待ち | accepted, rejected |
+| `accepted` | 承認済み。チームが従うべき決定 | deprecated, superseded by ADR-NNNN |
+| `rejected` | 却下。理由を明記して保存 | なし（終了状態） |
+| `deprecated` | 非推奨。もう適用しないが歴史的記録として残す | なし（終了状態） |
+| `superseded by ADR-NNNN` | 新ADRに置き換え済み（NNNN は新ADRの番号） | なし（終了状態） |
 
 ### 不変性の原則
 
@@ -76,15 +78,47 @@ ADRは「追記のみ（append-only）」で運用する:
 
 ### Supersedeプロセス
 
-1. **新ADRを作成**: 新しい決定を通常のADR作成プロセスで記録
-2. **新ADRに supersedes を追加**: フロントマターに `supersedes: "NNNN-old-title.md"`
-3. **旧ADRのステータス変更**: `status: superseded` に更新
-4. **旧ADRに superseded-by を追加**: フロントマターに `superseded-by: "NNNN-new-title.md"`
+公式 MADR では `status` フィールド自体に置き換え関係を記録する形式を採用している:
+
+1. **新ADRを作成**: 新しい決定を通常のADR作成プロセスで記録（`status: "proposed"`）
+2. **旧ADRのステータス変更**: `status: "superseded by ADR-NNNN"` に書き換える（NNNN は新ADRの番号）
+3. **新ADRから旧ADRへのリンク（推奨）**: 新ADRの More Information セクションに旧ADRへのリンクを記載する
 
 ## ADR #0 について
 
-プロジェクトで最初に作成するADR（0000番）は、「ADR形式にMADRを使用する」という決定自体を記録することが推奨される。これにより:
+プロジェクトで最初に作成するADR（0000番）は、「ADRフォーマットの採用」という決定自体を記録する。これにより:
 
 - チームがADRの存在と形式を認識する
 - ADRディレクトリの初期化が行われる
 - ADRプラクティスの採用が明示的に記録される
+- そのプロジェクトでの**書式選択**（Y-Statement / Confirmation 等）が明示される
+
+### ADR-0000 自動生成フロー
+
+ADR保存ディレクトリに既存ADRがない場合、ADR-0000 をスキル側で自動生成する。生成時に `AskUserQuestion` で以下の書式選択を確認する。
+
+#### 質問項目
+
+1. **Y-Statement を使うか**
+   - はい — すべてのADRの frontmatter に `y-statement` を含める
+   - いいえ — `y-statement` は使わない
+
+frontmatter に入る要素のため、プロジェクト内で一貫性を保つ目的で ADR-0000 で確定する。本文の任意セクション（Confirmation / Revisit Triggers 等）は ADR ごとの書き手判断に委ねるため、ここでは聞かない。
+
+#### 回答の記録
+
+ADR-0000 の本文に、選択した書式を明示的に記録する:
+
+```markdown
+## Decision Outcome
+
+Chosen option: "MADR形式 + 本スキルのカスタマイズ", because ...
+
+### このプロジェクトでの書式選択
+
+- Y-Statement: 使う / 使わない
+```
+
+#### 以降のADRへの適用
+
+ADR-0001以降を新規作成する際は、**必ず最初に ADR-0000 を読み**、Y-Statement の採用設定を取得してから frontmatter を組む。

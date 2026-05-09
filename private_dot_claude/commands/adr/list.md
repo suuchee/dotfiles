@@ -31,7 +31,7 @@ allowed-tools:
 
 検出したディレクトリ内のすべての `.md` ファイルを読み取り、YAMLフロントマターから以下の情報を抽出する:
 
-- `status`
+- `status` — 公式 MADR の書式 `proposed | rejected | accepted | deprecated | superseded by ADR-NNNN` のいずれか
 - `date`
 - `y-statement`（あれば）
 
@@ -42,15 +42,21 @@ allowed-tools:
 | # | タイトル | ステータス | 日付 | Y-Statement要約 |
 | --- | --- | --- | --- | --- |
 | 0000 | ... | accepted | 2026-03-08 | ... |
+| 0002 | ... | superseded by ADR-0005 | 2026-03-10 | ... |
+
+ステータス列はfrontmatterの値をそのまま表示する（`superseded by ADR-NNNN` の形式を維持）。
 
 ### 4. フィルタリング（オプション）
 
-$ARGUMENTS にステータスが指定されている場合（例: `accepted`, `proposed`）、そのステータスのADRのみ表示する。
+$ARGUMENTS にステータスが指定されている場合、そのステータスのADRのみ表示する:
+
+- `proposed`, `accepted`, `rejected`, `deprecated` — 完全一致
+- `superseded` — `superseded by ADR-` で始まる全てのADRをマッチ
 
 ### 5. サマリー
 
-一覧の末尾に以下の集計を表示する:
+一覧の末尾に以下の集計を表示する。`superseded by ADR-NNNN` は集計上 `superseded` としてカウントする:
 
 ```
-合計: N件（proposed: X, accepted: Y, superseded: Z, ...）
+合計: N件（proposed: X, accepted: Y, superseded: Z, deprecated: W, rejected: V）
 ```
