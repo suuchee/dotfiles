@@ -10,6 +10,7 @@
 
 - **frontmatter に `y-statement` フィールドを追加** — Y-Statement形式の決定要約（ADR-0000 で「使う」を選んだ場合のみ）
 - **`## Revisit Triggers` セクションを追加** — この決定を見直すべき条件を明示する任意セクション
+- **`Consequences` 配下の `#### Updates` サブセクション** — 受理済みADRに対し、決定の妥当性を補強する事後観測のみ追記できる任意サブセクション。`Consequences` 以外への事後追記は原則禁止（決定時に揃えるべき不備として扱う）。詳細は `adr-conventions.md` の「受理済みADRの変更ルール」を参照
 
 それ以外は公式テンプレートに従う。
 
@@ -66,6 +67,12 @@ Chosen option: "{title of option 1}", because {justification. e.g., only option,
 * Good, because {positive consequence, e.g., improvement of one or more desired qualities, …}
 * Bad, because {negative consequence, e.g., compromising one or more desired qualities, …}
 * … <!-- numbers of consequences can vary -->
+
+<!-- 本スキル独自サブセクション。受理済みADRへの事後追記はここのみ許可。決定の妥当性を補強する事後観測（想定通りの効果、別方面の検証、結論を支持する裏付け事実等）を日付付きで残す。既存の Good/Bad 行は書き換えない。結論や根拠を否定する事実が出た場合は追記ではなく supersede。 -->
+
+#### Updates
+
+* {YYYY-MM-DD}: {決定の妥当性を補強する事後観測。例: 想定通り p99 が改善した / 別計測でも採用案が優位 / Bad で挙げた懸念は顕在化しなかった}
 
 <!-- This is an optional element. Feel free to remove. -->
 

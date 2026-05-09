@@ -17,7 +17,12 @@ description: This skill should be used when the user asks to "ADR作成", "ア�
 ## 運用原則
 
 1. **粒度をアトミックに保つ** — 1つのADRが扱う判断は1件のみ。複数の判断を束ねたい場合はそれぞれ別のADRに分割する
-2. **受理済みは追記のみ（append-only）** — `accepted` になったADRの本文は書き換えない。決定を覆す場合は新ADRを起票し、旧ADRの `status` を `superseded by ADR-NNNN` に切り替える
+2. **受理済みは原則 immutable。例外は「結論補強の事実追記」のみ** — ADRに記載する＝調査・検討が完了して決定済みのはず。本体は基本的に書き換えない。`accepted` 後の変更は以下の最小ルールに従う：
+   - **追記レーン**: `Consequences` の末尾に `#### Updates` サブセクションを設け、**決定の妥当性を補強する事後観測**（「想定通り p99 が 30% 改善」「別方面の計測でも採用案が優位だった」「Bad で挙げた懸念は顕在化しなかった」等）のみ追記する。frontmatter の `date` を更新
+   - **supersede レーン**: 採用案そのものの入れ替え、採用理由（justification）の差し替え、Y-Statement の品質目標 / 受け入れる欠点 / 採用案の変更は本体を書き換えず必ず新ADRを起票
+   - **原則禁止**: Confirmation / Considered Options / Revisit Triggers / More Information の事後追記は **決定時に揃えるべきだった不備**。やむを得ず追記する場合も `Consequences` の Updates に「決定時の Confirmation 不足を補う形で確認手段を後付けした」等と理由を添えて記録し、本体の該当セクションは触らない
+   - 誤字脱字や明白な誤りの修正は意味を変えない範囲で可。判断に迷う場合は supersede 側に倒す
+   - 詳細は `references/adr-conventions.md` の「受理済みADRの変更ルール」を参照
 3. **AI生成は `proposed` で固定** — AI が作るADRのステータスは常に `proposed`。`accepted` への昇格は人間の判断に限定する。ステータス変更を依頼されても AI 側で書き換えず「人間が確認のうえ変更してください」と返す
 4. **却下した選択肢も保存する** — 採用しなかった案こそ、将来の再検討時に「なぜそちらにしなかったか」を補う文脈になる。Considered Options / Pros and Cons of the Options に残す
 
@@ -157,7 +162,20 @@ Supersede の場合、status は `"superseded by ADR-NNNN"` の形式で記載�
 | `deprecated` | 非推奨（もう適用しない） | 終了状態 |
 | `superseded by ADR-NNNN` | 新ADRに置き換え済み（NNNN は新ADRの番号） | 終了状態 |
 
+### 受理済みADRへの事実追記
+
+ADRは原則 immutable。例外として、決定の妥当性を補強する事後観測のみ `Consequences` への追記を許す：
+
+1. `Consequences` セクション末尾に `#### Updates` サブセクションを設ける（既にあれば再利用）
+2. `- YYYY-MM-DD: <観測事実>` の形式で1行追記する
+3. frontmatter の `date` を追記日に更新する（MADR の `date` は "when the decision was last updated"）
+4. 元の決定文（Decision Outcome / Y-Statement / Pros and Cons の Good/Bad 等）には触らない
+
+`Consequences` 以外（Confirmation / Considered Options / Revisit Triggers / More Information）への事後追記は原則禁止。これらは決定時に揃えるべきセクション。詳細は `references/adr-conventions.md` の「受理済みADRの変更ルール」を参照。
+
 ### Supersede（置き換え）プロセス
+
+採用案または採用理由が入れ替わる場合のみ supersede する。入れ替わらないなら上記の事実追記レーンを使う。
 
 公式 MADR では `status` フィールド自体に置き換え関係を記録する形式を採用している:
 
@@ -182,12 +200,16 @@ Supersede の場合、status は `"superseded by ADR-NNNN"` の形式で記載�
 2. **トレードオフの明記**: 選ばれた選択肢の欠点も客観的に記録する
 3. **代替案の公平な評価**: 採用されなかった選択肢も、それぞれの長所・短所を記録する
 4. **断定的な言語**: 決定セクションは「〜を使用する」「〜を採用する」など断定形で記述する
+5. **調査結果は要点を本体に書く** — 採用理由を裏付ける主要な調査結果（数値・引用元URL・重要事実）は `Decision Outcome` の `because …` と `Pros and Cons of the Options` に要約として含める。試行錯誤のログや全候補の細かい計測など個人作業領域の素材は ADR に持ち込まない（個人作業として `.notes/<NNN>/research/` に残す）
+6. **公開境界を守る（ADR から `.notes/` への参照禁止）** — ADR はチーム向け公開ドキュメント、`.notes/` は個人作業領域。**`docs/`（ADR含む）→ `.notes/` 方向のリンクは書かない**。`.notes/` → ADR の片方向のみ。ADR本体に書く外部リンクは `docs/` 配下・GitHub・公式ドキュメント等の公開リソースに限定する
+7. **TODO や調査途中の項目を持ち込まない** — ADRに記載する＝調査・検討は完了している前提。TODO・未確定の比較・検討途中のメモは `.notes/<NNN>/deliberation/` 等で扱い、決まってから ADR を起票する
 
 ### ADRを作成しない場面
 
 - 一時的な修正やワークアラウンド
 - 明白な実装詳細（変数名の選択等）
 - 既存の決定に従った実装
+- 調査・検討が未完了で、TODO や未確定項目が残っている段階（先に `.notes/<NNN>/` で詰める）
 
 ## Additional Resources
 
