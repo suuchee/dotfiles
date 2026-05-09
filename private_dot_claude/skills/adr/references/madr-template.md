@@ -136,3 +136,51 @@ Chosen option: "{title of option 1}", because {justification. e.g., only option,
 | Pros and Cons of the Options | 任意 | |
 | Revisit Triggers | 任意 | **本スキル独自セクション** |
 | More Information | 任意 | |
+
+## Confirmation と Revisit Triggers の書き分け
+
+両者は近接して見えるが、**答えている問いが違う**。混ぜずに分けて書く。
+
+| セクション | 答えている問い | 由来 |
+| --- | --- | --- |
+| **Confirmation** | 「**決定どおりに実装されているか**」をどう測るか（公式 MADR の "fitness function"） | 公式 MADR |
+| **Revisit Triggers** | 「**決定そのものを再考すべきか**」を判断する条件 | 本スキル独自 |
+
+### Confirmation に書く内容
+
+公式 MADR の意図に沿って、決定の遵守（compliance）を測る fitness function を列挙する：
+
+- contract test / property test / characterization test
+- code review / design review でのチェックポイント
+- lint rule / type check / static analysis（ArchUnit、dependency-cruiser、eslint-plugin-import の `no-restricted-imports` 等）
+- grep / structural test / 構造テスト
+- 守られなくなった時の検出（CI で fail させる仕組み、監視アラート）
+
+### Confirmation に**書かない**もの
+
+- 具体テストケースの列挙 → **仕様書 / テストコード** に置く
+- 実装タスク・TODO → **Issue / plan** に置く
+- 完了報告 → コミットメッセージ・PR description で十分
+- 「想定負荷を3倍超えたら見直す」のような前提変更トリガー → **Revisit Triggers へ**
+
+### Revisit Triggers に書く内容
+
+決定の前提が崩れた合図（再考の引き金）を列挙する：
+
+- 想定負荷を超えた / 成長した（「3倍超え」等）
+- 採用ライブラリのメジャー版更新で破壊的変更
+- 法令・規制・コンプラ要件の変更
+- 別ADRとの整合性が崩れる条件
+- 採用案の前提となる外部サービス・技術の方針変更
+
+### Revisit Triggers に**書かない**もの
+
+- 決定の遵守を測る仕組み（fitness function） → **Confirmation へ**
+- 個別の検証手段（lint rule、contract test 等） → **Confirmation へ**
+
+### 同じ事実でも書き分けが変わる例
+
+- **「p99 が 500ms を超えたらアラート」** → Confirmation（性能基準の遵守を測る fitness function）
+- **「p99 が 500ms を恒常的に超え始めたら採用案を再検討」** → Revisit Trigger（決定の前提が崩れた合図）
+
+同じ閾値でも、**「測る」のが Confirmation、「再考する」のが Revisit Triggers**。判定軸はこの一点。
