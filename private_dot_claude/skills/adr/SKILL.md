@@ -163,73 +163,17 @@ Confirmation セクションと Revisit Triggers セクションは公式 MADR /
 
 シグナルを検知しても、判定フローを通らなければADRにしない。**変更種別だけで自動的にADR化しない**。
 
-## ADR作成プロセス
+## ADR操作フロー
 
-### Step 1: コンテキストの収集
+判定フローを通って起票が確定した後の対話フローは、用途別に `references/` 配下のフローファイルに集約している。SKILL.md は判断軸を定義する場所、フロー本体は references が単一ソース：
 
-ユーザーとの対話で以下の情報を収集する:
+| 操作 | フロー定義 |
+| --- | --- |
+| 新規ADRの作成 | `references/create-flow.md` |
+| 既存ADRの置き換え（Supersede） | `references/supersede-flow.md` |
+| 既存ADR一覧の表示 | `references/list-flow.md` |
 
-1. **問題の背景**: 何が起きていて、なぜ決定が必要か。決定の対象範囲も明示する
-2. **決定の推進要因（Decision Drivers）**: 判断に影響する品質要件・制約・force等
-3. **検討した選択肢**: 比較した代替案（最低2つ）
-4. **選ばれた選択肢と理由**: なぜその選択肢を選んだか
-5. **トレードオフ**: 受け入れる欠点やリスク
-6. **見直しトリガー**: この決定を再考すべき条件
-
-### Step 2: ADRの作成
-
-公式 [MADR v4.0.0](https://adr.github.io/madr/) のテンプレートに従ってADRを作成する。本スキルは公式テンプレに `y-statement` フィールド（frontmatter）と `## Revisit Triggers` セクションを追加した拡張版を使用する。完全なテンプレートは `references/madr-template.md` を参照。
-
-**ファイル命名**: `NNNN-title-in-kebab-case.md`（4桁ゼロ埋め連番）
-
-**frontmatter**:
-
-```yaml
----
-status: "proposed"
-date: YYYY-MM-DD
-decision-makers: [name1]
-consulted: []           # optional
-informed: []            # optional
-# 本スキル独自フィールド（ADR-0000 で「使う」を選んだ場合のみ）:
-y-statement: >
-  <ユースケース>の文脈において、
-  <懸念事項>に直面したため、
-  <品質目標>を達成するために、
-  <欠点>を受け入れ、
-  <選択肢>を採用することを決定した。
----
-```
-
-Y-Statementの詳細は `references/y-statement-guide.md` を参照。
-
-Supersede の場合、status は `"superseded by ADR-NNNN"` の形式で記載する（公式 MADR の推奨形式）。
-
-### セクション構成
-
-公式 MADR に従う。`<!-- This is an optional element. -->` のコメントが付いているセクションが任意。
-
-| セクション | 必須/任意 | 内容 |
-| --- | --- | --- |
-| Title | 必須 | 問題と解決策を要約する短い名詞句 |
-| Context and Problem Statement | 必須 | 状況・問題（散文）。決定の対象範囲も明示する |
-| Decision Drivers | 任意 | 判断に影響する要因（品質要件、制約、force等） |
-| Considered Options | 必須 | 検討した選択肢の見出し列挙（最低2つ） |
-| Decision Outcome | 必須 | 採用する選択肢 + 1-2文の理由 |
-| Consequences (h3) | 任意 | Decision Outcome のサブ。Good/Bad で結果を記述 |
-| Confirmation (h3) | 任意 | Decision Outcome のサブ。書き手判断で記載 |
-| Pros and Cons of the Options | 任意 | 各選択肢の詳細分析（Good/Bad/Neutral） |
-| Revisit Triggers | 任意 | **本スキル独自セクション**。決定を見直すべき条件。書き手判断で記載 |
-| More Information | 任意 | 関連ADR、参照リンク、チーム合意の記録等 |
-
-### Step 3: 既存ADRとの関連付け
-
-新しいADRを作成する際:
-
-1. **ADR-0000 を必ず読む**: そのプロジェクトの Y-Statement 採用設定を取得し、frontmatter を組む際に従う
-2. 既存ADRのディレクトリを確認する
-3. 関連するADRがあれば「More Information」セクションにリンクを記載
-4. 既存の決定を置き換える場合は Supersede プロセスに従う
+各フローは公式 [MADR v4.0.0](https://adr.github.io/madr/) + 本スキルの拡張（`y-statement` frontmatter / `Revisit Triggers` セクション / `Updates` サブセクション）に従う。テンプレートと書式は `references/madr-template.md` を参照。
 
 ## ライフサイクル管理
 
@@ -258,22 +202,9 @@ ADRは原則 immutable。例外として、決定の妥当性を補強する事�
 
 ### Supersede（置き換え）プロセス
 
-採用案または採用理由が入れ替わる場合のみ supersede する。入れ替わらないなら上記の事実追記レーンを使う。
+採用案または採用理由が入れ替わる場合のみ supersede する。入れ替わらないなら上記の事実追記レーンを使う。公式 MADR では `status` フィールド自体に置き換え関係を記録する形式を採用しており、本スキルもこれに従う（旧ADRの `status` を `"superseded by ADR-NNNN"` に書き換える）。
 
-公式 MADR では `status` フィールド自体に置き換え関係を記録する形式を採用している:
-
-1. 新しいADRを通常通り `status: "proposed"` で作成する
-2. 旧ADRの `status` を `"superseded by ADR-NNNN"` に書き換える（NNNN は新ADRの番号）
-3. 必要に応じて新ADRの More Information セクションに旧ADRへのリンクを記載する
-
-## ADR一覧表示
-
-既存ADRのディレクトリを検索し、以下の形式で一覧表示する:
-
-| # | タイトル | ステータス | 日付 |
-| --- | --- | --- | --- |
-| 0001 | Use MADR for ADR format | accepted | 2026-03-08 |
-| 0002 | Use Redis for caching | superseded by ADR-0005 | 2026-03-10 |
+具体的な対話フローは `references/supersede-flow.md` を参照（判定ガード Step 0 で3レーンに振り分け、補強と差し替えの境界例を含む）。
 
 ## Important Guidelines
 
@@ -304,18 +235,18 @@ ADRは原則 immutable。例外として、決定の妥当性を補強する事�
 
 ### Reference Files
 
-- **`references/madr-template.md`** - MADRテンプレートと各セクションの記述ガイド
-- **`references/adr-conventions.md`** - ADR規約（保存先、命名、連番、ライフサイクル、ADR-0000生成）
+#### 規約・テンプレート
+
+- **`references/madr-template.md`** - MADRテンプレート、各セクションの記述ガイド、Confirmation と Revisit Triggers の書き分け
+- **`references/adr-conventions.md`** - ADR規約（保存先、命名、連番、ライフサイクル、受理済みADRの変更ルール、ADR-0000生成）
 - **`references/y-statement-guide.md`** - Y-Statement形式の作成ガイド
+
+#### 操作フロー
+
+- **`references/create-flow.md`** - 新規ADR作成の対話フロー
+- **`references/supersede-flow.md`** - 既存ADR置き換え（Supersede）の対話フロー（Step 0 判定ガード含む）
+- **`references/list-flow.md`** - 既存ADR一覧表示の対話フロー
 
 ### Example Files
 
 - **`examples/example-adr.md`** - ADRの完成例
-
-### Commands
-
-対話的なADR操作には以下のコマンドも利用可能:
-
-- `/adr:create` - 対話形式でADRを新規作成
-- `/adr:list` - 既存ADRの一覧表示
-- `/adr:supersede` - 既存ADRの置き換え
