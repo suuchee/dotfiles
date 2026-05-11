@@ -30,11 +30,6 @@
 9. 対話中の要望や要件に関わる情報を常に `.notes/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
 10. 検討したことは再度検討しなくていいよう `.notes/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
 
-## .notes
-
-作業コンテキスト（ブランチ相当の作業単位）を管理するディレクトリ。検討中・個人作業のメモ・ノート類を集約する（正式ドキュメントは `docs/` 配下）。
-詳細は `~/.claude/rules/notes.md` を参照。
-
 ## 設計・実装ポリシー
 
 ### 優先順位
