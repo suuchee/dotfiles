@@ -118,3 +118,18 @@ updated_at: 2026-02-15
 - コンテキストへの変更は notes ブランチ上でコミットする（worktree 内で `git add` / `git commit`）
 - worktree が展開されていない場合（`.worktrees/notes/` が存在しない場合）は、セットアップ手順に従って展開してから作業する
 - 検討が固まり正式化する内容は `docs/` 配下へ昇格させる
+
+## worktree 内での Bash 操作
+
+`.worktrees/notes/` を出入りしながら作業する際は、Claude Code の Bash ツールが **CWD をコマンド間で持続する** 点を意識する。原則は「**現在地が目的地と一致していれば cd しない**」。
+
+**失敗例**（既に notes worktree 内にいるのに、再度同じ相対パスで cd を書いてしまうケース）:
+
+- 1回目: `cd .worktrees/notes && git status` → 成功（CWD が `.worktrees/notes/` に移動）
+- 2回目: `cd .worktrees/notes && git add ...` → 失敗（`no such file or directory: .worktrees/notes`。既に notes worktree 内にいるので、相対パス `.worktrees/notes` は存在しない）
+
+**対策**:
+
+- 各コマンド実行前に「現在地はどこか」「目的地はどこか」を意識する。一致していれば cd 不要
+- worktree 外（メイン作業ブランチ等）に出てから再度 notes worktree で作業する場合は、改めて `cd <repo-root>/.worktrees/notes`（または絶対パス）で入り直す
+- worktree 外に出る時はメインの作業ディレクトリへ絶対パスで `cd`
