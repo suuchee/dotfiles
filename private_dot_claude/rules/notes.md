@@ -38,6 +38,20 @@ echo '.worktrees/' >> .gitignore
 git worktree add .worktrees/notes notes
 ```
 
+### 4. （任意）素材（メディア）を扱う場合の LFS 設定
+
+`assets/` 配下に動画・画像・PDF など大容量バイナリを置く予定なら、**notes ブランチ側にも `.gitattributes` を追加して Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない点に注意。
+
+```bash
+# main 側の .gitattributes を notes worktree にコピーして取り込む
+cp .gitattributes .worktrees/notes/.gitattributes
+git -C .worktrees/notes lfs install --local
+git -C .worktrees/notes add .gitattributes
+git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を追加"
+```
+
+これを忘れて先にメディアをコミットすると履歴に直接埋め込まれ、後からの LFS 移行は `git lfs migrate import` での履歴書き換えが必要になる（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。
+
 ### セットアップ後のパス
 
 - **worktree ルート**: `.worktrees/notes/`
@@ -61,15 +75,21 @@ git worktree add .worktrees/notes notes
         ├── deliberation/        # 検討・比較
         ├── conversation/        # 会話ログ
         ├── spec/                # 仕様（検討中。正式版は docs/ へ）
-        └── evidence/            # 検証・学びの集積レイヤー
-            ├── tests/           #   eval task 群（実失敗 20–50 件）
-            ├── incidents/       #   失敗ログ
-            └── ops-learnings.md #   運用知見
+        ├── evidence/            # 検証・学びの集積レイヤー
+        │   ├── tests/           #   eval task 群（実失敗 20–50 件）
+        │   ├── incidents/       #   失敗ログ
+        │   └── ops-learnings.md #   運用知見
+        └── assets/              # 素材レイヤー（動画/画像/参考メモ等、必要時のみ）
+            ├── recordings/      #   画面収録・録画
+            ├── screenshots/     #   スクリーンショット（日付などで階層化）
+            └── references/      #   外部ドキュメント・配布資料
 ```
 
 コンテキストは必ず `.notes/context/` 配下に置く。`.notes/` 直下にコンテキストディレクトリを作らない（将来 `.notes/` 直下を別用途に使えるよう、中間層 `context/` を維持する）。
 
-`intent/` と `evidence/` は必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら従来通り plan/ や research/ だけでよい）。
+`intent/`、`evidence/`、`assets/` は必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら従来通り plan/ や research/ だけでよい）。
+
+`assets/` は元素材（動画・画像・配布資料など）を集めるためのもので、コンテキスト独自の派生ファイル（要約・対応表など）は `research/` 等の通常レイヤーに置く。素材と分析を分けることで原本を変更せず参照できる。なお `assets/` にメディアを置く場合は事前に「セットアップ 4」で notes ブランチ側の LFS を有効化しておくこと。
 
 ## CONTEXT.md フォーマット
 
