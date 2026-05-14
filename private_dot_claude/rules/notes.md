@@ -40,12 +40,14 @@ git worktree add .worktrees/notes notes
 
 ### 4. （任意）素材（メディア）を扱う場合の LFS 設定
 
-`assets/` 配下に動画・画像・PDF など大容量バイナリを置く予定なら、**notes ブランチ側にも `.gitattributes` を追加して Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない点に注意。
+`assets/` 配下に動画・画像・PDF など大容量バイナリを置く予定なら、**notes ブランチ側で Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない（また main 側に `.gitattributes` が無いケースもあるため、notes 側で独立に設定する）。
+
+トラッキング対象の拡張子は `~/.claude/skills/git/references/init-checklist.md` と揃えており、メディア（動画・音声・画像）と PDF を含む。
 
 ```bash
-# main 側の .gitattributes を notes worktree にコピーして取り込む
-cp .gitattributes .worktrees/notes/.gitattributes
+# notes worktree 内で LFS を有効化し .gitattributes を作成・コミット
 git -C .worktrees/notes lfs install --local
+git -C .worktrees/notes lfs track "*.mp4" "*.mov" "*.mp3" "*.m4a" "*.wav" "*.png" "*.jpg" "*.jpeg" "*.pdf"
 git -C .worktrees/notes add .gitattributes
 git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を追加"
 ```
