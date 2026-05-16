@@ -102,7 +102,6 @@
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__server-sequential-thinking__sequentialthinking",
       "mcp__server-time__get_current_time",
-      "mcp__plugin_freee-api_freee__freee_auth_status",
       "mcp__plugin_freee-api_freee__freee_api_get",
       "mcp__plugin_freee-api_freee__freee_api_list_paths",
       "mcp__plugin_freee-api_freee__freee_auth_status",
@@ -113,6 +112,7 @@
     ],
     "ask": [
       "Bash(kill:*)",
+      "Bash(git commit:*)",
       "Bash(git push --force-with-lease:*)"
     ],
     "deny": [
@@ -149,7 +149,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -161,6 +160,13 @@
             "if": "Bash(rm:*)",
             "timeout": 5,
             "statusMessage": "Checking for safe delete..."
+          },
+          {
+            "type": "command",
+            "command": "cat ~/.claude/skills/git/references/commit-conventions.md",
+            "if": "Bash(git commit:*)",
+            "timeout": 5,
+            "statusMessage": "Loading commit conventions..."
           }
         ]
       }
@@ -181,7 +187,6 @@
     "codex@openai-codex": true,
     "context7@claude-plugins-official": true,
     "csharp-lsp@claude-plugins-official": true,
-    "everything-claude-code@everything-claude-code": false,
     "explanatory-output-style@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
@@ -190,7 +195,6 @@
     "laravel-boost@claude-plugins-official": true,
     "learning-output-style@claude-plugins-official": true,
     "php-lsp@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -200,26 +204,13 @@
     "superpowers@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "slack@claude-plugins-official": true,
-    "freee-api@freee-api-marketplace": true
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
-      }
-    },
-    "freee-api-marketplace": {
-      "source": {
-        "source": "github",
-        "repo": "freee/freee-mcp"
-      }
-    },
-    "everything-claude-code": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/affaan-m/everything-claude-code.git"
       }
     },
     "openai-codex": {
@@ -231,9 +222,16 @@
   },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
+  "autoCompactEnabled": false,
   "sandbox": {
     "enabled": true,
-    "autoAllowBashIfSandboxed": true
+    "autoAllowBashIfSandboxed": true,
+    "filesystem": {
+      "allowWrite": [
+        ".worktrees/",
+        "/Users/hayakawa/.Trash"
+      ]
+    }
   }
 }
