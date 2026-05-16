@@ -206,7 +206,7 @@
     "filesystem": {
       "allowWrite": [
         ".worktrees/",
-        "/Users/hayakawa/.Trash"
+        "~/.Trash"
       ]
     }
   }
