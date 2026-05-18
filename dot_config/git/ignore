@@ -1,0 +1,13 @@
+*~
+.DS_Store
+
+.worktrees/
+
+.certs/
+certs/
+.bak/
+bak/
+.trash/
+trash/
+
+**/.claude/settings.local.json
