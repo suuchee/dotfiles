@@ -29,7 +29,7 @@ informed: {list everyone who is kept up-to-date on progress; and with whom there
 # 本スキル独自フィールド（ADR-0000 で「使う」を選んだ場合のみ）:
 y-statement: >
   <ユースケース>の文脈において、
-  <懸念事項>に直面したため、
+  <懸念事項>{を踏まえ|を考慮し|があるなかで|という課題に対し|に直面し|など}、
   <品質目標>を達成するために、
   <欠点>を受け入れ、
   <選択肢>を採用することを決定した。
