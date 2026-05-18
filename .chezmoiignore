@@ -30,7 +30,10 @@ README.md
 {{ end }}
 
 {{ if not (and (eq .chezmoi.os "linux") (eq .chezmoi.username "penguin")) }}
-./.config
+./.config/Code
+./.config/fcitx
+./.config/gtk-3.0
+./.config/gtk-4.0
 .bash_logout
 .bashrc
 .profile
