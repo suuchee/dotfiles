@@ -11,6 +11,8 @@
 `.notes/` ディレクトリを使う前に、以下の手順で環境を準備する。
 既にセットアップ済みの場合はスキップする。
 
+前提として `.worktrees/` は global gitignore (`~/.config/git/ignore`) で除外されている想定。個別 repo の `.gitignore` には書かない（`~/.claude/skills/git/SKILL.md` の「.gitignore の置き場所」参照）。
+
 ### 1. notes ブランチの作成（存在しない場合）
 
 ```bash
@@ -22,23 +24,14 @@ git commit --allow-empty -m "chore: notes ブランチを初期化"
 git switch -
 ```
 
-### 2. .gitignore への追加（現在のブランチで）
-
-`.worktrees/` がまだ `.gitignore` に含まれていない場合は、worktree 展開前に追加しておく。
-これは現在の作業ブランチ（main 等）で行う。
-
-```bash
-echo '.worktrees/' >> .gitignore
-```
-
-### 3. worktree の展開
+### 2. worktree の展開
 
 ```bash
 # .worktrees/notes に worktree を展開
 git worktree add .worktrees/notes notes
 ```
 
-### 4. （任意）素材（メディア）を扱う場合の LFS 設定
+### 3. （任意）素材（メディア）を扱う場合の LFS 設定
 
 `assets/` 配下に動画・画像・PDF など大容量バイナリを置く予定なら、**notes ブランチ側で Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない（また main 側に `.gitattributes` が無いケースもあるため、notes 側で独立に設定する）。
 
