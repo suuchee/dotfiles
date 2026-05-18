@@ -21,6 +21,18 @@ Git操作における規約とワークフローを定義する。
 
 新しいリポジトリを初期化する場合は `references/init-checklist.md` に従う。
 
+## .gitignore の置き場所
+
+無視したいパスは以下の 3 層から選ぶ：
+
+| パターンの性質 | 置き場所 | 共有 |
+| --- | --- | --- |
+| プロジェクトに必須・全 contributor 共有 | リポジトリの `.gitignore` | コミット対象 |
+| 個人の全 repo 共通 | global ignore (`~/.config/git/ignore`) | しない |
+| 個人かつこの clone 限定 | `.git/info/exclude` | しない |
+
+個人パターン（`.DS_Store`、`.worktrees/`、個人スクラッチディレクトリ等）は `.gitignore` に書かない。後から入った contributor のエディタ・ローカル運用を強制することになるため。
+
 ## ブランチ戦略
 
 ブランチの選択・切替・性格変更の判断と操作。状況に応じて以下を参照する。
