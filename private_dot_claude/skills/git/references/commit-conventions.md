@@ -88,20 +88,45 @@ scope は任意だが、変更対象を明確にしたい場合に使用する�
 <type>/<issue>-<description>
 ```
 
-- **type**: コミットプレフィックスの type に対応（`feature`, `fix`, `refactor` 等）
+- **type**: ブランチプレフィックス（下表参照）
 - **description**: ケバブケース（小文字、ハイフン区切り）
 - **issue**: Issue 番号（任意）
+
+### description の付け方
+
+**「何をするか（What）」を表す名前にする。「なぜ（Why）」や背景を名前にしない。**
+
+ブランチ名を見ただけで、どんな変更が含まれているか分かる名前にする。
+
+| 観点 | 良い例 | 悪い例 | 理由 |
+| --- | --- | --- | --- |
+| What vs Why | `feature/singleton-gcp-clients` | `feature/cloud-run-memory-optimization` | 後者は背景（メモリ問題）であり、変更内容（シングルトン化）が伝わらない |
+| 具体的 | `bugfix/fix-null-pointer-in-login` | `bugfix/login-error` | 何を直すかが明確 |
+| 簡潔 | `feature/add-email-verification` | `feature/add-email-verification-to-signup-flow-for-security` | 長すぎない |
+
+### Git-Flow プロジェクトの場合
+
+Git-Flow を採用しているプロジェクトでは、ブランチプレフィックスは Git-Flow の規約に従う。
+リファクタリングやパフォーマンス改善など Git-Flow に専用プレフィックスがないものは `feature/` を使用する。
+
+| ブランチ type | 用途 | コミット type |
+| --- | --- | --- |
+| `feature` | 新機能・リファクタリング・改善 | `feat`, `refactor`, `perf` 等 |
+| `bugfix` | develop からのバグ修正 | `fix` |
+| `hotfix` | 本番（main/master）の緊急修正 | `fix` |
+| `release` | リリース準備 | `chore` |
+| `support` | 旧バージョンの保守 | `fix` |
 
 ### 例
 
 | ブランチ名 | 説明 |
 | --- | --- |
 | `feature/add-auth` | 認証機能の追加 |
-| `fix/123-login-error` | Issue #123 のログインエラー修正 |
-| `refactor/api-client` | APIクライアントのリファクタリング |
-| `docs/update-readme` | README の更新 |
+| `feature/singleton-gcp-clients` | GCP Client のシングルトン化 |
+| `bugfix/123-login-error` | Issue #123 のログインエラー修正 |
+| `hotfix/critical-crash` | 本番の緊急クラッシュ修正 |
 
-### type の対応
+### Git-Flow 以外のプロジェクトの場合
 
 | ブランチ type | コミット type |
 | --- | --- |
