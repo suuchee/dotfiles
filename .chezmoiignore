@@ -1,5 +1,9 @@
 README.md
 
+bak/
+.worktrees/
+**/skills/*-workspace/
+
 # macOS
 **/.DS_Store
 
