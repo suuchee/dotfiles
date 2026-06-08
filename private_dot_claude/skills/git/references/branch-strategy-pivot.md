@@ -88,6 +88,5 @@ git branch feature/X main                  # 元名を base から再生成
 ## 関連
 
 - CLAUDE.md 方針 2 (セッション開始時のブランチ確認)
-- `~/.claude/rules/git-tips.md` (ベースブランチからの移行・マージ戦略・worktree)
 - SKILL.md「コミット前の確認」(現在のブランチ確認の段)
 - SKILL.md「cherry-pick 後のブランチ整理」
