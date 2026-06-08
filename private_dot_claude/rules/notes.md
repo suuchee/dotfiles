@@ -30,13 +30,13 @@ git switch -
 git worktree add .worktrees/notes notes
 ```
 
-### 3. （任意）バイナリ素材を扱う場合の LFS 設定
+### 3. LFS 設定
 
-`.notes/` 配下にバイナリ（動画・画像・PDF など、Git の差分が効かない形式）を置く予定なら、**置き場所（`assets/` 配下か否か）に関わらず notes ブランチ側で Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない（また main 側に `.gitattributes` が無いケースもあるため、notes 側で独立に設定する）。
+notes ブランチでは Git LFS を有効化する（バイナリ素材を予定していなくても必ず実施）。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない（また main 側に `.gitattributes` が無いケースもあるため、notes 側で独立に設定する）。
 
-LFS 化の対象は次のように切り分ける。
+LFS 化の対象：
 
-- **バイナリ（PNG/JPEG/MP4/MOV/MP3/M4A/WAV/PDF 等）**: 置き場所を問わず LFS 化する。`assets/` 限定ではなく、`screenshots/` や `research/` 直下なども対象。
+- **バイナリ（動画 / 音声 / 画像 / ドキュメント / アーカイブ / データ / デザイン / フォント）**: 全て LFS 化する。
 - **テキスト（Markdown / JSONL / CSV 等）**: 原則 LFS 外。Git の差分・grep が効くメリットを優先する。
 
 ```bash
@@ -44,15 +44,21 @@ LFS 化の対象は次のように切り分ける。
 # パターンは大文字小文字を吸収するブラケット表記（カメラ由来の .JPG など大文字拡張子もカバー）
 git -C .worktrees/notes lfs install --local
 git -C .worktrees/notes lfs track \
-  "*.[Mm][Pp]4" "*.[Mm][Oo][Vv]" \
-  "*.[Mm][Pp]3" "*.[Mm]4[Aa]" "*.[Ww][Aa][Vv]" \
-  "*.[Pp][Nn][Gg]" "*.[Jj][Pp][Gg]" "*.[Jj][Pp][Ee][Gg]" \
-  "*.[Pp][Dd][Ff]"
+  "*.[Mm][Pp]4" "*.[Mm][Oo][Vv]" "*.[Ww][Ee][Bb][Mm]" \
+  "*.[Mm][Pp]3" "*.[Mm]4[Aa]" "*.[Ww][Aa][Vv]" "*.[Ff][Ll][Aa][Cc]" "*.[Oo][Gg][Gg]" "*.[Aa][Aa][Cc]" \
+  "*.[Pp][Nn][Gg]" "*.[Jj][Pp][Gg]" "*.[Jj][Pp][Ee][Gg]" "*.[Gg][Ii][Ff]" "*.[Ww][Ee][Bb][Pp]" "*.[Hh][Ee][Ii][Cc]" "*.[Hh][Ee][Ii][Ff]" \
+  "*.[Pp][Dd][Ff]" \
+  "*.[Dd][Oo][Cc]" "*.[Dd][Oo][Cc][Xx]" "*.[Xx][Ll][Ss]" "*.[Xx][Ll][Ss][Xx]" "*.[Pp][Pp][Tt]" "*.[Pp][Pp][Tt][Xx]" \
+  "*.[Oo][Dd][Tt]" "*.[Oo][Dd][Ss]" "*.[Oo][Dd][Pp]" \
+  "*.[Zz][Ii][Pp]" "*.[Tt][Aa][Rr]" "*.[Gg][Zz]" "*.[Tt][Gg][Zz]" "*.[Bb][Zz]2" "*.[Xx][Zz]" "*.7[Zz]" "*.[Rr][Aa][Rr]" "*.[Zz][Ss][Tt]" "*.[Ll][Zz]4" "*.[Ll][Zz][Mm][Aa]" "*.[Ll][Zz]" \
+  "*.[Pp][Aa][Rr][Qq][Uu][Ee][Tt]" \
+  "*.[Pp][Ss][Dd]" "*.[Aa][Ii]" "*.[Ff][Ii][Gg]" "*.[Ss][Kk][Ee][Tt][Cc][Hh]" \
+  "*.[Tt][Tt][Ff]" "*.[Oo][Tt][Ff]" "*.[Ww][Oo][Ff][Ff]" "*.[Ww][Oo][Ff][Ff]2"
 git -C .worktrees/notes add .gitattributes
 git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を追加"
 ```
 
-これを忘れて先にバイナリをコミットすると履歴に直接埋め込まれ、後からの LFS 移行は `git lfs migrate import` での履歴書き換えが必要になる（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。
+セットアップ前にバイナリをコミットしてしまった場合は、`git lfs migrate import` で履歴書き換えが必要（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。
 
 ### セットアップ後のパス
 
