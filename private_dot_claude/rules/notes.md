@@ -4,7 +4,6 @@
 `.notes/` は専用の `notes` ブランチ上で管理し、worktree 経由でアクセスする。
 
 正式なドキュメントは `docs/` 配下に配置し、検討中・個人作業のメモ・ノート類はこの `.notes/` 配下にコンテキスト単位で集約する。
-メモ・research・deliberation 等もすべてこのコンテキスト配下に集約する（コンテキストとの紐づきを切らないため、別ディレクトリには切り出さない）。
 
 ## セットアップ
 
@@ -38,9 +37,7 @@ git worktree add .worktrees/notes notes
 LFS 化の対象は次のように切り分ける。
 
 - **バイナリ（PNG/JPEG/MP4/MOV/MP3/M4A/WAV/PDF 等）**: 置き場所を問わず LFS 化する。`assets/` 限定ではなく、`screenshots/` や `research/` 直下なども対象。
-- **テキスト（Markdown / JSONL / CSV 等）**: 原則 LFS 外。Git の差分・grep が効くメリットを優先する。極端に大きく履歴に乗せたくないものはケースバイケースで判断する（明確な閾値は設けない）。
-
-トラッキング対象の拡張子は `~/.claude/skills/git/references/init-checklist.md` と揃えており、メディア（動画・音声・画像）と PDF を含む。
+- **テキスト（Markdown / JSONL / CSV 等）**: 原則 LFS 外。Git の差分・grep が効くメリットを優先する。
 
 ```bash
 # notes worktree 内で LFS を有効化し .gitattributes を作成・コミット
@@ -55,7 +52,7 @@ git -C .worktrees/notes add .gitattributes
 git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を追加"
 ```
 
-これを忘れて先にバイナリをコミットすると履歴に直接埋め込まれ、後からの LFS 移行は `git lfs migrate import` での履歴書き換えが必要になる（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。notes ブランチはローカル専用（push 禁止）のため履歴書き換え自体のリスクは低いが、コミットハッシュが変わる点には留意する。
+これを忘れて先にバイナリをコミットすると履歴に直接埋め込まれ、後からの LFS 移行は `git lfs migrate import` での履歴書き換えが必要になる（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。
 
 ### セットアップ後のパス
 
@@ -94,7 +91,7 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
 
 `intent/`、`evidence/`、`assets/` は必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら従来通り plan/ や research/ だけでよい）。
 
-`assets/` は元素材（動画・画像・配布資料など）を集めるためのもので、コンテキスト独自の派生ファイル（要約・対応表など）は `research/` 等の通常レイヤーに置く。素材と分析を分けることで原本を変更せず参照できる。なお **notes ブランチにバイナリを置く場合は配置先を問わず**（`assets/` 配下に限らず、`screenshots/` や `research/` 直下のメディアも含む）、事前に「セットアップ 3」で notes ブランチ側の LFS を有効化しておくこと。
+`assets/` は元素材（動画・画像・配布資料など）を集めるためのもので、コンテキスト独自の派生ファイル（要約・対応表など）は `research/` 等の通常レイヤーに置く。素材と分析を分けることで原本を変更せず参照できる。
 
 ## CONTEXT.md フォーマット
 
@@ -118,16 +115,25 @@ updated_at: 2026-02-15
 なぜこの作業が必要になったか。
 ```
 
-## 公開境界（`.notes/` から外への参照ルール）
+## 公開境界（`.notes/` ↔ `docs/`）
 
-`.notes/` は個人作業領域、`docs/`（ADR 含む）はチーム向け公開ドキュメント。リンクの方向は片方向のみ：
+`.notes/` は個人作業領域、`docs/`（ADR 含む）はチーム向け公開ドキュメント。参照は **一方向のみ**：
 
-- **OK**: `.notes/` → `docs/`、`.notes/` → 公開URL（GitHub、公式ドキュメント等）
-- **NG**: `docs/`（ADR 含む） → `.notes/`、`docs/` → `.worktrees/notes/...`
+- ✅ `.notes/` → `docs/`、`.notes/` → 公開URL（GitHub、公式ドキュメント等）
+- ❌ `docs/` → `.notes/`、`docs/` → `.worktrees/notes/...`
 
-公開ドキュメントが個人領域に依存する形になると、リンク切れの保守コストが公開側に染み出し、他メンバーやCIからアクセスできない参照が混ざる。ADR や docs はチームの共有資産として **`.notes/` を参照しなくても完結している** 必要がある。
+### 理由
 
-公開ドキュメントの中で参照したい事実・調査結果は、ADR 本体や `docs/research/` 等の公開領域に要約として書く。`.notes/<NNN>/research/` への外向きリンクは書かない。
+- `.notes/` は流動的（削除・移動・renumber 対象、ブランチ自体が orphan）
+- `docs/` は安定的（ADR は append-only、設計資料は確定版）
+- 公開 docs が個人 notes に依存すると、notes 側の変更で参照が壊れ、保守コストが公開側に染み出す
+- 公開ドキュメントは他人が `.notes/` を持っていなくても理解できる単独完結である必要がある
+
+### 実務での適用
+
+- ADR / 設計資料に「検討経緯」「実機検証結果」を書きたい場合は、要点を `docs/` 配下に正式版として保存する（個別の `.notes/` ファイルにリンクしない）
+- `.notes/` 側の CONTEXT.md / research / spec / evidence では、関連する `docs/` を「関連ドキュメント」「関連 ADR」セクションでリンクする（逆方向は OK）
+- 「`.notes/.../foo.md` を参照」と書きたくなったら、その内容を `docs/` に昇格させるか、要約して `docs/` の本文に取り込むかを検討する
 
 ## 命名規則
 
@@ -171,26 +177,6 @@ updated_at: 2026-02-15
 - `git push origin notes` / `git push -u origin notes` を実行しない
 - push 系コマンドは常に**独立実行**し、`&&` などで他コマンドの後ろに連結しない（対象ブランチを毎回明示的に確認できる状態を保つ）
 - 共同作業者間で notes 内容を共有したい場合は、`docs/` 昇格や別途の手段で行う
-
-## docs / notes の依存方向
-
-公式ドキュメント (`docs/`) と個人検討 (`.notes/`) の参照は **一方向のみ許容**する。
-
-- ✅ `.notes/` → `docs/` への参照は推奨（個人検討から公式 ADR / 設計資料を参照する）
-- ❌ `docs/` → `.notes/` への参照は禁止（公式 docs は個人 notes に依存させない）
-
-### 理由
-
-- `.notes/` は流動的（削除・移動・整理・renumber の対象、ブランチ自体が orphan）
-- `docs/` は安定的（ADR は append-only、設計資料は確定版）
-- 公式 docs が個人 notes に依存すると、notes 側の変更で公式 docs の参照が壊れる
-- 公式 docs は単独で完結するべき（他人が `.notes/` を持っていなくても理解できる）
-
-### 実務での適用
-
-- ADR / 設計資料に「検討経緯」「実機検証結果」を書きたい場合は、要点を `docs/` 配下に正式版として保存する（個別の `.notes/` ファイルにリンクしない）
-- `.notes/` 側の CONTEXT.md / research / spec / evidence では、関連する `docs/` を「関連ドキュメント」「関連 ADR」セクションでリンクする（逆方向は OK）
-- 「`.notes/.../foo.md` を参照」と書きたくなったら、その内容を `docs/` に昇格させるか、要約して `docs/` の本文に取り込むかを検討する
 
 ## worktree 内での Bash 操作
 
