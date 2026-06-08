@@ -20,13 +20,13 @@ CLAUDE.md 方針 2 (セッション開始時のブランチ確認) で「現ブ�
 | 現ブランチをリネーム + 元名を別 base から再生成 | 既コミットが「今の作業」側の性格 / 元ブランチ名で別作業を後で再開したい |
 | 既コミットを cherry-pick で別ブランチに分離 | 既コミットの中に複数性格が混在 |
 
-## 2. 作業ブランチの性格が当初想定と変わった場合のリカバリ
+## 2. 現ブランチを別作業に転用する（リネーム + 再生成）
 
-「現ブランチで別性格の作業を始めてしまい、既コミットも別性格寄り」のパターン。
+現ブランチで進めていた作業の性格が変わった、またはベースブランチ（main / develop 等）で作業を始めてしまったので別ブランチに分離したい、というケース。`git branch -m` でリネームし、元のブランチ名を base から再生成する。
 
 ### 判断フロー
 
-1. `git log --oneline <base>..HEAD` で既コミットを確認
+1. `git log --oneline <base>..HEAD` で既コミットを確認（base は main / develop 等）
 2. 既コミットの性格を判定:
    - **「今の作業」側** → リネーム + 元名を base から再生成 (本セクションの「操作」)
    - **「ブランチ本来の作業」側** → 別ブランチを「今の作業」用に切る (既ブランチは触らない)
@@ -40,13 +40,24 @@ git branch -m <current> <renamed-for-current-work>
 
 # 2. 元のブランチ名を base から再生成 (HEAD は移動しない)
 git branch <current> <base>
-# <base> は main / origin/main / 特定の commit hash 等
 ```
 
-**メリット**:
+### シナリオ別の `<base>` の決め方
+
+| シナリオ | `<current>` | `<base>` | 例 |
+| --- | --- | --- | --- |
+| ベースブランチで作業を始めてしまった | main / develop 等 | `origin/<current>`（リモートから再生成） | `git branch -m main feature/add-auth` → `git branch main origin/main` |
+| feature ブランチで別性格の作業を始めてしまった | feature/X | main / develop / 分岐元 commit | `git branch -m feature/X docs/refactor-Y` → `git branch feature/X main` |
+
+**ベースブランチ起点ケースの前提条件**:
+- リモートとの差分（未 push のコミット・未コミットの変更）が、これから作業したい内容であること
+
+### メリット
+
 - stash / cherry-pick / reset 不要
-- 既コミットをそのまま引き継ぐ (履歴の連続性が保たれる)
+- 既コミットをそのまま引き継ぐ（履歴の連続性が保たれる）
 - 元のブランチ名で別作業を後で再開できる
+- ベースブランチ起点ケースでは、ベースブランチがリモートと同期済みの状態になる
 
 ### 関連手順との違い
 
