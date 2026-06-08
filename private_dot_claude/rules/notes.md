@@ -58,7 +58,7 @@ git -C .worktrees/notes add .gitattributes
 git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を追加"
 ```
 
-セットアップ前にバイナリをコミットしてしまった場合は、`git lfs migrate import` で履歴書き換えが必要（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。
+セットアップ前にバイナリをコミットしてしまった場合は、`git lfs migrate import` で履歴書き換えが必要。
 
 ### セットアップ後のパス
 
