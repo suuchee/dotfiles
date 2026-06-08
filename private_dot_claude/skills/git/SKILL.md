@@ -41,7 +41,7 @@ Git操作における規約とワークフローを定義する。
 - 作業ブランチの性格が当初想定と変わった場合のリカバリ
 - 既コミットを別ブランチに分離する手段 (cherry-pick / 部分リセット 等)
 
-詳細な判断フロー・操作・具体例は `references/branch-strategy-pivot.md` を参照。
+詳細な判断フロー・操作・具体例は `references/branch-strategy.md` を参照。
 
 ## ステージング
 
@@ -165,6 +165,16 @@ A - B - C(除去したい) - D - E (HEAD)
 git rebase -i HEAD~3   # C を含む範囲を指定
 # エディタで C の行を削除または `drop` に変更して保存
 ```
+
+## マージ戦略
+
+作業ブランチを統合する際の `--no-ff` / `--ff-only` / `--squash` / rebase + ff の選択指針。
+
+詳細は `references/merge-strategy.md` を参照。
+
+## Worktree のリネーム
+
+worktree のディレクトリ名・ブランチ名を変更する手順は `references/worktree-rename.md` を参照。
 
 ## 参考資料
 
