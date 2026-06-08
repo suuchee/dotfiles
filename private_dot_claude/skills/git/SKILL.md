@@ -41,7 +41,7 @@ Git操作における規約とワークフローを定義する。
 - 作業ブランチの性格が当初想定と変わった場合のリカバリ
 - 既コミットを別ブランチに分離する手段 (cherry-pick / 部分リセット 等)
 
-詳細な判断フロー・操作・具体例は `references/branch-strategy-pivot.md` を参照。
+詳細な判断フロー・操作・具体例は `references/branch-strategy.md` を参照。
 
 ## ステージング
 
