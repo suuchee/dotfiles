@@ -31,21 +31,31 @@ git switch -
 git worktree add .worktrees/notes notes
 ```
 
-### 3. （任意）素材（メディア）を扱う場合の LFS 設定
+### 3. （任意）バイナリ素材を扱う場合の LFS 設定
 
-`assets/` 配下に動画・画像・PDF など大容量バイナリを置く予定なら、**notes ブランチ側で Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない（また main 側に `.gitattributes` が無いケースもあるため、notes 側で独立に設定する）。
+`.notes/` 配下にバイナリ（動画・画像・PDF など、Git の差分が効かない形式）を置く予定なら、**置き場所（`assets/` 配下か否か）に関わらず notes ブランチ側で Git LFS を有効化する**。notes は orphan ブランチで作るため、main 側の `.gitattributes` を継承しない（また main 側に `.gitattributes` が無いケースもあるため、notes 側で独立に設定する）。
+
+LFS 化の対象は次のように切り分ける。
+
+- **バイナリ（PNG/JPEG/MP4/MOV/MP3/M4A/WAV/PDF 等）**: 置き場所を問わず LFS 化する。`assets/` 限定ではなく、`screenshots/` や `research/` 直下なども対象。
+- **テキスト（Markdown / JSONL / CSV 等）**: 原則 LFS 外。Git の差分・grep が効くメリットを優先する。極端に大きく履歴に乗せたくないものはケースバイケースで判断する（明確な閾値は設けない）。
 
 トラッキング対象の拡張子は `~/.claude/skills/git/references/init-checklist.md` と揃えており、メディア（動画・音声・画像）と PDF を含む。
 
 ```bash
 # notes worktree 内で LFS を有効化し .gitattributes を作成・コミット
+# パターンは大文字小文字を吸収するブラケット表記（カメラ由来の .JPG など大文字拡張子もカバー）
 git -C .worktrees/notes lfs install --local
-git -C .worktrees/notes lfs track "*.mp4" "*.mov" "*.mp3" "*.m4a" "*.wav" "*.png" "*.jpg" "*.jpeg" "*.pdf"
+git -C .worktrees/notes lfs track \
+  "*.[Mm][Pp]4" "*.[Mm][Oo][Vv]" \
+  "*.[Mm][Pp]3" "*.[Mm]4[Aa]" "*.[Ww][Aa][Vv]" \
+  "*.[Pp][Nn][Gg]" "*.[Jj][Pp][Gg]" "*.[Jj][Pp][Ee][Gg]" \
+  "*.[Pp][Dd][Ff]"
 git -C .worktrees/notes add .gitattributes
 git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を追加"
 ```
 
-これを忘れて先にメディアをコミットすると履歴に直接埋め込まれ、後からの LFS 移行は `git lfs migrate import` での履歴書き換えが必要になる（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。
+これを忘れて先にバイナリをコミットすると履歴に直接埋め込まれ、後からの LFS 移行は `git lfs migrate import` での履歴書き換えが必要になる（詳細は `~/.claude/rules/git-tips.md` の LFS 節）。notes ブランチはローカル専用（push 禁止）のため履歴書き換え自体のリスクは低いが、コミットハッシュが変わる点には留意する。
 
 ### セットアップ後のパス
 
@@ -84,7 +94,7 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
 
 `intent/`、`evidence/`、`assets/` は必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら従来通り plan/ や research/ だけでよい）。
 
-`assets/` は元素材（動画・画像・配布資料など）を集めるためのもので、コンテキスト独自の派生ファイル（要約・対応表など）は `research/` 等の通常レイヤーに置く。素材と分析を分けることで原本を変更せず参照できる。なお `assets/` にメディアを置く場合は事前に「セットアップ 4」で notes ブランチ側の LFS を有効化しておくこと。
+`assets/` は元素材（動画・画像・配布資料など）を集めるためのもので、コンテキスト独自の派生ファイル（要約・対応表など）は `research/` 等の通常レイヤーに置く。素材と分析を分けることで原本を変更せず参照できる。なお **notes ブランチにバイナリを置く場合は配置先を問わず**（`assets/` 配下に限らず、`screenshots/` や `research/` 直下のメディアも含む）、事前に「セットアップ 3」で notes ブランチ側の LFS を有効化しておくこと。
 
 ## CONTEXT.md フォーマット
 
