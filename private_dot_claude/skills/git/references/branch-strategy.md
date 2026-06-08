@@ -1,4 +1,4 @@
-# Branch Strategy Pivot
+# Branch Strategy
 
 ブランチの選択・切替・性格変更の判断と操作。
 
