@@ -12,7 +12,6 @@ git branch -m main
 ## 2. Git LFS のセットアップ
 
 バイナリファイルが後からコミットされると LFS 移行が困難になるため、最初のコミット前に LFS を設定する。
-LFS 導入前の確認事項は `~/.claude/rules/git-tips.md` の「Git LFS（Large File Storage）」セクションを参照。
 
 ```sh
 git lfs install --local
