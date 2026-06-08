@@ -1,7 +1,7 @@
 # Pencil（.pen ファイル）
 
 * Pencil（pencil.dev）はFigmaのようなデザインツール。`.pen` ファイルでUIデザインを管理する
-* `.pen` ファイルの内容は暗号化されているため、`Read` / `Grep` ツールではなく Pencil MCP ツールのみで読み書きする
+* `.pen` ファイルの実体は plain JSON だが、Pencil MCP server 自体が `Read` / `Grep` を禁じている（schema 整合性とエディタの編集状態との同期を MCP に集約する設計）。したがって `.pen` の読み書きは Pencil MCP ツール経由で行う
 * Pencil MCP には明示的な「保存」操作がない。`batch_design` の変更はエディタのメモリ上に反映されるが、ディスクへの永続化はユーザーがPencilエディタ側で保存する必要がある
 * 大きな変更の区切りごとにユーザーへ保存を促すこと
 
