@@ -1,6 +1,6 @@
 ---
 name: git
-description: This skill should be used when the user asks about Git operations including "commit", "git commit", "コミット", "git init", "リポジトリ初期化", "ブランチ作成", "ブランチ戦略", "ブランチ方針", "ブランチをリネーム", "ブランチを切るか", "現ブランチで続けるか", "別ブランチ", "amend", "ステージング", "git add", "cherry-pick", "rebase", "merge", or mentions any Git operations like staging, committing, branching, branch strategy decisions, working branch pivots, or amending commits.
+description: Git 操作全般（commit / branch / staging / amend / rebase / merge / cherry-pick など）で使用する。
 allowed-tools: "Read,Grep,Glob"
 ---
 
