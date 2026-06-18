@@ -88,7 +88,7 @@ index に今回のコミット対象外の変更が残っている場合、勝�
 
 ## コミットメッセージ
 
-コミットメッセージは `references/commit-conventions.md` の規約に従う。
+コミットメッセージは `references/commit-rules.md` の運用ルールに従う。
 
 ### 起点とする差分
 
@@ -178,6 +178,6 @@ worktree のディレクトリ名・ブランチ名を変更する手順は `ref
 
 ### References
 
-詳細な規約は以下を参照：
-- **`references/commit-conventions.md`** - コミットメッセージのプレフィックスとフォーマット
+詳細な運用ルールは以下を参照：
+- **`references/commit-rules.md`** - コミットメッセージ・ブランチ命名の運用ルール
 - **`references/commit-isolation.md`** - コミット対象の切り分け・隔離（index 確認、pathspec コミット、混入時の対処）
