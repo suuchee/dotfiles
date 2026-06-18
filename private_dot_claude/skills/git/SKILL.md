@@ -108,7 +108,7 @@ git commit <path>...   # 指定 path の変更のみコミット（既存 staged
 
 - 可能な限り、その変更の理由を記述する
 - 日本語の場合は文章の途中に改行を入れない
-- フォーマット: `<type>(<scope>): <description>`
+- フォーマット: `<type>(<scope>): <description>`（作業途中は `wip(<scope>): <description>`。ドラフトはブランチ名の `-draft` サフィックス）
 
 ## ファイルの移動・名前変更
 

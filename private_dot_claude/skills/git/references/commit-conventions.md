@@ -1,16 +1,35 @@
 # コミットメッセージ規約
 
-[Conventional Commits](https://www.conventionalcommits.org/) に基づく Git 運用規約。
+[Conventional Commits](https://www.conventionalcommits.org/) を土台とし、本リポジトリ独自のルールを加えた Git 運用規約。
 
 ## フォーマット
 
 ```text
 <type>(<scope>): <description>
+wip(<scope>): <description>
 ```
 
-- **type**: 変更の種類（必須）
+- **type**: 変更の種類（必須）。作業途中のチェックポイントは `wip`（後述）
 - **scope**: 変更対象の領域（任意、例: `infra/stg`, `frontend`, `api`）
 - **description**: 変更内容の説明（必須）
+
+### 作業途中（wip）
+
+未完成・断片的な変更を履歴に残す場合、type に `wip` を使う。
+
+| 例 | 用途 |
+| --- | --- |
+| `wip(auth): OAuth コールバックの骨組みを追加` | 機能実装の途中地点 |
+| `wip(deps): lodash を 4.x に更新中` | 依存更新の途中地点 |
+| `wip: 設定ファイルの整理中` | scope 不要な場合 |
+
+- Conventional Commits の標準 type ではない（本規約の独自拡張）
+- `feat` / `fix` 等へ置き換えてもよいが、必須ではない
+- マージ前に squash 等で整理する場合は、最終コミットを本来 type にする
+
+**draft はコミットに付けない**
+
+ドラフトはブランチ名の `-draft` サフィックスで表現する（「ブランチ命名規則」を参照）。
 
 ## type 一覧
 
@@ -33,6 +52,12 @@
 | `refactor` | 機能変更を伴わないコード改善 | 可読性向上、構造整理 |
 | `style` | コードの意味に影響しない変更 | フォーマット、UI調整 |
 | `test` | テストの追加・修正 | 新規テスト、テスト修正 |
+
+### 独自拡張
+
+| type | 対象 | 例 |
+| --- | --- | --- |
+| `wip` | 作業途中のチェックポイント | `wip(auth): OAuth コールバックの骨組みを追加` |
 
 ## scope の使い方
 
@@ -92,6 +117,24 @@ scope は任意だが、変更対象を明確にしたい場合に使用する�
 - **description**: ケバブケース（小文字、ハイフン区切り）
 - **issue**: Issue 番号（任意）
 
+### ドラフト（`-draft` サフィックス）
+
+ブランチ名末尾の `-draft` で、ドラフト作業であることを示す。
+
+```text
+<type>/<description>-draft
+<type>/<issue>-<description>-draft
+```
+
+| ブランチ名 | 意味 |
+| --- | --- |
+| `feature/add-auth-draft` | ドラフト作業。レビュー・マージ可能だが最終版ではない |
+| `feature/add-auth` | 通常作業。最終版として取り込む意図 |
+
+- コミットメッセージには付けない
+- 最終版として取り込む場合は `-draft` なしのブランチ名を使う
+- ドラフトのまま取り込む場合は `-draft` サフィックスのままでよい
+
 ### description の付け方
 
 **「何をするか（What）」を表す名前にする。「なぜ（Why）」や背景を名前にしない。**
@@ -122,6 +165,7 @@ Git-Flow を採用しているプロジェクトでは、ブランチプレフ�
 | ブランチ名 | 説明 |
 | --- | --- |
 | `feature/add-auth` | 認証機能の追加 |
+| `feature/add-auth-draft` | 認証機能のドラフト作業 |
 | `feature/singleton-gcp-clients` | GCP Client のシングルトン化 |
 | `bugfix/123-login-error` | Issue #123 のログインエラー修正 |
 | `hotfix/critical-crash` | 本番の緊急クラッシュ修正 |
