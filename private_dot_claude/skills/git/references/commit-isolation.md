@@ -2,6 +2,21 @@
 
 自分のタスク外の変更がコミットに巻き込まれるのを防ぐ。`git switch -c <new>` で新規ブランチを切っても index は持続するため、ブランチ作成だけでは隔離されない。
 
+## 予防（混入前）
+
+対処より予防が低コスト。
+
+```mermaid
+flowchart LR
+  prevent[予防] --> add["git add <path> で<br/>タスク分だけ stage"]
+  prevent --> wt["並行セッションは<br/>worktree で分離"]
+  add --> check["コミット前に index 列を確認"]
+  wt --> branch["branch-strategy.md 参照"]
+```
+
+- 最初から `git add <path>` でタスク内の変更だけ stage する（SKILL.md「ステージング」参照）
+- 並行セッションがある場合は worktree で作業を分離する（`references/branch-strategy.md` 参照）
+
 ## コミット前の確認
 
 `git status --short` の **左列（index 列）** を確認し、今回のタスクと無関係なパスがステージされていないか見る。
