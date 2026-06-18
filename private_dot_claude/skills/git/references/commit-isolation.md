@@ -18,6 +18,28 @@
 - `AM` / `MM`（index と worktree で別状態のファイル）が混在
 - セッション開始前から残っていた可能性のあるファイル
 
+### `AM` / `MM` 状態の注意
+
+`AM` / `MM` は index と worktree で内容が異なる。`git restore --staged <file>` → `git add -p` の流れでは、**unstage 後は worktree 基準の hunk** になるため、元の index 内容と一致しないことがある。
+
+```mermaid
+flowchart LR
+  subgraph danger [hunk 切り分けが危険]
+    MM["status: MM / AM"]
+    MM --> risk["restore --staged 後の add -p は<br/>worktree 基準の hunk になる"]
+  end
+  risk --> action["セクション 3 へ<br/>ユーザー確認 or ファイルごと外す"]
+```
+
+この状態では hunk 単位の非対話切り分けを試さず、判断フローの `MM / AM` 分岐どおりセクション 3 へ進む。
+
+### 具体例: 同一ファイル内の混在
+
+`src/foo.ts` にタスク A（今回）とタスク B（別セッション）の変更が両方 index にある場合:
+
+- `git commit -- src/foo.ts` → **タスク B の hunk も全部入る**（pathspec ではファイル内を切れない）
+- 対処: hunk 数が 2 以上なら stdin 注入、1 ならユーザーに `-p` を依頼するか、今回は `foo.ts` をコミット対象から外す
+
 ## 用語と粒度
 
 切り分け手段は **pathspec（path 単位）** と **hunk（ファイル内の差分ブロック単位）** に分かれる。
