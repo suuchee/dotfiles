@@ -48,6 +48,24 @@ graph TB
 
 次の順で検討する。
 
+```mermaid
+flowchart TD
+  start[index にタスク外の変更あり] --> fileSplit{ファイル単位で<br/>切り分け可能?}
+  fileSplit -->|はい| pathspec[pathspec 指定コミット]
+  fileSplit -->|いいえ<br/>同一ファイル内混在| mmCheck{status が<br/>MM / AM?}
+  mmCheck -->|はい| sec3[セクション 3<br/>ユーザー確認 or ファイルごと外す]
+  mmCheck -->|いいえ| hunkCount{hunk 数<br/>grep -c '^@@'}
+  hunkCount -->|2 以上| stdin[stdin 注入]
+  hunkCount -->|1| sec3
+  stdin -->|成功| commit[commit]
+  pathspec --> commit
+  sec3 --> userChoice{ユーザー判断}
+  userChoice -->|対話 -p| human["git add -p / restore --staged -p"]
+  userChoice -->|外す| exclude[混在ファイルを今回のコミットから除外]
+  human --> commit
+  exclude --> commit
+```
+
 ### 1. pathspec 指定コミット（第一選択）
 
 **適する場合**: コミット対象の path がファイル／ディレクトリ単位で切れる。混入 path が複数ファイルにまたがっても、対象 path を列挙すれば足りる。
