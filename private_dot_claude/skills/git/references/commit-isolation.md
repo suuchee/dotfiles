@@ -226,7 +226,13 @@ git commit -m "..." -- <path>...   # pathspec で再コミット
 git status --short | grep -v '^ ' | grep -v '^??'   # index に変化のある行のみ
 ```
 
-このフィルタで残った行が「次の commit に入る予定のファイル」。タスク外が混じっていれば pathspec へ切替える。
+このフィルタで残った行が **pathspec なしの `git commit` で入る予定の index 内容**。タスク外が混じっていれば pathspec へ切替える。
+
+フィルタの限界:
+
+- `R` / `RM`（リネーム）は index 列に変化があるため拾える
+- `??`（未追跡）は index 外のため除外される（意図どおり）
+- pathspec で絞る前の確認用であり、pathspec 指定後に入る内容とは別の話
 
 ## 関連
 
