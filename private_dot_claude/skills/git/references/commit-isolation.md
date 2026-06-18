@@ -234,6 +234,12 @@ git status --short                 # 巻き込みファイルを再確認
 git commit -m "..." -- <path>...   # pathspec で再コミット
 ```
 
+amend との関係:
+
+- 混入修正は `reset --soft` → pathspec 再コミットが基本（index を整理してからやり直す）
+- `git commit --amend` は index 全体が対象になり、pathspec での部分 amend は通常使わない
+- amend の条件・メッセージの扱いは `references/amend.md` を参照
+
 ### `git add .` / `git add -A` で広範囲に拾う
 
 作業ツリー全体の追跡対象外ファイルまで add される。
@@ -263,3 +269,4 @@ git status --short | grep -v '^ ' | grep -v '^??'   # index に変化のある�
 - SKILL.md「コミット前の確認」（4 項目チェック）
 - SKILL.md「コミット設計」（未コミット変更はそのまま、対象のみコミットする方針）
 - `references/branch-strategy.md`（ブランチ単位での作業分離）
+- `references/amend.md`（混入修正後の amend との使い分け）
