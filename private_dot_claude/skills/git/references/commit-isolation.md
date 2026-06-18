@@ -234,6 +234,8 @@ git status --short                 # 巻き込みファイルを再確認
 git commit -m "..." -- <path>...   # pathspec で再コミット
 ```
 
+複数ブランチに分ける場合は、片方だけ直して終わらない。各ブランチで `git show --stat` を確認する（`references/branch-strategy.md`「分割後の確認」参照）。
+
 amend との関係:
 
 - 混入修正は `reset --soft` → pathspec 再コミットが基本（index を整理してからやり直す）
