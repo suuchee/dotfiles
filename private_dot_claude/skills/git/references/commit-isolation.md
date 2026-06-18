@@ -98,12 +98,47 @@ git commit -m "..." -- <path>...
 | stdin 注入（unstage） | `printf 'n\ny\n' \| git restore --staged -p <file>` | 2 hunk 以上なら、指定 hunk だけ index から外れる |
 | `git apply --cached` | `git diff <file> > /tmp/p.patch` → 対象 hunk だけ残して編集 → `git apply --cached /tmp/p.patch` | 対象 hunk だけ staged になり、残りは worktree に残る |
 
+#### 非対話での難易度と打ち切り基準
+
+```mermaid
+flowchart TD
+  subgraph easy [非対話で続行可]
+    multi[hunk 2 つ以上]
+    multi --> preview["git diff --cached <file> で<br/>hunk の順序を確認"]
+    preview --> stdinOk["printf で y/n を注入<br/>個数は hunk 数と一致"]
+  end
+  subgraph abort [打ち切り → セクション 3]
+    one[hunk 1 つ]
+    split["s 分割が必要"]
+    fail["apply が失敗"]
+  end
+  one --> askUser[ユーザー確認]
+  split --> askUser
+  fail --> askUser
+  stdinOk --> done[切り分け完了]
+```
+
+| 状況 | 難易度 | エージェントの方針 |
+| --- | --- | --- |
+| hunk 2 つ以上、内容が分離済み | 低 | stdin 注入で続行 |
+| hunk 1 つ（近接変更がまとまった） | 高 | **パッチ編集に踏み込まず** セクション 3 へ |
+| `s` 分割が必要 | 高（対話向け） | セクション 3 へ |
+| パッチ編集 + `git apply --cached` | 最高 | 1 ファイル・最終手段。失敗したら打ち切り |
+
+stdin 注入の注意:
+
+- `y` / `n` の個数は hunk 数と一致させる（多いと後続が全部 `n`、少ないと途中で止まる）
+- 注入前に `git diff --cached <file>` で hunk の順序と内容を確認する
+
 **stdin 注入が効かないとき**: 変更が近接していて Git が 1 hunk にまとめた場合（`grep -c '^@@'` が `1`）、または `s`（hunk 分割）が要る場合。→ セクション 3 へ。
 
 ### 3. それでも切り分けできない場合
 
-- **編集ツールで対応** — ファイル数が少ないときのみ。多いとトークン・時間の無駄なので避ける
-- **諦めてユーザーに確認** — 混在ファイルは今回のコミットから外す、ユーザーに対話的な `-p` を依頼する、等
+エージェントはここで打ち切り、ユーザーに判断を委ねる。
+
+- **混在ファイルを今回のコミットから外す** — pathspec で他ファイルだけコミットし、混在ファイルは index に残す
+- **ユーザーに対話的 `-p` を依頼** — `git add -p` や `git restore --staged -p` で `s` / `e` を使う（人間向け）
+- **パッチ編集** — 1 ファイル・最終手段。`git apply --cached` が失敗したらこれ以上試さない
 
 ### 作業ツリー側の退避（別件）
 
