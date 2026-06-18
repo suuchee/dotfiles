@@ -104,6 +104,19 @@ git commit -m "..." -- <path>...
 - pathspec に含めたパスについては、index にあるモード変更（chmod 等）も取り込まれる
 - pathspec はディレクトリ単位の指定も可能（例: `-- docs/`）
 
+#### pathspec の挙動
+
+```mermaid
+flowchart LR
+  index[index 全体] --> commit{git commit -- path}
+  commit -->|含めた path| in[コミットに入る]
+  commit -->|含めない path| stay[index に残る]
+```
+
+- pathspec に**含めない** path は index に残り、コミットされない（他作業の staged 変更を壊さない）
+- pathspec に**含めた** path は index の内容がそのまま入る（worktree の未 stage 分は入らない）
+- pathspec なしの `git commit` は **index 全体**が対象になる
+
 ### 2. hunk 単位の切り分け（pathspec では不可）
 
 **適する場合**: 同一ファイル内で、コミット対象の hunk と対象外 hunk が index に混在している。pathspec は path 単位までしか切れない。
