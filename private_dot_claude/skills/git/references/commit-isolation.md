@@ -20,21 +20,45 @@
 
 ## 巻き込みが見つかった際の対処パターン
 
-| パターン | 適する場合 | コマンド例 |
-| --- | --- | --- |
-| pathspec 指定コミット | コミット対象のパスがファイル／ディレクトリ単位で切れる（混入 path が複数でも可） | `git commit -m "..." -- <path>...` |
-| 一時 unstage → コミット → 再 stage | 同一ファイル内で対象 hunk と対象外 hunk が index に混在するなど、pathspec では切れない | `git restore --staged -p <file>` → commit → `git add -p <file>` |
-| 作業ツリー側を退避 | 未ステージ変更まで完全に隔離したい | `git stash --keep-index`（ステージ済みのみ残る） |
+次の順で検討する。
 
-第一選択は **pathspec 指定コミット**。他作業の index を一切触らないため、最も非侵襲。
+### 1. pathspec 指定コミット（第一選択）
 
-**変更多い場合**: 対象外が複数ファイルにまたがるだけなら pathspec で対象 path を列挙すれば足りる。一時 unstage が必要なのは、pathspec ではファイル内の一部 hunk だけを外せないケースに限る。
+**適する場合**: コミット対象の path がファイル／ディレクトリ単位で切れる。混入 path が複数ファイルにまたがっても、対象 path を列挙すれば足りる。
 
-### pathspec 指定コミットの注意点
+**なぜ第一選択か**: 他作業の index を一切触らないため、最も非侵襲。
+
+```sh
+git commit -m "..." -- <path>...
+```
+
+#### pathspec 指定コミットの注意点
 
 - `--` 区切りを必ず置く（オプションとパスの解釈を明示的に分ける）
 - pathspec に含めたパスについては、index にあるモード変更（chmod 等）も取り込まれる
 - pathspec はディレクトリ単位の指定も可能（例: `-- docs/`）
+
+### 2. hunk 単位の切り分け（pathspec では不可）
+
+**適する場合**: 同一ファイル内で、コミット対象の hunk と対象外 hunk が index に混在している。pathspec は path 単位までしか切れない。
+
+**非対話でできそうなら**、次を試す：
+
+| 手段 | 向く状況 | コマンド例 |
+| --- | --- | --- |
+| `git apply --cached` | 載せたい／外したい hunk をパッチで明示できる | `git diff [--cached] <file> > /tmp/p.patch` → 編集 → `git apply --cached /tmp/p.patch` |
+| stdin 注入 | hunk の数・順序が分かっている | `printf 'y\nn\n' \| git add -p <file>` |
+
+`git add -p` / `git restore --staged -p` は対話前提。Claude Code からは stdin 注入か `git apply --cached` で非対話化する。`s`（hunk 分割）が要る場合は stdin 注入では足りないことが多い。
+
+### 3. それでも切り分けできない場合
+
+- **編集ツールで対応** — ファイル数が少ないときのみ。多いとトークン・時間の無駄なので避ける
+- **諦めてユーザーに確認** — 混在ファイルは今回のコミットから外す、ユーザーに対話的な `-p` を依頼する、等
+
+### 作業ツリー側の退避（別件）
+
+未ステージの worktree 変更まで隔離したい場合は `git stash --keep-index`（ステージ済みのみ残る）。
 
 ## よくある失敗
 
