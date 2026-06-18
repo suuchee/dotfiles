@@ -174,10 +174,8 @@ Git-Flow を採用しているプロジェクトでは、ブランチプレフ�
 
 | ブランチ type | コミット type |
 | --- | --- |
-| `feature` | `feat` |
+| `feat` | `feat` |
 | `fix` | `fix` |
 | `refactor` | `refactor` |
 | `docs` | `docs` |
 | `chore` | `chore` |
-
-**補足**: ブランチ名では `feat` より `feature` が一般的（可読性のため）
