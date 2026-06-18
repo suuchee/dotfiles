@@ -1,7 +1,7 @@
 ---
 name: dotfiles
-description: chezmoi で管理する dotfiles（~/.local/share/chezmoi）の変更・追加・適用を行うときに使用する。ユーザーが「dotfiles」「chezmoi」「chezmoi apply」「設定をホームに反映」「~/.claude や ~/.cursor の設定を直す」「エージェント設定のメンテ」「~/.agents のレイアウト」と言ったとき、またはどのリポジトリからでも個人設定の改善を依頼したときに読む。
-allowed-tools: "Read,Grep,Glob,Bash"
+description: chezmoi で管理する dotfiles（~/.local/share/chezmoi）の変更・追加・適用を行うときに使用する。
+allowed-tools: "Read,Grep,Glob,Bash(chezmoi cat:*),Bash(chezmoi data:*),Bash(chezmoi diff:*),Bash(chezmoi doctor:*),Bash(chezmoi execute-template:*),Bash(chezmoi managed:*),Bash(chezmoi source-path:*),Bash(chezmoi status:*),Bash(chezmoi target-path:*),Bash(chezmoi apply -n*)"
 ---
 
 # Dotfiles（chezmoi）
@@ -63,6 +63,8 @@ chezmoi target-path private_dot_claude/settings.json
 ```
 
 対話付き apply にはリポジトリの `scripts/chezmoi-apply-source.sh` も使える。
+
+`allowed-tools` には読み取り系とドライラン（`apply -n*`）のみ事前許可している。`chezmoi apply -v` や `chezmoi add` はホーム／ソースを変更するため、実行前にユーザー確認が必要（`settings.json` の allow にも含めない）。
 
 ## Additional Resources
 
