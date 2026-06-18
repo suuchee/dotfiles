@@ -1,6 +1,6 @@
-# コミットメッセージ規約
+# コミットメッセージ運用ルール
 
-[Conventional Commits](https://www.conventionalcommits.org/) を土台とし、本リポジトリ独自のルールを加えた Git 運用規約。
+[Conventional Commits](https://www.conventionalcommits.org/) を土台とし、本リポジトリ独自のルールを加えた Git 運用ルール。
 
 ## フォーマット
 
@@ -23,7 +23,7 @@ wip(<scope>): <description>
 | `wip(deps): lodash を 4.x に更新中` | 依存更新の途中地点 |
 | `wip: 設定ファイルの整理中` | scope 不要な場合 |
 
-- Conventional Commits の標準 type ではない（本規約の独自拡張）
+- Conventional Commits の標準 type ではない（本運用ルールの独自拡張）
 - `feat` / `fix` 等へ置き換えてもよいが、必須ではない
 - マージ前に squash 等で整理する場合は、最終コミットを本来 type にする
 
