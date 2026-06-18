@@ -1,6 +1,6 @@
 ---
 name: dotfiles
-description: chezmoi で管理する dotfiles（~/.local/share/chezmoi）の変更・追加・適用を行うときに使用する。
+description: chezmoi で管理する dotfiles の変更・追加・適用を行うときに使用する。
 allowed-tools: "Read,Grep,Glob,Bash(chezmoi cat:*),Bash(chezmoi data:*),Bash(chezmoi diff:*),Bash(chezmoi doctor:*),Bash(chezmoi execute-template:*),Bash(chezmoi managed:*),Bash(chezmoi source-path:*),Bash(chezmoi status:*),Bash(chezmoi target-path:*),Bash(chezmoi apply -n*)"
 ---
 
