@@ -42,14 +42,19 @@ git commit -m "..." -- <path>...
 
 **適する場合**: 同一ファイル内で、コミット対象の hunk と対象外 hunk が index に混在している。pathspec は path 単位までしか切れない。
 
-**非対話でできそうなら**、次を試す：
+**手順**: 切り分えが必要と判断したら、次を順に試す。`git add -p` 等をそのまま実行すると入力待ちで止まるため、stdin 注入か `git apply --cached` で非対話化する。
 
-| 手段 | 向く状況 | コマンド例 |
+1. **hunk 数を確認** — `git diff --cached <file> | grep -c '^@@'`。`1` なら変更が 1 hunk にまとまっている。stdin 注入では分割できない。
+2. **stdin 注入** — hunk が 2 つ以上あるとき。`printf` で `y` / `n` を流し込む。
+3. **`git apply --cached`** — 載せたい hunk だけのパッチを当てる。1 hunk にまとまっているときはパッチ編集で分割する。
+
+| 手段 | コマンド例 | 検証結果 |
 | --- | --- | --- |
-| `git apply --cached` | 載せたい／外したい hunk をパッチで明示できる | `git diff [--cached] <file> > /tmp/p.patch` → 編集 → `git apply --cached /tmp/p.patch` |
-| stdin 注入 | hunk の数・順序が分かっている | `printf 'y\nn\n' \| git add -p <file>` |
+| stdin 注入（stage） | `git restore --staged <file>` のあと `printf 'y\nn\n' \| git add -p <file>` | 2 hunk 以上なら、指定 hunk だけ index に載る |
+| stdin 注入（unstage） | `printf 'n\ny\n' \| git restore --staged -p <file>` | 2 hunk 以上なら、指定 hunk だけ index から外れる |
+| `git apply --cached` | `git diff <file> > /tmp/p.patch` → 対象 hunk だけ残して編集 → `git apply --cached /tmp/p.patch` | 対象 hunk だけ staged になり、残りは worktree に残る |
 
-`git add -p` / `git restore --staged -p` は対話前提。Claude Code からは stdin 注入か `git apply --cached` で非対話化する。`s`（hunk 分割）が要る場合は stdin 注入では足りないことが多い。
+**stdin 注入が効かないとき**: 変更が近接していて Git が 1 hunk にまとめた場合（`grep -c '^@@'` が `1`）、または `s`（hunk 分割）が要る場合。→ セクション 3 へ。
 
 ### 3. それでも切り分けできない場合
 
