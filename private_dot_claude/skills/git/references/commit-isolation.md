@@ -127,11 +127,25 @@ flowchart LR
 2. **stdin 注入** — hunk が 2 つ以上あるとき。`printf` で `y` / `n` を流し込む。
 3. **`git apply --cached`** — 載せたい hunk だけのパッチを当てる。1 hunk にまとまっているときはパッチ編集で分割する。
 
-| 手段 | コマンド例 | 検証結果 |
+| 状況 | やりたいこと | コマンド例 |
 | --- | --- | --- |
-| stdin 注入（stage） | `git restore --staged <file>` のあと `printf 'y\nn\n' \| git add -p <file>` | 2 hunk 以上なら、指定 hunk だけ index に載る |
-| stdin 注入（unstage） | `printf 'n\ny\n' \| git restore --staged -p <file>` | 2 hunk 以上なら、指定 hunk だけ index から外れる |
-| `git apply --cached` | `git diff <file> > /tmp/p.patch` → 対象 hunk だけ残して編集 → `git apply --cached /tmp/p.patch` | 対象 hunk だけ staged になり、残りは worktree に残る |
+| 全部 stage 済み、一部 hunk だけ外したい | unstage | `printf 'n\ny\n' \| git restore --staged -p <file>` |
+| 未 stage から一部 hunk だけ載せたい | stage | `printf 'y\nn\n' \| git add -p <file>` |
+| 全部 stage 済み、一部だけ残したい | unstage 寄り | 上の unstage を使う（`restore --staged` → `add -p` は worktree 基準になるため注意） |
+
+```mermaid
+flowchart TD
+  goal{やりたいこと}
+  goal -->|index から一部 hunk を外す| unstage["restore --staged -p<br/>cached diff 基準"]
+  goal -->|worktree から一部 hunk を載せる| stage["add -p<br/>worktree diff 基準"]
+  goal -->|全部 stage 済みで一部残す| prefer["unstage 寄りを優先<br/>MM/AM ならセクション 3"]
+```
+
+| 手段 | 検証結果 |
+| --- | --- |
+| stdin 注入（unstage） | 2 hunk 以上なら、指定 hunk だけ index から外れる |
+| stdin 注入（stage） | 2 hunk 以上なら、指定 hunk だけ index に載る |
+| `git apply --cached` | 対象 hunk だけ staged になり、残りは worktree に残る（パッチ編集が要る） |
 
 #### 非対話での難易度と打ち切り基準
 
