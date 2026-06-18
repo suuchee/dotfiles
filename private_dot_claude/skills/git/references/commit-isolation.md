@@ -1,21 +1,10 @@
 # コミット対象の切り分け・隔離
 
-index（ステージング領域）はブランチとは独立している。`git switch -c <new>` でブランチを切り替えても index の内容は持続する。
-
-`git commit`（path 指定なし）は **index 全体**をコミットする。コミット対象を限定するには、事前に index の内容を確認し、必要なら pathspec を使う。
-
-## 前提: index と commit の関係
-
-| 操作 | index への影響 |
-| --- | --- |
-| `git add <path>` | 指定 path の変更を index に載せる |
-| `git switch -c <branch>` | index は変わらない |
-| `git commit` | index 全体がコミット対象 |
-| `git commit -- <path>...` | 指定 path に該当する **index 上の変更のみ**がコミット対象。他の staged 変更は index に残る |
+自分のタスク外の変更がコミットに巻き込まれるのを防ぐ。`git switch -c <new>` で新規ブランチを切っても index は持続するため、ブランチ作成だけでは隔離されない。
 
 ## コミット前の確認
 
-`git status --short` の **左列（index 列）** が空でなければ、その行の path は次の `git commit`（path なし）に含まれる。
+`git status --short` の **左列（index 列）** を確認し、今回のタスクと無関係なパスがステージされていないか見る。
 
 | 表示 | 意味 |
 | --- | --- |
@@ -23,59 +12,64 @@ index（ステージング領域）はブランチとは独立している。`gi
 | `M ` / `MM` | 既存ファイルの変更が index に add 済み |
 | `D ` | 削除が index に add 済み |
 
-index 列に、今回コミットする意図と一致しない path があれば、下記の対処パターンを検討する。
+特に注意するサイン：
 
-`AM` / `MM` は index と worktree で状態が異なる行。コミット対象の見落としが起きやすい。
+- 自分が触っていないディレクトリ階層のファイルがステージされている
+- `AM` / `MM`（index と worktree で別状態のファイル）が混在
+- セッション開始前から残っていた可能性のあるファイル
 
-## 対処パターン
+## 巻き込みが見つかった際の対処パターン
 
-| パターン | 条件 | コマンド例 |
+| パターン | 適する場合 | コマンド例 |
 | --- | --- | --- |
-| pathspec 指定コミット | index に他の staged 変更を残したい | `git commit -m "..." -- <path>...` |
-| 一時 unstage → コミット → 再 stage | 部分 hunk staging など pathspec で表現しづらい | `git restore --staged <other>` → commit → `git add <other>` |
-| `git stash --keep-index` | 未ステージの worktree 変更を一時退避し、staged のみ残したい | `git stash --keep-index` |
+| pathspec 指定コミット | コミット対象のパスがファイル／ディレクトリ単位で切れる（混入 path が複数でも可） | `git commit -m "..." -- <path>...` |
+| 一時 unstage → コミット → 再 stage | 同一ファイル内で対象 hunk と対象外 hunk が index に混在するなど、pathspec では切れない | `git restore --staged -p <file>` → commit → `git add -p <file>` |
+| 作業ツリー側を退避 | 未ステージ変更まで完全に隔離したい | `git stash --keep-index`（ステージ済みのみ残る） |
 
-pathspec 指定コミットは index 上の他の staged 変更を触らない。
+第一選択は **pathspec 指定コミット**。他作業の index を一切触らないため、最も非侵襲。
+
+**変更多い場合**: 対象外が複数ファイルにまたがるだけなら pathspec で対象 path を列挙すれば足りる。一時 unstage が必要なのは、pathspec ではファイル内の一部 hunk だけを外せないケースに限る。
 
 ### pathspec 指定コミットの注意点
 
 - `--` 区切りを必ず置く（オプションとパスの解釈を明示的に分ける）
-- pathspec に含めた path については、index にあるモード変更（chmod 等）も取り込まれる
+- pathspec に含めたパスについては、index にあるモード変更（chmod 等）も取り込まれる
 - pathspec はディレクトリ単位の指定も可能（例: `-- docs/`）
 
 ## よくある失敗
 
-### ブランチ切替だけで隔離されると見なす
+### 新規ブランチを切れば隔離されると判断してしまう
 
-`git switch -c <new>` 後も index は持続する。`git add <path>` → `git commit`（path なし）すると、切替前から index にあった変更も含まれる。
+`git switch -c <new>` しても index は前のブランチから持続する。新規ブランチで `git add <自分の対象>` → `git commit` すると、既存ステージも巻き込まれる。
 
 → ブランチ切替の前後で `git status` を確認する。
 
-### コミット後に範囲ミスに気付いた場合
+### コミット後に気付いた場合
 
-`git reset --soft HEAD~1` でコミットを取り消すと、変更は index に復元される（worktree は不変）。pathspec で再コミットする。
+`git reset --soft HEAD~1` でコミットを取り消し、index 状態を復元できる（非破壊・worktree 不変）。その後 pathspec で再コミットする。
 
 ```bash
 git reset --soft HEAD~1
-git status --short
-git commit -m "..." -- <path>...
+git status --short                 # 巻き込みファイルを再確認
+git commit -m "..." -- <path>...   # pathspec で再コミット
 ```
 
-### `git add .` / `git add -A` で index を広くする
+### `git add .` / `git add -A` で広範囲に拾う
 
-worktree 内の追跡対象ファイルの変更を一括で index に載せる。意図しない path まで staged になる。
+作業ツリー全体の追跡対象外ファイルまで add される。
+タスク外の新規追加・削除があれば同じく巻き込まれる。
 
-→ `git add <path>` で対象を個別指定する（SKILL.md「ステージング」参照）。
+→ `git add <path>` で対象を個別指定する（SKILL.md「ステージング」参照。Claude Code では `git add -A` は deny 済み）。
 
-## index 列のみを一覧する
+## 検出が難しいケース
 
-`git status --short` の出力が多い場合、index 列に変化がある行だけを抽出する：
+セッション開始時の `git status` 出力が長大で、ユーザーの作業途中分とノイズ（大量の削除済みファイル等）が混ざっている場合、コミット直前に index 列のみを抽出して確認する：
 
 ```bash
-git status --short | grep -v '^ ' | grep -v '^??'
+git status --short | grep -v '^ ' | grep -v '^??'   # index に変化のある行のみ
 ```
 
-1 列目が空白でなく `??` でもない行 = 次の `git commit`（path なし）に含まれる path。
+このフィルタで残った行が「次の commit に入る予定のファイル」。タスク外が混じっていれば pathspec へ切替える。
 
 ## 関連
 
