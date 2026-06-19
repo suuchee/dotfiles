@@ -4,8 +4,8 @@
 # Shared hook for Claude Code (PreToolUse) and Cursor (preToolUse).
 # Set HOOK_FORMAT=claude|cursor via the wrapper in ~/.claude/hooks or ~/.cursor/hooks.
 #
-# rm <files> → trash (macOS) / trash-put (Linux)
-# rm -r / rm -rf are denied (Claude Code: permissions.deny; Cursor: this script).
+# rm <files...> → trash (macOS) / trash-put (Linux)
+# -r / -rf 等のフラグは剥がして trash に渡す（trash はディレクトリも再帰でゴミ箱送り）。
 
 set -euo pipefail
 
@@ -26,25 +26,7 @@ if [[ ! "$COMMAND" =~ ^rm[[:space:]] ]]; then
   exit 0
 fi
 
-# Deny recursive rm (parity with Claude Code permissions.deny)
-if echo "$COMMAND" | grep -qE '^rm[[:space:]]+.*(-r|--recursive)'; then
-  case "$HOOK_FORMAT" in
-    cursor)
-      jq -n --arg cmd "$COMMAND" '{
-        "permission": "deny",
-        "user_message": "rm -r / rm -rf は拒否されています。",
-        "agent_message": ("rm -r / rm -rf is forbidden: " + $cmd)
-      }'
-      ;;
-    *)
-      # Claude Code: permissions.deny should block first; exit 2 as fallback
-      exit 2
-      ;;
-  esac
-  exit 0
-fi
-
-# Extract file paths: strip "rm" and any flags (-f, -i, -v, etc.)
+# Extract file paths: strip "rm" and any flags (-r, -rf, -f, -i, -v, etc.)
 FILES=$(echo "$COMMAND" | sed -E 's/^rm[[:space:]]+//' | sed -E 's/(^|[[:space:]])-[a-zA-Z]+//g' | xargs)
 
 if [ -z "$FILES" ]; then
