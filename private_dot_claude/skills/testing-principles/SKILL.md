@@ -1,6 +1,6 @@
 ---
 name: testing-principles
-description: テストの方針・戦略を決めるときに使う。どこを test-first にするか（バグ再現・境界・構造制約・外部契約 vs 変化の激しい UI）の優先順位付け、テスタビリティ確保のための DI 境界・レイヤー分離、テスト設計の視点/視野/視座、要因マトリクスの検討時に発火する。個別ケースの列挙は `test-factor-design`、red-green 実行は `tdd` に委ねる。
+description: テストの方針・戦略を決めるときに使う。「どこからテストを書くべきか」「テストを書く優先順位は？」「このコードがテストしづらい」「env 直読み/モックしにくい」「DI した方がいい？」「テストが多すぎ/薄すぎる気がする」のような場面で発火する。扱うのは、どこを test-first にするか（バグ再現・境界・構造制約・外部契約 vs 変化の激しい UI）の優先順位付けと、テスタビリティ確保のための DI 境界・レイヤー分離、テスト設計の視点/視野/視座。個別テストケース・要因マトリクスの列挙設計は `test-factor-design`、red-green-refactor の実行は `tdd` に委ねる。Use this skill when deciding test strategy, testability, or where to write tests first (e.g. "this is hard to test", "should I add DI", "where do I start testing").
 ---
 
 # テストの方針
@@ -75,7 +75,7 @@ CLI / handler 側も同様に `{ env, stdout, exit, createClient }` を deps と
 - **視野**: 対象範囲（unit / integration / e2e）
 - **視座**: 誰の責任で書くか（モジュール作者 / API 利用者 / 運用者）
 
-定義と使い分けの詳細・アンチパターンは `~/.claude/skills/perspective/` を参照。
+定義と使い分けの詳細・アンチパターンは `~/.claude/skills/perspective/SKILL.md` を参照。
 
 ## テスト設計の要因マトリクス
 
