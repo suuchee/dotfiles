@@ -61,20 +61,20 @@ uv run pytest
 
 リンターおよびフォーマッターは **ruff** を使用する。
 
-ruff は uv に同梱されているため、明示的な依存関係追加は不要。
+ruff は uv にバンドルされているため、`uvx ruff` で実行する（`uvx ruff` と違い、プロジェクトの dev 依存に含まれていなくても使える）。
 
 ```sh
 # リント実行
-uv run ruff check .
+uvx ruff check .
 
 # リント + 自動修正
-uv run ruff check --fix .
+uvx ruff check --fix .
 
 # フォーマット実行
-uv run ruff format .
+uvx ruff format .
 
 # フォーマットチェック（変更なし）
-uv run ruff format --check .
+uvx ruff format --check .
 ```
 
 ## エラーハンドリング
