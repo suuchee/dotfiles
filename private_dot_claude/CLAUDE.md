@@ -25,10 +25,10 @@
   * 詳細・作法・失敗パターンは `~/.claude/rules/fact-based-evaluation.md` を参照。
 7. 常にあなたの知識は古い可能性があることを認識し、特に外部サービスやライブラリを利用しているコードの作成・変更を行う場合は、以下の手順で調査する。
    1. Context7または公式ドキュメントに直接アクセスし、最新仕様を確認
-   2. 調査結果は実装根拠として `.notes/<NNN>_<context-name>/research/<対象名>_YYYY-MM-DD.md` に保存
+   2. 調査結果は実装根拠として `.notes/context/<NNN>_<context-name>/research/<対象名>_YYYY-MM-DD.md` に保存
       * 一度保存した記録は過去の記録として価値があるため、メンテナンス不要
-9. 対話中の要望や要件に関わる情報を常に `.notes/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
-10. 検討したことは再度検討しなくていいよう `.notes/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
+9. 対話中の要望や要件に関わる情報を常に `.notes/context/<NNN>_<context-name>/requirements/requirements_YYYY-MM-DD.md` に記録する。
+10. 検討したことは再度検討しなくていいよう `.notes/context/<NNN>_<context-name>/deliberation/deliberation_YYYY-MM-DD.md` にメモする。
 
 ## 設計・実装ポリシー
 
