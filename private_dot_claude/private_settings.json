@@ -59,7 +59,7 @@
       "Bash(git status:*)",
       "Bash(git switch:*)",
       "Bash(git tag:*)",
-      "Bash(git commit:*)",
+      "Bash(git commit --no-gpg-sign:*)",
       "Bash(npm audit:*)",
       "Bash(npm explain:*)",
       "Bash(npm ls:*)",
