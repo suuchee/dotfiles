@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "./hooks/safe-rm.sh",
+        "matcher": "Shell"
+      }
+    ]
+  }
+}
