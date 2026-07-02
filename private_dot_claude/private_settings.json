@@ -165,6 +165,12 @@
             "if": "Bash(rm:*)",
             "timeout": 5,
             "statusMessage": "Checking for safe delete..."
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/no-gpg-sign-guard.sh",
+            "timeout": 5,
+            "statusMessage": "Checking git signing policy..."
           }
         ]
       }
