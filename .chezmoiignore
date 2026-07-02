@@ -2,6 +2,7 @@ README.md
 
 bak/
 .worktrees/
+tests/
 **/skills/*-workspace/
 
 # macOS

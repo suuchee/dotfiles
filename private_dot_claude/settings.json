@@ -157,7 +157,6 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/safe-rm.sh",
-            "if": "Bash(rm:*)",
             "timeout": 5,
             "statusMessage": "Checking for safe delete..."
           },
