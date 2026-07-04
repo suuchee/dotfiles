@@ -1,5 +1,7 @@
 # エージェント設定のレイアウト（chezmoi）
 
+dotfiles メンテ時は **`dotfiles` skill**（`~/.claude/skills/dotfiles/`）を読む。
+
 ## 方針
 
 ツール横断の設定は **`~/.agents/` を正本**とする。chezmoi ソースは `private_dot_agents/`。
@@ -42,3 +44,4 @@ private_dot_local/           → 廃止予定（~/.agents へ統合済みのも�
 ## 参照
 
 - 正本の説明: `~/.agents/README.md`（`private_dot_agents/README.md`）
+- 作業手順: `private_dot_claude/skills/dotfiles/SKILL.md`
