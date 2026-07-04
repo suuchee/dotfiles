@@ -1,7 +1,6 @@
 ---
 name: notes-system
 description: ".notes システム（notes ブランチ・worktree・Git LFS）のセットアップ手順、ディレクトリ構造、CONTEXT.md フォーマット、命名規則、運用、worktree 内 Bash 操作の注意をまとめたリファレンス。"
-disable-model-invocation: true
 ---
 
 # .notes システムのリファレンス
