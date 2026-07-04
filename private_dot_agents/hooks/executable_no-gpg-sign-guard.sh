@@ -7,6 +7,10 @@
 # 方針: エージェントは署名しない (see ~/.claude/skills/git/references/signing.md)。
 #   - `git commit ...` に `--no-gpg-sign` が含まれない場合は deny する
 #     （commit.gpgsign=true 環境で意図せず署名処理が走るのを防ぐため）。
+#   - `git merge / cherry-pick / revert` も commit.gpgsign=true では署名コミットを
+#     作成するため同様に deny する。コミットを作らない形態（--abort / --quit /
+#     --skip / -n / --no-commit、merge の --ff-only / --squash）と、オプションを
+#     追加できない --continue は素通し。
 #   - `git tag ...` に署名系オプション（-s / --sign / -u / --local-user）が
 #     含まれる場合は deny する。軽量タグ・`-a` の注釈タグは素通し。
 #   - 上記以外の Bash コマンドは素通し。
@@ -60,14 +64,22 @@ while [ "$i" -lt "$n" ]; do
     continue
   fi
 
-  # Advance past `git` and any `-c key=val` / `--config key=val` pairs.
+  # Advance past `git` and global options that take a value
+  # (`-c key=val` / `-C path` / `--git-dir path` / `--work-tree path`,
+  #  and their attached forms `-cX` / `-CX` / `--git-dir=X` / `--work-tree=X`).
   j=$((i + 1))
   while [ "$j" -lt "$n" ]; do
     t="${TOKENS[$j]}"
-    if [ "$t" = "-c" ] || [ "$t" = "--config" ]; then
+    if [ "$t" = "-c" ] || [ "$t" = "--config" ] || [ "$t" = "-C" ] || [ "$t" = "--git-dir" ] || [ "$t" = "--work-tree" ]; then
       j=$((j + 2))
       continue
     fi
+    case "$t" in
+      -c?*|-C?*|--git-dir=*|--work-tree=*)
+        j=$((j + 1))
+        continue
+        ;;
+    esac
     break
   done
 
@@ -75,19 +87,42 @@ while [ "$i" -lt "$n" ]; do
   sub="${TOKENS[$j]}"
 
   case "$sub" in
-    commit)
-      # Look for --no-gpg-sign anywhere after `commit` (until the next `&&`/`;`/`|` — but
-      # tokenized already, so we just scan remaining tokens).
+    commit|merge|cherry-pick|revert)
+      # Look for --no-gpg-sign anywhere after the subcommand (until the next
+      # `&&`/`;`/`|` — tokenized already, so we just scan remaining tokens).
       has_flag=0
       k=$((j + 1))
       while [ "$k" -lt "$n" ]; do
-        case "${TOKENS[$k]}" in
+        t2="${TOKENS[$k]}"
+        case "$t2" in
           --no-gpg-sign|--no-gpg-sign=*) has_flag=1; break ;;
           "&&"|"||"|";"|"|") break ;;
         esac
+        # merge / cherry-pick / revert: コミットを作らない形態と、オプションを
+        # 追加できない --continue は署名処理が走らない（または対処不能）ので素通し。
+        if [ "$sub" != "commit" ]; then
+          case "$t2" in
+            --abort|--quit|--skip|--continue|-n|--no-commit)
+              has_flag=1
+              break
+              ;;
+            --ff-only|--squash)
+              if [ "$sub" = "merge" ]; then
+                has_flag=1
+                break
+              fi
+              ;;
+          esac
+        fi
         k=$((k + 1))
       done
-      [ "$has_flag" -eq 0 ] && emit_deny "$DENY_COMMIT"
+      if [ "$has_flag" -eq 0 ]; then
+        if [ "$sub" = "commit" ]; then
+          emit_deny "$DENY_COMMIT"
+        else
+          emit_deny "no-gpg-sign-guard: エージェントは署名なしでコミットするポリシー。git $sub は commit.gpgsign=true の環境で署名コミットを作成するため、--no-gpg-sign を付けて再実行してください。詳細: ~/.claude/skills/git/references/signing.md"
+        fi
+      fi
       ;;
     tag)
       # Deny if any signing flag appears in this tag invocation.
