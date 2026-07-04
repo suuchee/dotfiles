@@ -59,7 +59,7 @@
       "Bash(git status:*)",
       "Bash(git switch:*)",
       "Bash(git tag:*)",
-      "Bash(git commit:*)",
+      "Bash(git commit --no-gpg-sign:*)",
       "Bash(npm audit:*)",
       "Bash(npm explain:*)",
       "Bash(npm ls:*)",
@@ -165,6 +165,12 @@
             "if": "Bash(rm:*)",
             "timeout": 5,
             "statusMessage": "Checking for safe delete..."
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/no-gpg-sign-guard.sh",
+            "timeout": 5,
+            "statusMessage": "Checking git signing policy..."
           }
         ]
       }
