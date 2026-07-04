@@ -83,6 +83,12 @@ git switch <original-branch>
 
 cherry-pick 後の元ブランチ整理の詳細は SKILL.md「cherry-pick 後のブランチ整理」を参照。
 
+### 分割後の確認
+
+混在コミットを複数ブランチに分けるとき、**旧コミット SHA にブランチを指すだけでは分割にならない**（中身は混在のまま）。各ブランチで対象 path だけを取り出して新規コミットする（`reset --soft` → pathspec 再コミット等。詳細は `references/commit-isolation.md`「コミット後に気付いた場合」）。
+
+分割後は**各ブランチで** `git show --stat` を確認し、意図したファイルだけか見る。
+
 ## 具体例 (パターン)
 
 機能ブランチ `feature/X` で `feat:` のコミットを積む想定だったが、`docs:` や `refactor:` のコミットを 2 本積んでしまい、続きの作業もそちらにシフトする見込みになった場合:
