@@ -142,51 +142,6 @@ Present findings in a clear format:
 2. **Missing environments**: Environment `prod` referenced but not created
 ```
 
-## Common Patterns
-
-### Next.js / Firebase Projects
-
-Typical variables for Next.js with Firebase:
-
-```
-# Secrets (sensitive)
-NEXT_PUBLIC_FIREBASE_API_KEY
-SERVICE_ACCOUNT_JSON
-WIF_PROVIDER
-
-# Variables (non-sensitive but environment-specific)
-PROJECT_ID
-NEXT_PUBLIC_FIREBASE_PROJECT_ID
-```
-
-### GCP Deployment Projects
-
-Typical variables for GCP deployments:
-
-```
-# Secrets
-SERVICE_ACCOUNT_DEPLOY    # SA email for WIF
-WIF_PROVIDER_DEPLOY       # Workload Identity Federation provider
-
-# Variables
-PROJECT_ID                # GCP project ID
-REGION                    # Deployment region
-```
-
-### General CI/CD
-
-Common CI/CD variables:
-
-```
-# Secrets
-NPM_TOKEN                 # For private npm packages
-CODECOV_TOKEN             # For coverage reports
-SONAR_TOKEN               # For code quality
-
-# Variables
-NODE_VERSION              # Node.js version
-```
-
 ## Important Notes
 
 ### This Skill Does NOT
