@@ -1,0 +1,34 @@
+{
+  "skill_name": "csv-api-diff-check",
+  "notes": "ドラフトのみ。実行は未予定。各テストプロンプトは現実的なユーザーが書く想定。",
+  "evals": [
+    {
+      "id": 1,
+      "name": "first-time-reconciliation-with-multiple-pairs",
+      "prompt": "BI で使ってる mazrica と freee のシートが、公式 CSV エクスポートと値が合うか検算したいです。 .notes/data/検算用/api と .notes/data/検算用/csv にそれぞれ CSV を置いてあります。 deals / actions / projects / workloads のペアで突き合わせてほしいんですが、中身は可能な限り見ないでお願いします。",
+      "expected_output": "ペア対応・空列ルール・マージキーをユーザーに確認した上で、ヘッダ+空列→クリーンアップ→集計→必要に応じてサンプル→分類（表記差/実値差/欠損）→対応案 まで進む。長い文字列は短縮されている。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "format-diff-only-deep-dive",
+      "prompt": "deals だけ、555 件中 555 件で差分が出てます。 contract_date, expected_close_date, last_modified_at の 3 列が全部全件差。 たぶんフォーマット差っぽいんですが切り分けたいです。 取り込みは TypeScript 側で書いてるので、表記揃え shim 入れるべきか BI 側で吸収するべきかも判断したいです。",
+      "expected_output": "上位サンプル抽出 → 表記差パターン特定（区切り文字差・日時 vs 日付丸めなど）→ 取り込み層 shim と BI 側変換の判断軸提示 → ユーザー選択を促す。BI が日付型として認識できる場合は表記揃え不要の選択肢も提示。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "data-loss-investigation",
+      "prompt": "actions の取り込みを刷新して全列 API から取るようにしたんですが、検算したら 22 件で取引先・グループ・フェーズ・いいね数・コメント数 が同時に空文字になってます。 csv 側にはちゃんと値があります。 原因の切り分け方法を教えてください。",
+      "expected_output": "main_pattern モードで該当行の共通特徴抽出 → 期間・種別・取れている列・落ちている列のパターン化 → list API のレスポンス fullness の差を疑う → detail API 補完 / include パラメータ / SaaS 側確認 の対応案提示 → 1 件 detail API で検証する最短パスを提案。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "intersect-zero-key-mismatch",
+      "prompt": "deals のペアで intersect=0 になってます。 案件ID をキーにしてるんですが、api 側で案件ID 列が 548 件重複しててユニーク値が 10 個しかないです。 何が起きてるんでしょうか？",
+      "expected_output": "「キー列にそもそも案件ID が入っていない」可能性（列ズレ）を指摘 → ユーザーに「中身を最小限見て確認していいか」確認 → 上位サンプルで列ズレを特定 → ユーザーに修正版データを依頼。",
+      "files": []
+    }
+  ]
+}
