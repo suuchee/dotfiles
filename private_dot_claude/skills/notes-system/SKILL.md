@@ -123,16 +123,16 @@ updated_at: 2026-02-15
 なぜこの作業が必要になったか。
 ```
 
-## 公開境界（notes ↔ `docs/`）の詳細
+## 公開境界（main 側 ↔ notes）の詳細
 
-方向のルール（notes → `docs/` の一方向のみ）は `~/.claude/rules/notes.md` にある。理由と実務適用は以下。
+方向のルール（notes → main 側の一方向のみ。main/master 及び派生ブランチにコミットされるファイルから notes への参照・リンクは書かない）は `~/.claude/rules/notes.md` にある。理由と実務適用は以下。
 
 ### 理由
 
-- notes 側は流動的（削除・移動・renumber 対象、ブランチ自体が orphan）
-- `docs/` は安定的（ADR は append-only、設計資料は確定版）
-- 公開 docs が個人 notes に依存すると、notes 側の変更で参照が壊れ、保守コストが公開側に染み出す
-- 公開ドキュメントは他人が notes を持っていなくても理解できる単独完結である必要がある
+- notes 側は流動的（削除・移動・renumber 対象、ブランチ自体が orphan・push しないローカル専用）
+- main 側は安定的かつ共有物（他コントリビューターと共有される。`docs/` の ADR は append-only、設計資料は確定版）
+- 共有される main 側ファイルが notes に依存すると、notes は他者が持たず push もされないため参照が壊れ、保守コストが染み出す
+- main 側のファイルは他人が notes を持っていなくても理解できる単独完結である必要がある
 
 ### 実務での適用
 
