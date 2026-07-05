@@ -26,10 +26,8 @@ allowed-tools: "Read,Write,Edit,Grep,Glob,Bash"
 以下を `Read` / `Glob` で網羅する：
 
 - `CONTEXT.md`（目的・背景・status）
-- `intent/`（既存の goal / constraints / decisions）
-- `evidence/incidents/`（失敗ログ）
-- `evidence/ops-learnings.md`
-- `deliberation/` / `research/`（必要に応じて）
+- `intent/decisions/`（既存の軽量 ADR。運用しているコンテキストのみ）
+- `deliberation/` / `research/`（検討・調査ログ、失敗ログ・運用知見を含む）
 
 ### 2. 4種類に分類
 
