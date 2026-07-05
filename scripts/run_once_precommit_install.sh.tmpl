@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# chezmoi ソースリポジトリ自身に pre-commit フックを登録し、
+# コミット時に gitleaks による secret スキャンを強制する。
+source_dir="{{ .chezmoi.sourceDir }}"
+
+if ! command -v pre-commit &> /dev/null; then
+  echo "⚠️  pre-commit is not installed, skipping hook installation."
+  exit 0
+fi
+
+if [ ! -e "$source_dir/.pre-commit-config.yaml" ]; then
+  echo "⚠️  .pre-commit-config.yaml not found, skipping hook installation."
+  exit 0
+fi
+
+echo "🪝 Installing pre-commit hooks in chezmoi source..."
+cd "$source_dir" || exit 1
+pre-commit install
+echo "✅ pre-commit hooks installed"
