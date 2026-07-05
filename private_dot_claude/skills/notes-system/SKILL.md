@@ -145,15 +145,7 @@ updated_at: 2026-02-15
 - **コンテキスト**: `<連番>_<prefix>_<name>`（例: `context/001_feature_add-auth`）
 - **ファイル**: `<対象名>_YYYY-MM-DD.md`
 
-### prefix 一覧
-
-| prefix | 用途 |
-| --- | --- |
-| `feature` | 新機能 |
-| `fix` | バグ修正 |
-| `refactor` | リファクタリング |
-| `docs` | ドキュメント |
-| `chore` | その他 |
+`<prefix>` はブランチの種別セグメント（`<prefix>/<name>`）に対応する。種別の一覧と選び方は git skill の「ブランチ命名規則」（`~/.claude/skills/git/references/commit-rules.md`）を単一ソースとして従う（Git-Flow の repo なら `feature` / `bugfix` 等、それ以外なら `feat` / `fix` / `refactor` / `docs` / `chore` 等、その repo の規約に合わせる）。notes 独自の prefix 一覧は持たない（二重管理・ドリフトを避けるため）。
 
 ## 運用
 
