@@ -11,7 +11,7 @@ notes worktree の `context/` 配下に新規コンテキストディレクト�
 
 ## 前提
 
-- `.worktrees/notes/` が展開済みであること（未展開なら `~/.claude/rules/notes.md` のセットアップ手順に従う）
+- `.worktrees/notes/` が展開済みであること（未展開なら `notes-system` スキルの `references/setup.md` に従う）
 - 作業対象は notes worktree の **content ルート**（以下 `<ROOT>`）配下。新規フラット構成なら `<ROOT>` = `.worktrees/notes/`、旧構成の repo に `.worktrees/notes/.notes/` があればその内側が `<ROOT>`（詳細は `notes-system` スキル）
 
 ## 手順
