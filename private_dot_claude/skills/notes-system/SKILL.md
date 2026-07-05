@@ -1,15 +1,15 @@
 ---
 name: notes-system
-description: ".notes システム（notes ブランチ・worktree・Git LFS）のセットアップ手順、ディレクトリ構造、CONTEXT.md フォーマット、命名規則、運用、worktree 内 Bash 操作の注意をまとめたリファレンス。"
+description: "notes システム（notes ブランチ・worktree・Git LFS）のセットアップ手順、ディレクトリ構造、CONTEXT.md フォーマット、命名規則、運用、worktree 内 Bash 操作の注意をまとめたリファレンス。"
 ---
 
-# .notes システムのリファレンス
+# notes システムのリファレンス
 
 常時効く判断（パスの読み替え・公開境界・notes は push しない）は `~/.claude/rules/notes.md` にある。本ファイルはセットアップと構造の詳細を扱う。
 
 ## セットアップ
 
-`.notes/` ディレクトリを使う前に、以下の手順で環境を準備する。既にセットアップ済みの場合はスキップする。
+notes worktree を使う前に、以下の手順で環境を準備する。既にセットアップ済みの場合はスキップする。
 
 前提として `.worktrees/` は global gitignore (`~/.config/git/ignore`) で除外されている想定。個別 repo の `.gitignore` には書かない（`~/.claude/skills/git/SKILL.md` の「.gitignore の置き場所」参照）。
 
@@ -61,16 +61,21 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
 
 セットアップ前にバイナリをコミットしてしまった場合は、`git lfs migrate import` で履歴書き換えが必要。
 
-### セットアップ後のパス
+### セットアップ後のパス（content ルート）
+
+notes worktree の **content ルート** は、以下で決まる（本ファイルでは `<ROOT>` と表記）。
+
+- **新規（フラット構成）**: `<ROOT>` = `.worktrees/notes/`（worktree ルート直下がそのまま content ルート）
+- **旧構成の互換**: 既存 repo に `.worktrees/notes/.notes/` があれば、その内側を `<ROOT>` とする（既存は移行しない）
 
 - **worktree ルート**: `.worktrees/notes/`
-- **コンテキスト格納先**: `.worktrees/notes/.notes/context/`
-- CLAUDE.md 等で `.notes/...` と記載されているパスは、すべて `.worktrees/notes/.notes/...` に読み替える
+- **コンテキスト格納先**: `<ROOT>/context/`
+- CLAUDE.md 等の notes 側パス（`context/...` 等）は `<ROOT>/...` に読み替える（`<ROOT>` ≡ content ルート）
 
 ## 構造
 
 ```text
-.notes/
+<ROOT>/                          # notes worktree の content ルート（新規: .worktrees/notes/）
 └── context/
     └── <NNN>_<prefix>_<name>/
         ├── CONTEXT.md           # メタ情報（目的、背景、ステータス等）
@@ -90,7 +95,7 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
             └── references/      #   外部ドキュメント・配布資料
 ```
 
-コンテキストは必ず `.notes/context/` 配下に置く。`.notes/` 直下にコンテキストディレクトリを作らない（将来 `.notes/` 直下を別用途に使えるよう、中間層 `context/` を維持する）。
+コンテキストは必ず `<ROOT>/context/` 配下に置く。`<ROOT>` 直下にコンテキストディレクトリを作らない（将来 `<ROOT>` 直下を別用途に使えるよう、中間層 `context/` を維持する）。
 
 各レイヤーは必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら plan/ や research/ だけでよい）。
 
@@ -118,26 +123,26 @@ updated_at: 2026-02-15
 なぜこの作業が必要になったか。
 ```
 
-## 公開境界（`.notes/` ↔ `docs/`）の詳細
+## 公開境界（main 側 ↔ notes）の詳細
 
-方向のルール（`.notes/` → `docs/` の一方向のみ）は `~/.claude/rules/notes.md` にある。理由と実務適用は以下。
+方向のルール（notes → main 側の一方向のみ。main/master 及び派生ブランチにコミットされるファイルから notes への参照・リンクは書かない）は `~/.claude/rules/notes.md` にある。理由と実務適用は以下。
 
 ### 理由
 
-- `.notes/` は流動的（削除・移動・renumber 対象、ブランチ自体が orphan）
-- `docs/` は安定的（ADR は append-only、設計資料は確定版）
-- 公開 docs が個人 notes に依存すると、notes 側の変更で参照が壊れ、保守コストが公開側に染み出す
-- 公開ドキュメントは他人が `.notes/` を持っていなくても理解できる単独完結である必要がある
+- notes 側は流動的（削除・移動・renumber 対象、ブランチ自体が orphan・push しないローカル専用）
+- main 側は安定的かつ共有物（他コントリビューターと共有される。`docs/` の ADR は append-only、設計資料は確定版）
+- 共有される main 側ファイルが notes に依存すると、notes は他者が持たず push もされないため参照が壊れ、保守コストが染み出す
+- main 側のファイルは他人が notes を持っていなくても理解できる単独完結である必要がある
 
 ### 実務での適用
 
-- ADR / 設計資料に「検討経緯」「実機検証結果」を書きたい場合は、要点を `docs/` 配下に正式版として保存する（個別の `.notes/` ファイルにリンクしない）
-- `.notes/` 側の CONTEXT.md / research / spec / evidence では、関連する `docs/` を「関連ドキュメント」「関連 ADR」セクションでリンクする（逆方向は OK）
-- 「`.notes/.../foo.md` を参照」と書きたくなったら、その内容を `docs/` に昇格させるか、要約して `docs/` の本文に取り込むかを検討する
+- ADR / 設計資料に「検討経緯」「実機検証結果」を書きたい場合は、要点を `docs/` 配下に正式版として保存する（個別の notes ファイルにリンクしない）
+- notes 側の CONTEXT.md / research / spec / evidence では、関連する `docs/` を「関連ドキュメント」「関連 ADR」セクションでリンクする（逆方向は OK）
+- 「notes の `.../foo.md` を参照」と書きたくなったら、その内容を `docs/` に昇格させるか、要約して `docs/` の本文に取り込むかを検討する
 
 ## 命名規則
 
-- **コンテキスト**: `<連番>_<prefix>_<name>`（例: `.notes/context/001_feature_add-auth`）
+- **コンテキスト**: `<連番>_<prefix>_<name>`（例: `context/001_feature_add-auth`）
 - **ファイル**: `<対象名>_YYYY-MM-DD.md`
 
 ### prefix 一覧

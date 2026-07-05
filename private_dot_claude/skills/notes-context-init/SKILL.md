@@ -1,18 +1,18 @@
 ---
 name: notes-context-init
-description: 新規の `.notes/<NNN>_<prefix>_<name>/` コンテキストを CONTEXT.md 付きで作成する。ユーザーが「コンテキスト作成」「notes コンテキスト初期化」「新しい作業を始める」「.notes に新規作成」等と依頼したときに使用する。
+description: notes worktree に新規の `context/<NNN>_<prefix>_<name>/` コンテキストを CONTEXT.md 付きで作成する。ユーザーが「コンテキスト作成」「notes コンテキスト初期化」「新しい作業を始める」「notes に新規作成」等と依頼したときに使用する。
 allowed-tools: "Read,Write,Bash,Glob"
 disable-model-invocation: true
 ---
 
 # notes-context-init
 
-`.notes/` 配下に新規コンテキストディレクトリを CONTEXT.md 付きで作成する。
+notes worktree の `context/` 配下に新規コンテキストディレクトリを CONTEXT.md 付きで作成する。
 
 ## 前提
 
 - `.worktrees/notes/` が展開済みであること（未展開なら `~/.claude/rules/notes.md` のセットアップ手順に従う）
-- 作業対象パスは `.worktrees/notes/.notes/` 配下
+- 作業対象は notes worktree の **content ルート**（以下 `<ROOT>`）配下。新規フラット構成なら `<ROOT>` = `.worktrees/notes/`、旧構成の repo に `.worktrees/notes/.notes/` があればその内側が `<ROOT>`（詳細は `notes-system` スキル）
 
 ## 手順
 
@@ -26,14 +26,14 @@ disable-model-invocation: true
 
 ### 2. 連番を決定
 
-`.worktrees/notes/.notes/` を `Glob` で走査し、既存の最大連番 + 1（3桁ゼロ埋め）を採番。
+`<ROOT>/context/` を `Glob` で走査し、既存の最大連番 + 1（3桁ゼロ埋め）を採番。
 
 ### 3. ディレクトリと CONTEXT.md を作成
 
 コンテキストディレクトリを作成し、その直下に CONTEXT.md を置く。
 
 ```text
-.worktrees/notes/.notes/<NNN>_<prefix>_<name>/
+<ROOT>/context/<NNN>_<prefix>_<name>/
 └── CONTEXT.md
 ```
 

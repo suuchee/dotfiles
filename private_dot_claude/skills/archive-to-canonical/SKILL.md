@@ -1,6 +1,6 @@
 ---
 name: archive-to-canonical
-description: 完了した `.notes/<NNN>_.../` コンテキストから普遍化すべき決定・知見を抽出し、`intent/decisions/` の軽量 ADR、`docs/` への正式昇格、`~/.claude/rules/` への昇格候補として整理する。失敗ケースを eval（manual-cases.json / pdca-cases）として記録するときにも使う。ユーザーが「コンテキストを archive」「決定を昇格」「knowledge を canonical に戻す」「失敗を eval に残す」等と依頼したときに使用する。
+description: 完了した notes worktree の `context/<NNN>_.../` コンテキストから普遍化すべき決定・知見を抽出し、`intent/decisions/` の軽量 ADR、`docs/` への正式昇格、`~/.claude/rules/` への昇格候補として整理する。失敗ケースを eval（manual-cases.json / pdca-cases）として記録するときにも使う。ユーザーが「コンテキストを archive」「決定を昇格」「knowledge を canonical に戻す」「失敗を eval に残す」等と依頼したときに使用する。
 allowed-tools: "Read,Write,Edit,Grep,Glob,Bash"
 ---
 
@@ -17,7 +17,7 @@ allowed-tools: "Read,Write,Edit,Grep,Glob,Bash"
 
 ## 入力
 
-- 対象コンテキスト: `.worktrees/notes/.notes/<NNN>_<prefix>_<name>/`
+- 対象コンテキスト: `<ROOT>/context/<NNN>_<prefix>_<name>/`（`<ROOT>` = notes worktree の content ルート。新規フラット構成なら `.worktrees/notes/`、旧構成なら `.worktrees/notes/.notes/`。`notes-system` スキル参照）
 
 ## 手順
 
@@ -59,7 +59,7 @@ allowed-tools: "Read,Write,Edit,Grep,Glob,Bash"
 このスキルは **直接 `docs/` や `~/.claude/rules/` を書き換えない**。代わりに以下を作る：
 
 ```text
-.worktrees/notes/.notes/<NNN>_.../intent/decisions/<YYYY-MM-DD>-archive-summary.md
+<ROOT>/context/<NNN>_.../intent/decisions/<YYYY-MM-DD>-archive-summary.md
 ```
 
 内容：

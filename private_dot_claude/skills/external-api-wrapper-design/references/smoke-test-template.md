@@ -127,7 +127,7 @@ wait
 
 ## 結果の記録
 
-smoke test の結果は `.notes/<NNN>_<context>/research/smoke-test_YYYY-MM-DD.md` に記録する。テンプレ：
+smoke test の結果は notes の `context/<NNN>_<context>/research/smoke-test_YYYY-MM-DD.md` に記録する。テンプレ：
 
 ```markdown
 # 実 API smoke test 結果メモ
