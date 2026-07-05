@@ -2,8 +2,6 @@
 
 chezmoi を使用した dotfiles 管理リポジトリです。
 
-エージェント横断設定（hooks / skills の正本）は `~/.agents/`。詳細は [docs/agent-config.md](docs/agent-config.md) と `~/.agents/README.md` を参照。chezmoi メンテは **`dotfiles` skill**（`private_dot_claude/skills/dotfiles/`）を参照。
-
 ## 前提条件
 
 chezmoi がインストールされていること。インストール方法は公式ドキュメントを参照してください。
