@@ -74,20 +74,16 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
 └── context/
     └── <NNN>_<prefix>_<name>/
         ├── CONTEXT.md           # メタ情報（目的、背景、ステータス等）
-        ├── intent/              # 意思決定レイヤー
-        │   ├── goal.md          #   outcome / opportunities
-        │   ├── constraints.md   #   制約
-        │   └── decisions/       #   軽量ADR（YYYY-MM-DD-<topic>.md）
+        ├── intent/              # 意思決定レイヤー（goal / constraints / decisions 等。使い方は各自）
         ├── plan/                # 計画・実装設計
         ├── research/            # 調査・技術検証
         ├── requirements/        # 要望・要件
         ├── deliberation/        # 検討・比較
         ├── conversation/        # 会話ログ
         ├── spec/                # 仕様（検討中。正式版は docs/ へ）
-        ├── evidence/            # 検証・学びの集積レイヤー
-        │   ├── tests/           #   eval task 群（実失敗 20–50 件）
-        │   ├── incidents/       #   失敗ログ
-        │   └── ops-learnings.md #   運用知見
+        ├── evidence/            # 証跡・検証の集積レイヤー（使い方は各自。下は例）
+        │   ├── forensic/        #   例: マルウェア/インシデント調査の証跡（改変せず保持）
+        │   └── trail/           #   例: 監査証跡・操作ログ
         └── assets/              # 素材レイヤー（動画/画像/参考メモ等、必要時のみ）
             ├── recordings/      #   画面収録・録画
             ├── screenshots/     #   スクリーンショット（日付などで階層化）
@@ -96,7 +92,7 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
 
 コンテキストは必ず `.notes/context/` 配下に置く。`.notes/` 直下にコンテキストディレクトリを作らない（将来 `.notes/` 直下を別用途に使えるよう、中間層 `context/` を維持する）。
 
-`intent/`、`evidence/`、`assets/` は必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら従来通り plan/ や research/ だけでよい）。
+各レイヤーは必要に応じて追加するもので、すべてのコンテキストで揃える必要はない（軽いタスクなら plan/ や research/ だけでよい）。
 
 `assets/` は元素材（動画・画像・配布資料など）を集めるためのもので、コンテキスト独自の派生ファイル（要約・対応表など）は `research/` 等の通常レイヤーに置く。素材と分析を分けることで原本を変更せず参照できる。
 
