@@ -82,4 +82,3 @@ Claude Code の Bash は **CWD がコマンド間で持続**する。
 ## コミット
 
 - git skill の規約に従う（Conventional Commits、コミット分離）
-- 制限環境で署名がタイムアウトする場合: `git -c commit.gpgsign=false commit`

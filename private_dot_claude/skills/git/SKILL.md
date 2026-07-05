@@ -116,21 +116,6 @@ Git管理下にあるファイルやディレクトリの名前の変更・移�
 git mv old-name.txt new-name.txt
 ```
 
-## 署名（GPG / SSH）
-
-エージェントが作成するコミット・タグは **常に署名なし** とする。`commit.gpgsign` / `tag.gpgsign` が有効な環境でも、次のように明示的に無署名で実行する。
-
-```sh
-git commit --no-gpg-sign ...
-git commit --no-gpg-sign --amend ...
-git merge --no-gpg-sign ...          # merge コミットも署名対象のため必須
-git cherry-pick --no-gpg-sign ...
-git revert --no-gpg-sign ...
-git tag <tagname>                    # 軽量タグ（署名なし）
-```
-
-サンドボックス下で署名付き `git commit` / `git tag` がハング・失敗するのは意図した挙動であり、`dangerouslyDisableSandbox` 等での回避策は取らない。詳細な原則・人間による署名の扱いは `references/signing.md` を参照。
-
 ## push 操作
 
 コミットと push は**常に別の操作として実行**する。1つのコマンドで `git commit && git push` のようにチェインしない。
