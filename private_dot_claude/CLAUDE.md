@@ -11,7 +11,7 @@
    * 暗黙の前提・盲点・違和感・矛盾に気づいたら、その場で報告する。
    * 推測で埋めない。推測が必要な場合は推測であると明記する。分析・提案の作法は `~/.claude/rules/fact-based-evaluation.md` を参照。
 5. 知識は古い可能性がある。外部サービス・ライブラリの挙動が結果を左右する箇所や確信が持てない箇所は、着手前に Context7 または公式ドキュメントで最新仕様を確認する。
-6. 記録: 要件・検討・調査結果を `.notes/context/<NNN>_<context-name>/` 配下（`requirements/` / `deliberation/` / `research/`、ファイル名は `<対象名>_YYYY-MM-DD.md`）に残す。一度保存した調査記録は過去の記録として価値があるため、メンテナンス不要。
+6. 記録: 要件・検討・調査結果（サブエージェントに委任した調査の結果も含む）を notes worktree の `context/<NNN>_<context-name>/` 配下（`requirements/` / `deliberation/` / `research/`、ファイル名は `<対象名>_YYYY-MM-DD.md`）に残す。一度保存した調査記録は過去の記録として価値があるため、メンテナンス不要。
 
 ## 自律実行とサブエージェント
 

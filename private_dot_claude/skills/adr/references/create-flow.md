@@ -50,7 +50,7 @@ ls docs/adr/*.md docs/decisions/*.md doc/arch/*.md adr/*.md 2>/dev/null | sort
 6. **見直しトリガー**: この決定を再考すべき条件（Revisit Triggers）
 7. **遵守の確認手段**（任意）: 決定が守られているかを測る fitness function（Confirmation）
 
-TODO や未確定項目が残っている場合は、ADRを起票せず `.notes/<NNN>/deliberation/` で詰めるよう案内する（SKILL.md「ADRを作成しない場面」参照）。
+TODO や未確定項目が残っている場合は、ADRを起票せず notes の `context/<NNN>/deliberation/` で詰めるよう案内する（SKILL.md「ADRを作成しない場面」参照）。
 
 ## Step 3: 連番の決定
 
