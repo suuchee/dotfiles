@@ -20,7 +20,7 @@ notes worktree の `context/` 配下に新規コンテキストディレクト�
 
 ユーザーから以下を取得する：
 
-- **prefix**: `feature` / `fix` / `refactor` / `docs` / `chore` のいずれか
+- **prefix**: ブランチの種別セグメント。git skill の「ブランチ命名規則」に従う（その repo が Git-Flow なら `feature` / `bugfix` 等、それ以外なら `feat` / `fix` / `refactor` / `docs` / `chore` 等）
 - **name**: kebab-case の短い名前
 - **目的・背景**: 1〜2文
 
