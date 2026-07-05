@@ -81,7 +81,9 @@ git -C .worktrees/notes commit -m "chore(notes): Git LFS の .gitattributes を�
         ├── deliberation/        # 検討・比較
         ├── conversation/        # 会話ログ
         ├── spec/                # 仕様（検討中。正式版は docs/ へ）
-        ├── evidence/            # 検証・学びの集積レイヤー（使い方は各自）
+        ├── evidence/            # 証跡・検証の集積レイヤー（使い方は各自。下は例）
+        │   ├── forensic/        #   例: マルウェア/インシデント調査の証跡（改変せず保持）
+        │   └── trail/           #   例: 監査証跡・操作ログ
         └── assets/              # 素材レイヤー（動画/画像/参考メモ等、必要時のみ）
             ├── recordings/      #   画面収録・録画
             ├── screenshots/     #   スクリーンショット（日付などで階層化）
