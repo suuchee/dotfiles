@@ -6,7 +6,7 @@ input=$(cat)
 session_id=$(echo "$input" | jq -r '.session_id // "unknown"')
 cwd=$(echo "$input" | jq -r '.cwd // .workspace.current_dir // "unknown"')
 # ホームディレクトリをチルダ表記に置換
-cwd="${cwd/#$HOME/\~}"
+cwd="${cwd/#$HOME/~}"
 input_tokens=$(echo "$input" | jq -r '.context_window.total_input_tokens // "0"')
 output_tokens=$(echo "$input" | jq -r '.context_window.total_output_tokens // "0"')
 used=$(echo "$input" | jq -r '.context_window.used_percentage // "0"')
