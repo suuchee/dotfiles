@@ -6,15 +6,20 @@ Git コミット・タグの署名は **人間が行う場合のみ** とする�
 
 ## エージェントのコミット・タグ
 
-`commit.gpgsign` / `tag.gpgsign` が有効な環境でも、エージェントが作成するコミット・タグは **署名なし** とする。グローバル設定は変更しない。
+`commit.gpgsign` / `tag.gpgsign` が有効な環境でも、エージェントが作成するコミット・タグは **署名なし** とする。グローバル設定（人間の署名用）は変更しない。
 
-```sh
-git commit --no-gpg-sign ...
-git commit --no-gpg-sign --amend ...
-git tag <tagname>                    # 軽量タグ（署名なし）
+エージェント環境では **Claude Code の `settings.json` の `env` で署名を無効化**しており、コマンドに `--no-gpg-sign` を付ける必要はない。
+
+```jsonc
+// ~/.claude/settings.json の env（git が読む GIT_CONFIG_* で config を上書き）
+"GIT_CONFIG_COUNT": "2",
+"GIT_CONFIG_KEY_0": "commit.gpgsign",  "GIT_CONFIG_VALUE_0": "false",
+"GIT_CONFIG_KEY_1": "tag.gpgsign",     "GIT_CONFIG_VALUE_1": "false"
 ```
 
-署名付きアノテートッドタグ（`-s` / `-u`）はエージェントが作らない。
+この env は `git commit` に加えて `merge` / `cherry-pick` / `revert`（いずれも `commit.gpgsign` を参照）と軽量タグまで一律に無署名化する。`-S` / `-s` を明示した場合だけ config を上書きするので署名が残るが、エージェントは署名系オプションを付けない。
+
+> この env はエージェントのプロセス内でのみ効き、人間の端末での署名には影響しない。以前は `no-gpg-sign-guard.sh`（PreToolUse hook）で `--no-gpg-sign` を強制していたが、compound コマンドを丸ごと deny する副作用とコミット本文の誤検知があったため env による根絶へ移行した。
 
 ## サンドボックス
 
