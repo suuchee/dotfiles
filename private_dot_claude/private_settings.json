@@ -221,6 +221,7 @@
     },
     "filesystem": {
       "allowWrite": [
+        ".git/config",
         ".worktrees/",
         "~/.Trash",
         "/tmp"
