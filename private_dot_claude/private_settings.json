@@ -172,6 +172,18 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/inject-opus48-rules.sh",
+            "timeout": 5,
+            "statusMessage": "Checking model for reliability rules..."
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
